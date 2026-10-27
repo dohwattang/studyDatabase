@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Workspace Hub — 3열 고정 프로젝트 포털</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Pretendard / Noto Sans KR & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    :root {
+      --font-sans: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: #0b0f19;
+      background-image:
+        radial-gradient(at 15% 10%, rgba(79, 70, 229, 0.16) 0px, transparent 45%),
+        radial-gradient(at 85% 15%, rgba(16, 185, 129, 0.12) 0px, transparent 45%),
+        radial-gradient(at 50% 90%, rgba(245, 158, 11, 0.08) 0px, transparent 50%);
+      background-attachment: fixed;
+      color: #f8fafc;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+
+    code, pre, .font-mono {
+      font-family: var(--font-mono);
+    }
+
+    /* =====================================================================
+       [핵심 레이아웃] 열은 무조건 3열(1fr 1fr 1fr)로 고정, 행(Row)은 무한 자동 증가
+       ===================================================================== */
+    .hub-grid-3col {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr)); /* 3열 강제 고정 */
+      grid-auto-rows: 1fr;                             /* 같은 행의 카드 높이 균일화 */
+      gap: 20px;
+      width: 100%;
+    }
+
+    /* 작은 화면에서도 3열 고정을 유지하되 가로 스크롤 없이 볼 수 있도록 최소 너비와 여백 최적화 */
+    @media (max-width: 768px) {
+      .hub-grid-3col {
+        gap: 10px;
+      }
+    }
+
+    /* =====================================================================
+       [가변 카드 스타일]
+       1) <section class="hub-card"><a href="...">...</a></section>
+       2) <a href="..." class="hub-card"><section>...</section></a>
+       두 가지 작성 방식 모두 완벽하게 동일한 디자인으로 작동합니다!
+       ===================================================================== */
+    .hub-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      background: rgba(15, 23, 42, 0.78);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      border-radius: 18px;
+      overflow: hidden;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.35);
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .hub-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(99, 102, 241, 0.65);
+      background: rgba(30, 41, 59, 0.88);
+      box-shadow: 0 20px 35px -10px rgba(79, 70, 229, 0.28), 0 0 0 1px rgba(99, 102, 241, 0.3);
+    }
+
+    /* 상단 포인트 컬러 바 */
+    .hub-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #6366f1, #10b981, #f59e0b);
+      opacity: 0.7;
+      transition: opacity 0.25s ease;
+    }
+
+    .hub-card:hover::before {
+      opacity: 1;
+    }
+
+    /* 카드 내부 a 태그 또는 section 내부 패딩 자동 정렬 */
+    .hub-card > a,
+    a.hub-card > section {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex: 1;
+      padding: 22px;
+      text-decoration: none;
+      color: inherit;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* 만약 .hub-card에 바로 내용을 넣어도 패딩이 적용되도록 처리 */
+    .hub-card:not(:has(> a)):not(:has(> section)) {
+      padding: 22px;
+      justify-content: space-between;
+    }
+
+    @media (max-width: 768px) {
+      .hub-card > a,
+      a.hub-card > section,
+      .hub-card:not(:has(> a)):not(:has(> section)) {
+        padding: 12px;
+      }
+    }
+
+    /* 카드 내부 기본 타이포그래피 & 배지 간편 클래스 */
+    .card-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 700;
+      background: rgba(99, 102, 241, 0.16);
+      color: #a5b4fc;
+      border: 1px solid rgba(99, 102, 241, 0.32);
+      width: fit-content;
+    }
+
+    .card-title {
+      font-size: 1.08rem;
+      font-weight: 800;
+      color: #f8fafc;
+      margin-top: 12px;
+      margin-bottom: 6px;
+      line-height: 1.35;
+      transition: color 0.2s ease;
+    }
+
+    .hub-card:hover .card-title {
+      color: #818cf8;
+    }
+
+    .card-desc {
+      font-size: 0.84rem;
+      color: #94a3b8;
+      line-height: 1.55;
+      margin: 0;
+    }
+
+    .card-footer {
+      margin-top: 18px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(148, 163, 184, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: #64748b;
+    }
+
+    .hub-card:hover .card-footer .go-arrow {
+      color: #34d399;
+      transform: translateX(3px);
+    }
+
+    .go-arrow {
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 600;
+      color: #94a3b8;
+    }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+  <!-- =====================================================================
+       상단 헤더 영역 (검색, 그리드 상태 표시, 코드 스니펫 도우미)
+       ===================================================================== -->
+  <header class="sticky top-0 z-40 bg-slate-950/80 backdrop-blur-md border-b border-slate-800/80">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex flex-wrap items-center justify-between gap-4">
+      
+      <!-- 브랜드 타이틀 -->
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 via-purple-500 to-emerald-400 p-[1.5px] shadow-lg shadow-indigo-500/20">
+          <div class="w-full h-full bg-slate-950 rounded-[10.5px] flex items-center justify-center font-mono font-extrabold text-sm text-white">
+            HUB
+          </div>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-base sm:text-lg font-extrabold tracking-tight text-white">MY PROJECT HUB</h1>
+            <span id="gridStatBadge" class="px-2.5 py-0.5 text-[11px] font-mono font-semibold rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+              3열 고정 · 계산 중...
+            </span>
+          </div>
+          <p class="text-xs text-slate-400">body 안에 &lt;section&gt; + &lt;a href&gt;를 추가하면 3열을 유지하며 행이 자동으로 늘어납니다</p>
+        </div>
+      </div>
+
+      <!-- 우측 검색창 & HTML 스니펫 생성 버튼 -->
+      <div class="flex items-center gap-2.5 flex-wrap">
+        <div class="relative">
+          <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
+          <input
+            id="hubSearchInput"
+            type="text"
+            oninput="filterHubCards()"
+            placeholder="섹션 제목, 파일명(c-1.html) 검색..."
+            class="pl-9 pr-3 py-1.5 text-xs bg-slate-900/90 border border-slate-700/80 rounded-xl text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 w-52 sm:w-64"
+          />
+        </div>
+
+        <button
+          onclick="openSnippetModal()"
+          class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-md shadow-indigo-600/25 transition cursor-pointer"
+        >
+          <i data-lucide="code-2" class="w-4 h-4"></i>
+          <span>새 섹션(href) 추가/복사 도우미</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- =====================================================================
+       메인 허브 컨테이너 (열은 무조건 3열 고정 / 행은 무한 확장)
+       ===================================================================== -->
+  <main class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-8">
+
+    <!-- 상단 빠른 안내 배너 -->
+    <div class="mb-6 p-4 rounded-2xl bg-slate-900/70 border border-slate-800 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-2.5 text-xs text-slate-300">
+        <span class="px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-mono font-bold border border-indigo-500/30">HOW TO EDIT</span>
+        <span>아래 <code class="text-amber-300">#hubGrid</code> 내부에 <code class="text-emerald-300">&lt;section class="hub-card"&gt;&lt;a href="파일명.html"&gt;...&lt;/a&gt;&lt;/section&gt;</code> 블록만 붙여넣으면 <strong>자동으로 3열 그리드</strong>에 맞춰 배치됩니다.</span>
+      </div>
+      <div class="flex items-center gap-1.5 text-[11px] font-mono text-slate-400">
+        <span>Grid Rule:</span>
+        <code class="px-2 py-0.5 rounded bg-slate-950 text-indigo-300 border border-slate-800">grid-template-columns: repeat(3, 1fr)</code>
+      </div>
+    </div>
+
+    <!-- ===================================================================
+         ★ [3열 고정 허브 그리드 시작] ★
+         여기 안에 <section class="hub-card">...</section> 을 개수 제한 없이 계속 추가하세요!
+         3개마다 자동으로 줄바꿈(새 행 생성)되며 열은 항상 3열로 고정됩니다.
+         =================================================================== -->
+    <div id="hubGrid" class="hub-grid-3col">
+
+      <!-- [1행 1열] 실제 업로드된 파일: c-1.html -->
+      <section class="hub-card">
+        <a href="c-1.html">
+          <div>
+            <span class="card-badge" style="background: rgba(245, 158, 11, 0.16); color: #fcd34d; border-color: rgba(245, 158, 11, 0.35);">
+              🐍 Python 워크북 · LIVE
+            </span>
+            <h2 class="card-title">Python 9단계 커리큘럼 & 새폴더 코드 마스터</h2>
+            <p class="card-desc">
+              1~9단계 개념 로드맵, 줄별 X-Ray 코드 해부, 실시간 파이썬 터미널 시뮬레이터 및 A4 PDF 학습지 출력 워크북입니다.
+            </p>
+          </div>
+          <div class="card-footer">
+            <span>href="c-1.html"</span>
+            <span class="go-arrow">열기 →</span>
+          </div>
+        </a>
+      </section>
+
+      <!-- [1행 2열] 가변 추가 예시 섹션 2 -->
+      <section class="hub-card">
+        <a href="c-2.html">
+          <div>
+            <span class="card-badge">
+              📘 Chapter 02
+            </span>
+            <h2 class="card-title">자료구조 & 알고리즘 실습 노트</h2>
+            <p class="card-desc">
+              리스트, 튜플, 딕셔너리, 집합 심화 문제 풀이와 시간 복잡도 비교 정리를 담아둘 두 번째 섹션입니다.
+            </p>
+          </div>
+          <div class="card-footer">
+            <span>href="c-2.html"</span>
+            <span class="go-arrow">열기 →</span>
+          </div>
+        </a>
+      </section>
+
+      <!-- [1행 3열] 가변 추가 예시 섹션 3 -->
+      <section class="hub-card">
+        <a href="c-3.html">
+          <div>
+            <span class="card-badge" style="background: rgba(16, 185, 129, 0.15); color: #6ee7b7; border-color: rgba(16, 185, 129, 0.35);">
+              💻 Web / Frontend
+            </span>
+            <h2 class="card-title">HTML · CSS · JS 인터랙티브 실습실</h2>
+            <p class="card-desc">
+              반응형 웹 디자인 레이아웃과 DOM 제어 스크립트 예제들을 모아둔 프론트엔드 아카이브 페이지입니다.
+            </p>
+          </div>
+          <div class="card-footer">
+            <span>href="c-3.html"</span>
+            <span class="go-arrow">열기 →</span>
+          </div>
+        </a>
+      </section>
+
+      <!-- [2행 1열] 가변 추가 예시 섹션 4 -->
+      <section class="hub-card">
+        <a href="c-4.html">
+          <div>
+            <span class="card-badge">
+              🗄️ Database & SQL
+            </span>
+            <h2 class="card-title">데이터베이스 설계 및 SQL 쿼리 정리</h2>
+            <p class="card-desc">
+              SELECT, JOIN, GROUP BY 핵심 문법과 정규화 과정을 정리한 데이터베이스 학습 섹션입니다.
+            </p>
+          </div>
+          <div class="card-footer">
+            <span>href="c-4.html"</span>
+            <span class="go-arrow">열기 →</span>
+          </div>
+        </a>
+      </section>
+
+      <!-- [2행 2열] 가변 추가 예시 섹션 5 -->
+      <section class="hub-card">
+        <a href="c-5.html">
+          <div>
+            <span class="card-badge" style="background: rgba(236, 72, 153, 0.15); color: #f472b6; border-color: rgba(236, 72, 153, 0.35);">
+              🤖 AI & Data Science
+            </span>
+            <h2 class="card-title">NumPy · Pandas 데이터 분석 프로젝트</h2>
+            <p class="card-desc">
+              데이터프레임 전처리, 결측치 핸들링 및 시각화 차트 리포트를 연결할 다섯 번째 허브 슬롯입니다.
+            </p>
+          </div>
+          <div class="card-footer">
+            <span>href="c-5.html"</span>
+            <span class="go-arrow">열기 →</span>
+          </div>
+        </a>
+      </section>
+
+      <!-- [2행 3열] 가변 추가 예시 섹션 6 -->
+      <section class="hub-card">
+        <a href="c-6.html">
+          <div>
+            <span class="card-badge">
+              🚀 Mini Project
+            </span>
+            <h2 class="card-title">나만의 토이 프로젝트 & 포트폴리오</h2>
+            <p class="card-desc">
+              직접 만든 웹 애플리케이션과 자동화 스크립트 결과물을 링크로 연결하는 여섯 번째 섹션입니다.
+            </p>
+          </div>
+          <div class="card-footer">
+            <span>href="c-6.html"</span>
+            <span class="go-arrow">열기 →</span>
+          </div>
+        </a>
+      </section>
+
+      <!-- [3행 1열] 7번째 카드가 추가되면 자동으로 3행이 시작되며 3열 구조는 그대로 유지됩니다! -->
+      <section class="hub-card">
+        <a href="c-7.html">
+          <div>
+            <span class="card-badge" style="background: rgba(56, 189, 248, 0.15); color: #7dd3fc; border-color: rgba(56, 189, 248, 0.35);">
+              ✨ Row 3 · Auto Expand
+            </span>
+            <h2 class="card-title">새로운 섹션 추가 템플릿 (3행 1열)</h2>
+            <p class="card-desc">
+              카드가 3개를 초과할 때마다 자동으로 다음 행(Row)이 생성되며, 가로 열은 항상 3열로 일정하게 유지됩니다.
+            </p>
+          </div>
+          <div class="card-footer">
+            <span>href="c-7.html"</span>
+            <span class="go-arrow">열기 →</span>
+          </div>
+        </a>
+      </section>
+
+      <!-- =================================================================
+           [복사해서 바로 쓰는 최소형 템플릿]
+           아래 주석 안의 코드를 복사해서 바로 위에 붙여넣기만 하면 카드가 계속 늘어납니다!
+
+      <section class="hub-card">
+        <a href="이동할파일.html">
+          <div>
+            <span class="card-badge">카테고리</span>
+            <h2 class="card-title">섹션 제목을 입력하세요</h2>
+            <p class="card-desc">이곳에 섹션 설명을 적으세요.</p>
+          </div>
+          <div class="card-footer">
+            <span>href="이동할파일.html"</span>
+            <span class="go-arrow">열기 →</span>
+          </div>
+        </a>
+      </section>
+      ================================================================== -->
+
+    </div>
+    <!-- ★ [3열 고정 허브 그리드 끝] ★ -->
+
+    <!-- 검색 결과 없을 때 안내 -->
+    <div id="emptySearchState" class="hidden py-16 text-center text-slate-400">
+      <p class="text-sm font-semibold">검색어와 일치하는 섹션 카드가 없습니다.</p>
+    </div>
+
+  </main>
+
+  <!-- =====================================================================
+       하단 푸터 (HTML 구조 안내)
+       ===================================================================== -->
+  <footer class="border-t border-slate-800/80 bg-slate-950/60 py-5 mt-12">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-500">
+      <span>3-Column Fixed Web Hub Layout (<code class="text-slate-400">repeat(3, minmax(0, 1fr))</code>)</span>
+      <span id="footerCountText">총 7개 섹션 · 3행 구성 중</span>
+    </div>
+  </footer>
+
+  <!-- =====================================================================
+       모달: 새 섹션(href) HTML 스니펫 생성 & 실시간 추가 도우미
+       ===================================================================== -->
+  <div id="snippetModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/75 backdrop-blur-sm p-4">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-lg w-full overflow-hidden shadow-2xl">
+      <div class="px-5 py-4 bg-slate-950 border-b border-slate-800 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <i data-lucide="plus-circle" class="w-5 h-5 text-indigo-400"></i>
+          <h3 class="text-sm font-bold text-white">새 섹션(href) 카드 생성 & HTML 코드 복사</h3>
+        </div>
+        <button onclick="closeSnippetModal()" class="text-slate-400 hover:text-white cursor-pointer">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="p-5 space-y-3.5 text-xs">
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-slate-300 font-semibold mb-1">연결할 파일/주소 (href)</label>
+            <input id="inpHref" type="text" value="c-8.html" oninput="updateSnippetPreview()" class="w-full px-3 py-2 rounded-lg bg-slate-950 border border-slate-700 text-emerald-300 font-mono focus:outline-none focus:border-indigo-500" />
+          </div>
+          <div>
+            <label class="block text-slate-300 font-semibold mb-1">상단 배지 텍스트</label>
+            <input id="inpBadge" type="text" value="📌 New Section" oninput="updateSnippetPreview()" class="w-full px-3 py-2 rounded-lg bg-slate-950 border border-slate-700 text-slate-200 focus:outline-none focus:border-indigo-500" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-slate-300 font-semibold mb-1">섹션 제목 (Title)</label>
+          <input id="inpTitle" type="text" value="여덟 번째 실습 페이지 제목" oninput="updateSnippetPreview()" class="w-full px-3 py-2 rounded-lg bg-slate-950 border border-slate-700 text-slate-200 focus:outline-none focus:border-indigo-500" />
+        </div>
+
+        <div>
+          <label class="block text-slate-300 font-semibold mb-1">간단한 설명 (Description)</label>
+          <textarea id="inpDesc" rows="2" oninput="updateSnippetPreview()" class="w-full px-3 py-2 rounded-lg bg-slate-950 border border-slate-700 text-slate-200 focus:outline-none focus:border-indigo-500">새로 만든 HTML 문서로 이동하는 섹션 카드입니다.</textarea>
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-slate-400 font-semibold">body 안에 붙여넣을 HTML 코드:</span>
+            <button onclick="copyGeneratedSnippet()" class="text-indigo-400 hover:text-indigo-300 font-bold flex items-center gap-1 cursor-pointer">
+              <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+              <span id="copyBtnText">HTML 코드 복사</span>
+            </button>
+          </div>
+          <pre id="snippetCodePreview" class="p-3 rounded-xl bg-slate-950 border border-slate-800 text-[11px] font-mono text-amber-200 overflow-x-auto leading-relaxed"></pre>
+        </div>
+
+        <div class="pt-2 flex items-center justify-end gap-2">
+          <button onclick="closeSnippetModal()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold cursor-pointer">
+            닫기
+          </button>
+          <button onclick="appendCardToGridLive()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold shadow cursor-pointer">
+            현재 화면에 바로 추가해보기
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // body(#hubGrid) 내부의 카드 개수를 자동으로 감지하여 몇 행 × 3열인지 표시합니다.
+    function refreshGridStats() {
+      const grid = document.getElementById('hubGrid');
+      if (!grid) return;
+      const cards = Array.from(grid.children).filter(el => el.style.display !== 'none');
+      const totalCards = grid.children.length;
+      const rowCount = Math.ceil(totalCards / 3);
+
+      const badge = document.getElementById('gridStatBadge');
+      if (badge) {
+        badge.textContent = `3열 고정 · 현재 ${rowCount}행 (${totalCards}개 섹션)`;
+      }
+
+      const footerText = document.getElementById('footerCountText');
+      if (footerText) {
+        footerText.textContent = `총 ${totalCards}개 섹션 · ${rowCount}행 × 3열 고정 그리드`;
+      }
+
+      const emptyState = document.getElementById('emptySearchState');
+      if (emptyState) {
+        emptyState.classList.toggle('hidden', cards.length > 0);
+      }
+    }
+
+    // 실시간 검색 필터
+    function filterHubCards() {
+      const query = (document.getElementById('hubSearchInput').value || '').trim().toLowerCase();
+      const grid = document.getElementById('hubGrid');
+      const items = Array.from(grid.children);
+
+      items.forEach(card => {
+        const text = (card.innerText || '') + ' ' + (card.innerHTML || '');
+        const matched = !query || text.toLowerCase().includes(query);
+        card.style.display = matched ? '' : 'none';
+      });
+
+      refreshGridStats();
+    }
+
+    // 스니펫 생성 모달 제어
+    function openSnippetModal() {
+      updateSnippetPreview();
+      const modal = document.getElementById('snippetModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeSnippetModal() {
+      const modal = document.getElementById('snippetModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function buildCardHtmlString() {
+      const href = document.getElementById('inpHref').value.trim() || 'new-page.html';
+      const badge = document.getElementById('inpBadge').value.trim() || '📌 Section';
+      const title = document.getElementById('inpTitle').value.trim() || '새 섹션 제목';
+      const desc = document.getElementById('inpDesc').value.trim() || '설명을 입력하세요.';
+
+      return `<section class="hub-card">
+  <a href="${href}">
+    <div>
+      <span class="card-badge">${badge}</span>
+      <h2 class="card-title">${title}</h2>
+      <p class="card-desc">${desc}</p>
+    </div>
+    <div class="card-footer">
+      <span>href="${href}"</span>
+      <span class="go-arrow">열기 →</span>
+    </div>
+  </a>
+</section>`;
+    }
+
+    function updateSnippetPreview() {
+      const codeEl = document.getElementById('snippetCodePreview');
+      if (codeEl) {
+        codeEl.textContent = buildCardHtmlString();
+      }
+    }
+
+    function copyGeneratedSnippet() {
+      const code = buildCardHtmlString();
+      const temp = document.createElement('textarea');
+      temp.value = code;
+      document.body.appendChild(temp);
+      temp.select();
+      document.execCommand('copy');
+      document.body.removeChild(temp);
+
+      const btnText = document.getElementById('copyBtnText');
+      btnText.textContent = '복사 완료! ✓';
+      setTimeout(() => {
+        btnText.textContent = 'HTML 코드 복사';
+      }, 1500);
+    }
+
+    function appendCardToGridLive() {
+      const grid = document.getElementById('hubGrid');
+      const wrapper = document.createElement('div');
+      wrapper.innerHTML = buildCardHtmlString();
+      const newCard = wrapper.firstElementChild;
+      grid.appendChild(newCard);
+
+      // 다음 번호 자동 증가 편의 기능
+      const nextNum = grid.children.length + 1;
+      document.getElementById('inpHref').value = `c-${nextNum}.html`;
+      document.getElementById('inpTitle').value = `${nextNum}번째 실습 페이지 제목`;
+
+      refreshGridStats();
+      closeSnippetModal();
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      refreshGridStats();
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
