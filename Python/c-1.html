@@ -1,0 +1,3313 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Python 9단계 개념 커리큘럼 & 새폴더 실습 코드 마스터 워크북</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Noto Sans KR & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- html2pdf.js for direct one-click PDF file download -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <style>
+    :root {
+      --font-sans: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: #f1f5f9;
+      color: #0f172a;
+      margin: 0;
+      padding: 0;
+    }
+
+    code, pre, .font-mono {
+      font-family: var(--font-mono);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 7px;
+      height: 7px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    /* A4 Sheet Screen Preview Styling */
+    .a4-preview-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      padding: 20px 12px 60px 12px;
+    }
+
+    .a4-page {
+      width: 210mm;
+      min-height: 297mm;
+      background: #ffffff;
+      box-shadow: 0 12px 32px -4px rgba(15, 23, 42, 0.12), 0 2px 6px -1px rgba(15, 23, 42, 0.06);
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      padding: 9mm 10mm;
+      box-sizing: border-box;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .a4-page-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4.5mm;
+    }
+
+    @media (max-width: 900px) {
+      .a4-page {
+        width: 100%;
+        min-height: auto;
+        padding: 16px;
+      }
+    }
+
+    .study-card-print {
+      break-inside: avoid;
+      page-break-inside: avoid;
+      border: 1.5px solid #94a3b8;
+      border-radius: 6px;
+      background: #ffffff;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .code-block-print {
+      font-family: var(--font-mono);
+      font-size: 7.2pt;
+      line-height: 1.32;
+      white-space: pre-wrap;
+      word-break: break-all;
+      background-color: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      padding: 6px 8px;
+      color: #0f172a;
+      margin: 0;
+    }
+
+    /* Exact Print Media Queries for A4 PDF Export */
+    @media print {
+      @page {
+        size: A4 portrait;
+        margin: 6mm 7mm;
+      }
+
+      html, body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      .no-print {
+        display: none !important;
+      }
+
+      #pdfModeContainer {
+        display: block !important;
+        background: #ffffff !important;
+      }
+
+      .print-only-container {
+        display: block !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+
+      .a4-preview-wrapper {
+        display: block !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        gap: 0 !important;
+      }
+
+      .a4-page {
+        width: 100% !important;
+        height: 284mm !important;
+        min-height: 0 !important;
+        max-height: 284mm !important;
+        box-shadow: none !important;
+        border: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        overflow: hidden !important;
+        page-break-after: always;
+        break-after: page;
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+
+      .a4-page:last-child {
+        page-break-after: auto;
+        break-after: auto;
+      }
+
+      .a4-page-body {
+        gap: 3.5mm !important;
+      }
+
+      .study-card-print {
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
+        margin-bottom: 0 !important;
+        border: 1px solid #64748b !important;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- Top Navigation Header -->
+  <header class="no-print sticky top-0 z-40 bg-slate-900 text-white border-b border-slate-800 shadow-md">
+    <div class="max-w-[1600px] mx-auto px-4 sm:px-6 py-2.5 min-h-[4rem] flex flex-wrap items-center justify-between gap-3">
+      <!-- Brand / Title -->
+      <div class="flex items-center gap-3 min-w-0 shrink-0">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shrink-0 shadow-inner text-slate-950 font-extrabold text-lg">
+          Py
+        </div>
+        <div class="min-w-0">
+          <div class="flex items-center gap-2">
+            <h1 class="font-bold text-sm sm:text-base lg:text-lg tracking-tight truncate">Python 9단계 커리큘럼 & 새폴더 코드 마스터 워크북</h1>
+            <span id="zipStatusBadge" class="hidden xl:inline-flex items-center gap-1 px-2.5 py-0.5 text-[11px] font-medium rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/30 shrink-0">
+              <i data-lucide="folder-check" class="w-3 h-3"></i>
+              <span id="zipStatusText">새폴더 원본 (gugudan.py · 202627033 시리즈) + 9단계 개념 통합</span>
+            </span>
+          </div>
+          <p class="text-[11px] text-slate-400 hidden sm:block truncate">1~9단계 개념 로드맵 · 줄별 X-Ray 코드 해부 · 실시간 파이썬 터미널 시뮬레이터 · A4 PDF 학습지</p>
+        </div>
+      </div>
+
+      <!-- Center: Mode Switcher Tabs -->
+      <div class="flex items-center bg-slate-800/90 p-1 rounded-xl border border-slate-700/80 gap-1 shrink-0">
+        <button id="btnModeStudy" onclick="switchViewMode('study')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all whitespace-nowrap bg-indigo-600 text-white shadow">
+          <i data-lucide="terminal" class="w-4 h-4 shrink-0"></i>
+          <span>인터랙티브 실습 & 분석</span>
+        </button>
+        <button id="btnModeRoadmap" onclick="switchViewMode('roadmap')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all whitespace-nowrap text-slate-300 hover:text-white">
+          <i data-lucide="compass" class="w-4 h-4 shrink-0"></i>
+          <span>9단계 개념 목차 & 백과</span>
+        </button>
+        <button id="btnModePdf" onclick="switchViewMode('pdf')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all whitespace-nowrap text-slate-300 hover:text-white">
+          <i data-lucide="file-text" class="w-4 h-4 shrink-0"></i>
+          <span>A4 PDF 규격 학습지</span>
+        </button>
+      </div>
+
+      <!-- Right: Action Buttons -->
+      <div class="flex items-center gap-2 shrink-0">
+        <button onclick="openZipModal()" class="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition whitespace-nowrap" title="새 폴더 원본 ZIP(중첩 ZIP 포함) 또는 .py 파일 불러오기">
+          <i data-lucide="upload" class="w-3.5 h-3.5 text-amber-400 shrink-0"></i>
+          <span>새폴더 ZIP / .py 불러오기</span>
+        </button>
+
+        <button onclick="triggerPrintPdf()" class="flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm transition whitespace-nowrap">
+          <i data-lucide="printer" class="w-3.5 h-3.5 shrink-0"></i>
+          <span>A4 인쇄 / PDF 저장</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================================================================== -->
+  <!-- MODE 1: INTERACTIVE STUDY & PYTHON SANDBOX MODE                       -->
+  <!-- ===================================================================== -->
+  <main id="studyModeContainer" class="no-print flex-1 max-w-[1600px] w-full mx-auto flex flex-col lg:flex-row overflow-hidden min-h-[calc(100vh-4rem)]">
+    
+    <!-- Left Sidebar: 9-Stage Curriculum & File Navigator -->
+    <aside class="w-full lg:w-80 xl:w-96 bg-white border-b lg:border-b-0 lg:border-r border-slate-200 flex flex-col shrink-0">
+      <!-- Progress & Search Header -->
+      <div class="p-4 border-b border-slate-200 space-y-3 bg-slate-50/60">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold uppercase tracking-wider text-slate-500">9단계 마스터 진도율</span>
+          <span id="progressCountText" class="text-xs font-bold text-indigo-600">0 / 12 완료 (0%)</span>
+        </div>
+        <div class="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
+          <div id="progressBarFill" class="h-full bg-indigo-600 transition-all duration-300" style="width: 0%"></div>
+        </div>
+
+        <!-- Search Input -->
+        <div class="relative">
+          <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
+          <input id="searchInput" type="text" oninput="renderSidebarList()" placeholder="파일명(gugudan, 202627033) 또는 개념 검색..." class="w-full pl-9 pr-3 py-2 text-xs bg-white border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" />
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="grid grid-cols-4 gap-1 pt-0.5">
+          <button onclick="setSidebarFilter('all')" id="filterBtn_all" class="py-1.5 text-[11px] font-semibold rounded-md bg-indigo-600 text-white transition">전체 (12)</button>
+          <button onclick="setSidebarFilter('folder')" id="filterBtn_folder" class="py-1.5 text-[11px] font-semibold rounded-md bg-slate-100 text-slate-600 hover:bg-slate-200 transition">새폴더 핵심</button>
+          <button onclick="setSidebarFilter('starred')" id="filterBtn_starred" class="py-1.5 text-[11px] font-semibold rounded-md bg-slate-100 text-slate-600 hover:bg-slate-200 transition">★ 중요</button>
+          <button onclick="setSidebarFilter('uncompleted')" id="filterBtn_uncompleted" class="py-1.5 text-[11px] font-semibold rounded-md bg-slate-100 text-slate-600 hover:bg-slate-200 transition">미완료</button>
+        </div>
+      </div>
+
+      <!-- Curriculum File List -->
+      <div id="sidebarListContainer" class="flex-1 overflow-y-auto p-3 space-y-4 max-h-[340px] lg:max-h-[calc(100vh-14.5rem)]">
+        <!-- Populated dynamically by JS -->
+      </div>
+    </aside>
+
+    <!-- Center & Right Area: Active Lesson Details, Editor, X-Ray Table, and Live Python Terminal -->
+    <section class="flex-1 flex flex-col min-w-0 bg-slate-50 overflow-y-auto">
+      
+      <!-- Lesson Top Header Banner -->
+      <div class="bg-white border-b border-slate-200 px-6 py-4 flex flex-wrap items-center justify-between gap-4">
+        <div class="space-y-1 min-w-0">
+          <div class="flex items-center gap-2 flex-wrap">
+            <span id="activeStageBadge" class="px-2.5 py-0.5 text-xs font-bold rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200">1단계</span>
+            <h2 id="activeFileName" class="text-lg sm:text-xl font-extrabold text-slate-900 font-mono">gugudan.py</h2>
+            <span id="activeOriginBadge" class="px-2 py-0.5 text-xs font-mono font-semibold rounded bg-amber-50 text-amber-800 border border-amber-200">새폴더 원본 실습</span>
+          </div>
+          <p id="activeTitleDesc" class="text-sm text-slate-600 font-medium"></p>
+        </div>
+
+        <!-- Lesson Status Toggles & Navigation -->
+        <div class="flex items-center gap-2 flex-wrap">
+          <button id="btnToggleStar" onclick="toggleStarCurrent()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border border-slate-200 bg-white text-slate-600 hover:bg-amber-50 transition">
+            <i data-lucide="star" class="w-4 h-4"></i>
+            <span>중요 표시</span>
+          </button>
+          <button id="btnToggleDone" onclick="toggleDoneCurrent()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border border-slate-200 bg-white text-slate-600 hover:bg-emerald-50 transition">
+            <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+            <span>학습 완료</span>
+          </button>
+          <div class="h-5 w-px bg-slate-200 mx-1"></div>
+          <button onclick="navigateLesson(-1)" class="p-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-100 text-slate-700" title="이전 파이썬 파일">
+            <i data-lucide="chevron-left" class="w-4 h-4"></i>
+          </button>
+          <button onclick="navigateLesson(1)" class="p-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-100 text-slate-700" title="다음 파이썬 파일">
+            <i data-lucide="chevron-right" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Workspace Grid: Python Code Editor + Live Terminal Sandbox + X-Ray Breakdown -->
+      <div class="p-4 sm:p-6 grid grid-cols-1 xl:grid-cols-12 gap-6">
+        
+        <!-- Left Column (7 cols): Python Code Editor & Line-by-Line Concept Breakdown -->
+        <div class="xl:col-span-7 flex flex-col gap-5">
+          
+          <!-- Python Code Editor Card -->
+          <div class="bg-slate-900 rounded-2xl shadow-lg border border-slate-800 overflow-hidden flex flex-col">
+            <!-- Editor Header Tabs -->
+            <div class="bg-slate-950 px-4 py-2.5 border-b border-slate-800 flex items-center justify-between flex-wrap gap-2">
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-mono font-semibold bg-indigo-600 text-white">
+                  <i data-lucide="file-code-2" class="w-3.5 h-3.5"></i>
+                  <span id="tabPyLabel">gugudan.py</span>
+                </span>
+                <button id="btnToggleComments" onclick="toggleCommentView()" class="flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-400/30 hover:bg-amber-500/30 transition" title="한 줄씩 달린 한국어 상세 주석을 켜거나 끕니다">
+                  <i data-lucide="message-square-code" class="w-3.5 h-3.5"></i>
+                  <span id="commentToggleText">한 줄 주석: ON</span>
+                </button>
+                <button id="btnToggleXray" onclick="toggleXrayView()" class="flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 transition" title="코드를 한 줄씩 표 형태로 해부하여 봅니다">
+                  <i data-lucide="scan-line" class="w-3.5 h-3.5 text-emerald-400"></i>
+                  <span id="xrayToggleText">줄별 X-Ray 해부표 보기</span>
+                </button>
+              </div>
+              <div class="flex items-center gap-2">
+                <button onclick="resetCurrentCode()" class="px-2.5 py-1 rounded text-xs font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 transition">
+                  초기화
+                </button>
+                <button onclick="copyCurrentCode()" class="px-2.5 py-1 rounded text-xs font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 transition">
+                  코드 복사
+                </button>
+                <button onclick="runPythonSandbox()" class="flex items-center gap-1 px-3 py-1 rounded text-xs font-semibold bg-emerald-600 hover:bg-emerald-500 text-white transition">
+                  <i data-lucide="play" class="w-3.5 h-3.5"></i>
+                  <span>실행 (Run)</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Editable Textarea for Python -->
+            <div id="editorTextareaWrapper" class="relative">
+              <textarea id="codeEditorPy" oninput="handleCodeEdit()" spellcheck="false" class="w-full h-96 sm:h-[430px] p-4 bg-slate-900 text-emerald-100 font-mono text-xs sm:text-[13px] leading-relaxed focus:outline-none resize-y"></textarea>
+            </div>
+
+            <!-- Line-by-Line X-Ray Table View (Toggled) -->
+            <div id="editorXrayWrapper" class="hidden bg-slate-900 p-4 max-h-[450px] overflow-y-auto">
+              <div class="text-xs text-amber-300 font-semibold mb-2 flex items-center gap-1.5">
+                <i data-lucide="sparkles" class="w-4 h-4"></i>
+                <span>각 코드 라인의 문법적 역할과 한국어 해설을 1:1로 매칭한 X-Ray 분석표입니다.</span>
+              </div>
+              <div class="overflow-x-auto rounded-xl border border-slate-800">
+                <table class="w-full text-left border-collapse text-xs">
+                  <thead>
+                    <tr class="bg-slate-950 text-slate-400 border-b border-slate-800">
+                      <th class="py-2 px-2.5 w-10 text-center font-mono">Line</th>
+                      <th class="py-2 px-3 font-mono">Python 실행 코드</th>
+                      <th class="py-2 px-3">한 줄 문법 역할 & 동작 해설</th>
+                    </tr>
+                  </thead>
+                  <tbody id="xrayTableBody" class="divide-y divide-slate-800/80">
+                    <!-- Populated dynamically -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Key Concepts & Line-by-Line Study Guide -->
+          <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3 flex-wrap gap-2">
+              <div class="flex items-center gap-2">
+                <div class="w-7 h-7 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
+                  <i data-lucide="lightbulb" class="w-4 h-4"></i>
+                </div>
+                <h3 class="font-bold text-slate-900 text-base">단계별 핵심 파이썬 문법 & 줄별 코드 해설</h3>
+              </div>
+              <div id="activeTagsContainer" class="flex items-center gap-1.5 flex-wrap"></div>
+            </div>
+
+            <!-- Concept Explanation List -->
+            <div id="activeExplanationList" class="space-y-2.5 text-sm text-slate-700 leading-relaxed">
+              <!-- Populated dynamically -->
+            </div>
+
+            <!-- Key Exam / Study Point Callout -->
+            <div class="p-3.5 rounded-xl bg-amber-50/80 border border-amber-200/80 flex items-start gap-3">
+              <i data-lucide="sparkles" class="w-5 h-5 text-amber-600 shrink-0 mt-0.5"></i>
+              <div class="text-xs sm:text-sm text-amber-950">
+                <span class="font-bold">시험 & 실전 핵심 포인트: </span>
+                <span id="activeExamTip"></span>
+              </div>
+            </div>
+
+            <!-- Deep Python Concept Anatomy & Pitfalls Section -->
+            <div id="deepPyConceptContainer" class="pt-3 border-t border-slate-200 space-y-4">
+              <!-- Populated dynamically -->
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Column (5 cols): Interactive Python Terminal + Memory Inspector + Personal Notes -->
+        <div class="xl:col-span-5 flex flex-col gap-5">
+          
+          <!-- Live Python Terminal Card -->
+          <div class="bg-slate-950 rounded-2xl shadow-lg border border-slate-800 overflow-hidden flex flex-col">
+            <div class="bg-slate-900 px-4 py-2.5 border-b border-slate-800 flex items-center justify-between flex-wrap gap-2">
+              <div class="flex items-center gap-2">
+                <span class="flex gap-1.5">
+                  <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                </span>
+                <span class="text-xs font-bold text-slate-200 ml-1 font-mono">Python 3 인터랙티브 터미널 (Console)</span>
+              </div>
+              <button onclick="runPythonSandbox()" class="text-xs text-emerald-400 hover:text-emerald-300 font-semibold flex items-center gap-1">
+                <i data-lucide="rotate-cw" class="w-3.5 h-3.5"></i>
+                <span>다시 실행</span>
+              </button>
+            </div>
+
+            <!-- Standard Input (stdin) Controls for input() simulation -->
+            <div class="bg-slate-900/70 px-4 py-3 border-b border-slate-800 space-y-2">
+              <div class="flex items-center justify-between flex-wrap gap-1">
+                <label class="text-[11px] font-bold text-indigo-300 flex items-center gap-1.5">
+                  <i data-lucide="keyboard" class="w-3.5 h-3.5"></i>
+                  <span>표준 입력값 (input() 함수 테스트 값 · 공백 구분)</span>
+                </label>
+                <div id="presetInputsContainer" class="flex items-center gap-1 flex-wrap">
+                  <!-- Preset buttons populated dynamically -->
+                </div>
+              </div>
+              <div class="flex gap-2">
+                <input id="stdinInputBox" type="text" onkeydown="if(event.key==='Enter') runPythonSandbox()" placeholder="입력값 예: 7 또는 95 88 76" class="flex-1 px-3 py-1.5 text-xs font-mono bg-slate-950 text-amber-200 border border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                <button onclick="runPythonSandbox()" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-lg transition shrink-0">
+                  입력 후 실행
+                </button>
+              </div>
+            </div>
+
+            <!-- Terminal Output Screen -->
+            <div class="p-4 font-mono text-xs sm:text-[13px] text-slate-100 bg-slate-950 h-64 sm:h-72 overflow-y-auto whitespace-pre-wrap leading-relaxed" id="terminalOutputScreen"></div>
+
+            <!-- Variable Memory Inspector Table -->
+            <div class="bg-slate-900 border-t border-slate-800 p-3.5">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-[11px] font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1.5">
+                  <i data-lucide="database" class="w-3.5 h-3.5"></i>
+                  <span>실행 후 메모리 객체 상태 (Variable & Object Inspector)</span>
+                </span>
+                <span class="text-[10px] text-slate-400 font-mono">type() · 가변성(Mutable/Immutable)</span>
+              </div>
+              <div class="overflow-x-auto max-h-44">
+                <table class="w-full text-left border-collapse text-[11px] font-mono">
+                  <thead>
+                    <tr class="border-b border-slate-800 text-slate-400">
+                      <th class="py-1 pr-2">변수명</th>
+                      <th class="py-1 pr-2">자료형(type)</th>
+                      <th class="py-1">저장된 객체 값(value)</th>
+                    </tr>
+                  </thead>
+                  <tbody id="memoryInspectorBody" class="divide-y divide-slate-800/70 text-slate-200">
+                    <!-- Populated dynamically -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stage Roadmap Connection Card -->
+          <div id="stageConnectionCard" class="bg-gradient-to-br from-indigo-950 to-slate-900 text-white rounded-2xl shadow-md border border-indigo-500/30 p-4 space-y-2">
+            <!-- Populated dynamically -->
+          </div>
+
+          <!-- Personal Study Memo (Automatically Included in PDF Export!) -->
+          <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 flex flex-col gap-3">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <div class="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                  <i data-lucide="pen-line" class="w-4 h-4"></i>
+                </div>
+                <div>
+                  <h3 class="font-bold text-slate-900 text-sm">나만의 파이썬 학습 노트 & 오답 메모</h3>
+                  <p class="text-[11px] text-slate-500">자동 저장되며 A4 PDF 출력 시 각 예제 카드 하단에 함께 인쇄됩니다.</p>
+                </div>
+              </div>
+              <span id="noteSavedIndicator" class="text-[11px] text-emerald-600 font-medium opacity-0 transition-opacity">자동 저장됨 ✓</span>
+            </div>
+            <textarea id="personalNoteInput" oninput="savePersonalNote()" rows="3" placeholder="이 파이썬 파일에서 헷갈렸던 range(시작, 끝) 범위, 들여쓰기 규칙, 시험 대비 요약 등을 자유롭게 필기해 두세요..." class="w-full p-3 text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition"></textarea>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================================================================== -->
+  <!-- MODE 2: 9-STAGE PYTHON CURRICULUM ROADMAP & ENCYCLOPEDIA              -->
+  <!-- ===================================================================== -->
+  <section id="roadmapModeContainer" class="no-print hidden flex-1 flex-col bg-slate-100">
+    <div class="max-w-[1440px] w-full mx-auto px-4 sm:px-6 py-8 space-y-6">
+      <!-- Encyclopedia Hero Banner -->
+      <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 rounded-2xl p-6 sm:p-8 text-white shadow-lg border border-indigo-500/30 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div class="space-y-2">
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30">
+            <i data-lucide="layers" class="w-3.5 h-3.5"></i>
+            <span>PYTHON 9-STAGE MASTER CURRICULUM & CONCEPT ENCYCLOPEDIA</span>
+          </div>
+          <h2 class="text-xl sm:text-2xl font-extrabold tracking-tight">파이썬 9단계 개념 목차 정의 & 새폴더 실습 파일 완벽 매핑 가이드</h2>
+          <p class="text-xs sm:text-sm text-slate-300 max-w-3xl leading-relaxed">
+            입문자의 첫걸음(1단계)부터 흐름 제어(2단계), 컬렉션과 컴프리헨션(3단계), 함수 모듈화(4단계), 객체지향 OOP(5단계), 예외와 파일 입출력(6단계), 모듈과 가상환경(7단계), 제너레이터·데코레이터(8단계), 그리고 실무 응용 트랙(9단계)까지 체계적으로 정의한 마스터 커리큘럼입니다. 각 단계의 <strong>실습 파일 버튼</strong>을 누르면 즉시 코드 실행 화면으로 이동합니다.
+          </p>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          <button onclick="switchViewMode('pdf')" class="flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow transition">
+            <i data-lucide="printer" class="w-4 h-4"></i>
+            <span>A4 PDF 학습지로 출력</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Stage Navigation Pills -->
+      <div id="roadmapNavPills" class="flex items-center gap-2 overflow-x-auto pb-1">
+        <!-- Populated dynamically -->
+      </div>
+
+      <!-- 9 Stage Curriculum Cards Grid -->
+      <div id="roadmapCardsGrid" class="grid grid-cols-1 gap-6">
+        <!-- Populated dynamically -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <!-- MODE 3: A4 PDF STANDARD WORKBOOK MODE                                 -->
+  <!-- ===================================================================== -->
+  <section id="pdfModeContainer" class="hidden flex-1 flex-col bg-slate-200/70">
+    
+    <!-- PDF Formatting Toolbar (Hidden during actual print) -->
+    <div class="no-print bg-white border-b border-slate-200 sticky top-16 z-30 shadow-sm">
+      <div class="max-w-[1440px] mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-4">
+        
+        <!-- Filter & Layout Options -->
+        <div class="flex flex-wrap items-center gap-3">
+          <div class="flex items-center gap-2">
+            <label class="text-xs font-bold text-slate-700">출력 범위:</label>
+            <select id="pdfFilterScope" onchange="renderA4Workbook()" class="text-xs font-medium bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+              <option value="all">전체 1~9단계 파이썬 파일 (12개 전체 출력)</option>
+              <option value="folder">새폴더 원본 필수 과제만 (gugudan.py · 202627033 핵심)</option>
+              <option value="st1">1단계. 프로그래밍 첫걸음과 기본 문법</option>
+              <option value="st2">2단계. 흐름 제어 (조건문 · 반복문 · gugudan.py)</option>
+              <option value="st3">3단계. 데이터 묶음 (컬렉션 · 컴프리헨션)</option>
+              <option value="st4">4단계. 함수와 코드 모듈화 (def · lambda)</option>
+              <option value="st5">5단계. 객체지향 프로그래밍 (OOP · class)</option>
+              <option value="st6">6단계. 예외 처리와 파일 입출력 (try · with open)</option>
+              <option value="st78">7~8단계. 모듈·제너레이터·데코레이터·타입힌트</option>
+              <option value="st9">9단계. 응용 트랙 & 종합 캡스톤 프로젝트</option>
+              <option value="starred">★ 중요 표시한 예제만</option>
+            </select>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <label class="text-xs font-bold text-slate-700">페이지당 예제 수:</label>
+            <select id="pdfCardsPerPage" onchange="renderA4Workbook()" class="text-xs font-medium bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+              <option value="2" selected>A4 1장당 2개 예제 (표준 요약 교재 규격)</option>
+              <option value="1">A4 1장당 1개 예제 (한 줄 주석 전체 + 심화 해설형)</option>
+            </select>
+          </div>
+
+          <!-- Checkboxes for sections -->
+          <div class="flex items-center gap-3 border-l border-slate-200 pl-3 text-xs font-medium text-slate-700 flex-wrap">
+            <label class="flex items-center gap-1.5 cursor-pointer">
+              <input type="checkbox" id="chkIncludeCover" checked onchange="renderA4Workbook()" class="rounded text-indigo-600 focus:ring-indigo-500" />
+              <span>표지 & 9단계 개념 목차표</span>
+            </label>
+            <label class="flex items-center gap-1.5 cursor-pointer text-indigo-700 font-bold">
+              <input type="checkbox" id="chkIncludeDeepPy" checked onchange="renderA4Workbook()" class="rounded text-indigo-600 focus:ring-indigo-500" />
+              <span>심화 원리 & 오답비교(❌/⭕)</span>
+            </label>
+            <label class="flex items-center gap-1.5 cursor-pointer">
+              <input type="checkbox" id="chkIncludeOutput" checked onchange="renderA4Workbook()" class="rounded text-indigo-600 focus:ring-indigo-500" />
+              <span>실행 결과(stdout) 포함</span>
+            </label>
+            <label class="flex items-center gap-1.5 cursor-pointer">
+              <input type="checkbox" id="chkIncludeNotes" checked onchange="renderA4Workbook()" class="rounded text-indigo-600 focus:ring-indigo-500" />
+              <span>해설 & 필기란</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Export Buttons -->
+        <div class="flex items-center gap-2">
+          <span id="pdfPageCountBadge" class="px-2.5 py-1 text-xs font-bold rounded-md bg-slate-100 text-slate-700">총 8 페이지</span>
+          <button onclick="window.print()" class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-sm transition">
+            <i data-lucide="printer" class="w-4 h-4"></i>
+            <span>선명한 벡터 PDF 저장 (인쇄 대화상자)</span>
+          </button>
+          <button id="btnDirectPdfDownload" onclick="downloadDirectPdfFile()" class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold bg-slate-900 hover:bg-slate-800 text-white shadow-sm transition">
+            <i data-lucide="download" class="w-4 h-4"></i>
+            <span>.PDF 파일 즉시 다운로드</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- A4 Pages Container -->
+    <div id="a4WorkbookPages" class="a4-preview-wrapper print-only-container">
+      <!-- Dynamically populated with A4 sheets -->
+    </div>
+
+  </section>
+
+  <!-- Local ZIP / .PY Upload Modal (Supports Nested ZIPs & Auto Commenting) -->
+  <div id="zipModal" class="no-print fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
+    <div class="bg-white rounded-2xl max-w-lg w-full shadow-2xl border border-slate-200 overflow-hidden">
+      <div class="px-6 py-4 bg-slate-900 text-white flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <i data-lucide="folder-archive" class="w-5 h-5 text-amber-400"></i>
+          <h3 class="font-bold text-base">새 폴더 원본 ZIP(중첩 압축 포함) 또는 .py 파일 불러오기</h3>
+        </div>
+        <button onclick="closeZipModal()" class="text-slate-400 hover:text-white">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="p-6 space-y-4">
+        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+          현재 워크북에는 <code>새 폴더</code>의 <code class="px-1.5 py-0.5 bg-slate-100 rounded text-indigo-600">gugudan.py</code> 및 <code class="px-1.5 py-0.5 bg-slate-100 rounded text-indigo-600">202627033_*.py</code> 실습 파일들과 9단계 커리큘럼 심화 코드가 모두 수록되어 있습니다.<br/>
+          추가로 컴퓨터에 있는 <strong>.zip 압축 파일(내부에 또 .zip이 들어있는 중첩 압축 포함)</strong>이나 <strong>.py 파일</strong>을 업로드하면 자동으로 압축을 해제하고 <strong>9단계 목차 매핑 및 한 줄 한국어 해설 주석</strong>을 생성합니다!
+        </p>
+
+        <!-- Dropzone -->
+        <label id="zipDropzone" class="flex flex-col items-center justify-center border-2 border-dashed border-indigo-300 hover:border-indigo-500 bg-indigo-50/40 hover:bg-indigo-50/80 rounded-2xl p-8 cursor-pointer transition text-center">
+          <i data-lucide="upload-cloud" class="w-10 h-10 text-indigo-600 mb-2"></i>
+          <span class="text-sm font-bold text-slate-800">여기를 클릭하거나 새폴더 .zip / .py 파일을 드래그하세요</span>
+          <span class="text-xs text-slate-500 mt-1">중첩 .zip 자동 재귀 해제 · UTF-8 및 CP949(EUC-KR 한글 윈도우) 자동 인식</span>
+          <input id="zipFileInput" type="file" accept=".zip,.py,.txt" multiple onchange="handleUploadedFiles(this.files)" class="hidden" />
+        </label>
+
+        <div id="zipUploadStatusBox" class="hidden p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-900 space-y-1 max-h-40 overflow-y-auto"></div>
+
+        <div class="flex justify-end gap-2 pt-2">
+          <button onclick="closeZipModal()" class="px-4 py-2 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700">닫기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Banner -->
+  <div id="toastBanner" class="no-print fixed bottom-5 right-5 z-50 hidden items-center gap-2 px-4 py-3 rounded-xl bg-slate-900 text-white text-xs sm:text-sm font-medium shadow-xl border border-slate-700">
+    <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
+    <span id="toastMessage">완료되었습니다.</span>
+  </div>
+
+  <script>
+    // =========================================================================
+    // 1. 9-STAGE CURRICULUM ROADMAP DATA (1단계 ~ 9단계 개념 목차 정의)
+    // =========================================================================
+    const NINE_STAGE_ROADMAP = [
+      {
+        stageNum: 1,
+        stageKey: 'st1',
+        badge: '1단계 · 프로그래밍 첫걸음과 기본 문법',
+        title: '환경 설정, 변수와 자료형(int/float/str/bool), 연산자, 문자열 가공 기법',
+        goal: '컴퓨터적 사고의 기초를 잡고, 데이터를 메모리에 저장하고 연산하며 문자열을 자유자재로 다루는 기본기를 다집니다.',
+        subTopics: [
+          '환경 설정과 실행 원리: 인터프리터 언어의 특징과 print(), 주석(#), input() 표준 입출력',
+          '변수와 기본 자료형: 정수(int), 실수(float), 문자열(str), 불리언(bool) 및 명시적 형변환(Type Casting)',
+          '연산자 다루기: 산술(/, //, %, **), 비교(==, !=, >=), 대입(+=, -=) 연산자',
+          '문자열 가공 기법: 양수/음수 인덱싱, 슬라이싱([start:stop:step]), f-string, 내장 메서드(split, join, replace, upper)'
+        ],
+        files: ['202627033_입출력연산.py', '202627033_문자열슬라이싱.py'],
+        tableHeaders: ['핵심 개념', '파이썬 문법 예시', '실행 결과 및 자료형', '새폴더 연계 포인트'],
+        tableRows: [
+          ['형변환과 입력', 'n = int(input("숫자: "))', '입력 문자열 "17" → 정수 17 (int)', 'input()은 항상 str을 반환하므로 산술 연산 전 int() 필수'],
+          ['나눗셈 3총사', '17 / 5  |  17 // 5  |  17 % 5', '3.4 (float) | 3 (몫) | 2 (나머지)', '202627033_입출력연산.py 핵심 연산'],
+          ['문자열 슬라이싱', 's = "202627033"; s[0:4] / s[::-1]', '"2026" (입학연도) / "330726202" (역순)', '끝 인덱스(stop)는 포함되지 않음 (stop-1까지만 추출)'],
+          ['문자열 메서드', '"A_B_C".split("_") / "-".join(lst)', "['A', 'B', 'C'] (list) / 'A-B-C' (str)", '공백이나 구분자로 데이터를 쪼개고 합치는 핵심 기법']
+        ]
+      },
+      {
+        stageNum: 2,
+        stageKey: 'st2',
+        badge: '2단계 · 흐름 제어 (로직 만들기)',
+        title: '조건문(if-elif-else), 반복문(for/while), range() 함수와 흐름 제어(break/continue)',
+        goal: '조건에 따라 다른 동작을 수행하고, 구구단(gugudan.py) 등 반복 작업을 컴퓨터에게 맡기는 프로그래밍의 핵심 논리를 배웁니다.',
+        subTopics: [
+          '조건문 (if, elif, else): 조건식 작성, 콜론(:)과 4칸 들여쓰기(Indentation) 규칙, 논리 연산자(and, or, not)',
+          '반복문 (for, while): 횟수/시퀀스 기반 반복(for i in range)과 조건 기반 반복(while), 중첩 루프(Nested Loop)',
+          '흐름 제어 도구: 루프를 즉시 탈출하는 break, 현재 회차만 건너뛰는 continue, 루프 정상 완료 시 실행되는 for-else'
+        ],
+        files: ['202627033_조건문분기.py', 'gugudan.py', '202627033_반복문제어.py'],
+        tableHeaders: ['제어문 구분', '표준 구문 패턴', '핵심 동작 원리', '주의할 함정 (Exam Trap)'],
+        tableRows: [
+          ['다중 조건 분기', 'if s >= 90: ...\nelif s >= 80: ...\nelse: ...', '위에서부터 검사하여 첫 번째로 True인 블록 하나만 실행', 'else if 대신 반드시 elif 사용 / && 대신 and 사용'],
+          ['구구단 for 루프', 'for i in range(1, 10):\n    print(f"{dan}x{i}={dan*i}")', '1부터 9까지(10 미만!) i에 대입하며 9회 반복 (gugudan.py)', 'range(1, 9)로 쓰면 8까지만 출력되고 9가 누락됨!'],
+          ['while & 제어', 'while cur < n:\n    if cur % 3 == 0: continue\n    if total >= 60: break', 'continue는 아래 코드를 생략하고 다음 회차로, break는 완전 종료', 'while에서 continue 전에 증감식(cur += 1)이 없으면 무한 루프!']
+        ]
+      },
+      {
+        stageNum: 3,
+        stageKey: 'st3',
+        badge: '3단계 · 데이터 묶음 (컬렉션 자료형)',
+        title: '리스트(List), 튜플(Tuple), 딕셔너리(Dictionary), 집합(Set) 및 컴프리헨션',
+        goal: '여러 데이터를 특성에 맞게 효율적으로 묶어 관리하고, 파이썬다운(Pythonic) 컴프리헨션 문법으로 데이터를 한 줄에 가공합니다.',
+        subTopics: [
+          '리스트 (List, []): 순서가 있는 가변(Mutable) 시퀀스 — append(), pop(), sort(), sorted()',
+          '튜플 (Tuple, ()): 수정 불가능한 불변(Immutable) 데이터와 패킹(Packing) / 언패킹(Unpacking)',
+          '딕셔너리 (Dict, {k:v}): 해시 기반의 빠른 Key-Value 탐색 및 keys(), values(), items() 순회',
+          '집합 (Set, {}): 중복 자동 제거와 수학적 집합 연산(교집합 &, 합집합 |, 차집합 -)',
+          '컴프리헨션 (Comprehension): 리스트·딕셔너리 컴프리헨션을 통한 간결하고 빠른 컬렉션 생성'
+        ],
+        files: ['202627033_컬렉션자료구조.py', '202627033_컴프리헨션심화.py'],
+        tableHeaders: ['컬렉션 타입', '선언 및 특징', '가변성 / 중복 허용', '대표 활용 패턴'],
+        tableRows: [
+          ['List (리스트)', '[92, 85, 92, 78]', '⭕ 가변 / ⭕ 중복 허용', 'scores.append(88), sum(scores)/len(scores)'],
+          ['Tuple (튜플)', '(96, 92)', '❌ 불변 / ⭕ 중복 허용', 'a, b = (96, 92) 언패킹, 함수 다중 반환값'],
+          ['Dict (딕셔너리)', '{"학번": "202627033", "평균": 89.2}', '⭕ 가변 / Key 중복 불가', 'for k, v in d.items(): 로 키와 값 동시 순회'],
+          ['Set (집합)', 'set([92, 85, 92]) → {85, 92}', '⭕ 가변 / ❌ 중복 제거', '리스트의 중복 요소 즉시 제거 및 교집합/합집합'],
+          ['Comprehension', '[x**2 for x in range(1, 6) if x%2==1]', '새로운 컬렉션 즉시 생성', '반복문+조건 필터링+변환을 단 한 줄로 처리']
+        ]
+      },
+      {
+        stageNum: 4,
+        stageKey: 'st4',
+        badge: '4단계 · 함수와 코드 모듈화',
+        title: '함수 정의(def/return), 다양한 인수(*args, **kwargs), 변수 스코프, 람다(lambda)',
+        goal: '중복 코드를 줄이고 재사용 가능한 함수를 설계하며, 일급 객체로서의 함수(lambda, map, filter)를 활용합니다.',
+        subTopics: [
+          '함수 정의와 호출 (def): 매개변수(Parameter)와 인자(Argument), 다중 return 반환',
+          '다양한 인수 전달: 기본값 매개변수(Default Parameter), 키워드 인수, 가변 인수(*args, **kwargs)',
+          '변수의 유효 범위 (Scope): 지역 변수(Local)와 전역 변수(Global)의 생명주기(LEGB 규칙)',
+          '일급 객체로서의 함수: 익명 함수 lambda 표현식과 고차 내장 함수 map(), filter(), sorted(key=...)'
+        ],
+        files: ['202627033_함수모듈화.py'],
+        tableHeaders: ['문법 요소', '코드 패턴 예시', '동작 및 반환 특성', '핵심 주의사항'],
+        tableRows: [
+          ['기본값 & 다중 반환', 'def analyze(s1, s2, bonus=5):\n    return tot, avg', 'bonus 생략 시 5 자동 적용 / 반환값은 (tot, avg) 튜플', 'return을 생략하면 함수는 무조건 None을 반환함'],
+          ['가변 인수 (*args)', 'def sum_all(*args):\n    return sum(args)', '개수에 상관없이 전달된 위치 인자들을 튜플(args)로 묶어 받음', '**kwargs는 키워드 인자들을 딕셔너리(dict)로 묶어 받음'],
+          ['람다 (lambda)', 'sorted(students, key=lambda x: x[1])', '이름 없는 1줄 함수를 정의해 정렬 기준(key) 등으로 즉시 전달', '복잡한 여러 줄 로직은 lambda 대신 일반 def 함수 권장']
+        ]
+      },
+      {
+        stageNum: 5,
+        stageKey: 'st5',
+        badge: '5단계 · 객체지향 프로그래밍 (OOP)',
+        title: '클래스(class)와 인스턴스, 생성자(__init__), 캡슐화·상속·다형성, 매직 메서드',
+        goal: '데이터(속성)와 기능(메서드)을 하나의 설계도(Class)로 묶어 규모 있는 프로그램을 구조화하는 객체지향 패러다임을 체득합니다.',
+        subTopics: [
+          '클래스와 인스턴스: 설계도(Class)와 실제 객체(Instance), 속성과 메서드의 결합',
+          '생성자와 self: 객체 생성 시 자동 호출되는 __init__(self, ...)와 인스턴스 자신을 가리키는 self',
+          'OOP 4대 원리: 캡슐화(@property), 상속(class Sub(Super):와 super()), 다형성(오버라이딩/덕 타이핑)',
+          '특수 메서드 (Magic/Dunder Methods): __str__(출력 표현), __len__(길이), __add__(+ 연산자 오버로딩)'
+        ],
+        files: ['202627033_객체지향클래스.py'],
+        tableHeaders: ['OOP 핵심 구성', '문법 구조', '역할 및 의미', '실전 포인트'],
+        tableRows: [
+          ['생성자 메서드', 'def __init__(self, stu_id, name):\n    self.stu_id = stu_id', '인스턴스가 생성될 때 초기 상태(인스턴스 변수)를 설정', '모든 인스턴스 메서드의 첫 번째 매개변수는 반드시 self'],
+          ['상속과 확장', 'class HonorStudent(Student):\n    def __init__(self, ...): super().__init__(...)', '부모 클래스의 속성과 메서드를 물려받아 재사용 및 확장', 'super()를 통해 부모 클래스의 초기화 로직을 안전하게 호출'],
+          ['매직 메서드', 'def __str__(self):\n    return f"[{self.stu_id}] {self.name}"', 'print(객체) 실행 시 메모리 주소 대신 사람이 읽기 쉬운 문자열 반환', '파이썬 내장 연산자(+, len, print)와 사용자 객체를 자연스럽게 연결']
+        ]
+      },
+      {
+        stageNum: 6,
+        stageKey: 'st6',
+        badge: '6단계 · 견고한 프로그램 (예외와 입출력)',
+        title: '예외 처리(try-except-else-finally), 컨텍스트 매니저(with open), JSON/CSV 파싱',
+        goal: '잘못된 입력이나 파일 결측에도 프로그램이 비정상 종료되지 않도록 방어하고, 외부 파일 및 JSON 데이터를 안전하게 다룹니다.',
+        subTopics: [
+          '예외 처리 (Exception Handling): try - except - else - finally 구조로 런타임 에러(ValueError, ZeroDivisionError) 방어',
+          '의도적 예외 발생: raise 키워드와 비즈니스 로직 검증',
+          '파일 입출력 (File I/O): with open("파일명", "w", encoding="utf-8") as f: 컨텍스트 매니저를 통한 자원 자동 반환',
+          '데이터 교환 포맷: json.dumps() / json.loads() 및 CSV 형식 텍스트 직렬화·역직렬화'
+        ],
+        files: ['202627033_예외처리파일IO.py'],
+        tableHeaders: ['구문 블록', '실행 시점 및 역할', '예시 코드', '핵심 장점'],
+        tableRows: [
+          ['try / except', '에러 발생 가능 코드 감싸기 / 에러 포착 시 복구', 'try:\n    n = int(raw)\nexcept ValueError:\n    n = 0', '사용자가 숫자가 아닌 문자를 입력해도 프로그램이 멈추지 않음'],
+          ['else / finally', '예외가 없었을 때 실행 / 예외 여부와 무관하게 무조건 실행', 'finally:\n    print("검증 종료")', '자원 정리 및 로그 기록 보장'],
+          ['with open(...) as f:', '파일 블록 진입 시 열고 블록 탈출 시 자동으로 f.close() 호출', 'with open("score.json", "w") as f:', 'f.close() 누락으로 인한 메모리/파일 핸들 누수 완벽 방지']
+        ]
+      },
+      {
+        stageNum: 7,
+        stageKey: 'st78',
+        badge: '7단계 & 8단계 · 모듈·환경 관리와 고급 파이썬 테크닉',
+        title: '모듈/패키지(import), 가상환경(venv/pip), 제너레이터(yield), 데코레이터(@), 타입 힌트',
+        goal: '코드를 여러 모듈로 분리하고, 메모리 효율을 극대화하는 제너레이터와 함수 동작을 확장하는 데코레이터 및 타입 힌트를 마스터합니다.',
+        subTopics: [
+          '7단계 모듈과 환경: import / from ... import, __name__ == "__main__"의 의미, venv 가상환경과 pip requirements.txt',
+          '8단계 이터레이터와 제너레이터: yield 키워드로 대용량 데이터를 메모리에 한 번에 올리지 않고 지연 생성(Lazy Evaluation)',
+          '8단계 데코레이터 (Decorator): @wrapper 문법으로 원본 함수 수정 없이 실행 시간 측정·로깅 기능 주입',
+          '8단계 타입 힌트 & 표준 라이브러리: typing 모듈(List, Dict, Tuple)과 collections.Counter, datetime 활용'
+        ],
+        files: ['202627033_고급파이썬테크닉.py'],
+        tableHeaders: ['고급 기능', '핵심 키워드 / 문법', '동작 메커니즘', '실무 활용처'],
+        tableRows: [
+          ['메인 모듈 보호', 'if __name__ == "__main__":', '직접 실행할 때만 내부 코드를 돌리고, import 될 때는 실행 방지', '모든 실무 파이썬 모듈 스크립트의 표준 진입점'],
+          ['제너레이터', 'def gen():\n    yield value', '값을 하나씩 생성해 돌려주고 함수 상태를 일시 정지(메모리 절약)', '대용량 로그 파일 처리 및 무한 수열 생성'],
+          ['데코레이터', '@log_execution\ndef process(): ...', '함수를 인자로 받아 전후 처리(로깅, 권한 검사)를 덧붙인 새 함수 반환', 'FastAPI 라우팅(@app.get), 로그인 체크, 성능 측정'],
+          ['타입 힌트', 'def calc(scores: list[int]) -> float:', '변수와 함수의 매개변수·반환값 타입을 명시하여 IDE 자동완성 및 정적 분석 지원', '대규모 협업 및 모던 파이썬(3.9+) 필수 표준']
+        ]
+      },
+      {
+        stageNum: 9,
+        stageKey: 'st9',
+        badge: '9단계 · 다음 단계로의 분기 (실전 응용 트랙 & 종합 캡스톤)',
+        title: '새폴더 전 단원 통합 성적·데이터 분석 캡스톤 & 3대 실무 트랙(AI·웹·자동화) 분기',
+        goal: '1~8단계의 모든 문법을 통합한 종합 프로젝트를 완성하고, 진로에 따라 데이터 분석/AI, 웹 백엔드(FastAPI), 업무 자동화 트랙으로 나아갑니다.',
+        subTopics: [
+          '새폴더 종합 캡스톤 (202627033_종합캡스톤.py): 입력 파싱 + OOP 데이터 모델 + 통계 집계 + 등급 판별 + 리포트 생성 통합',
+          '트랙 A (데이터 분석 / AI): NumPy(다차원 배열 연산), Pandas(DataFrame 전처리), Matplotlib/Seaborn(시각화)',
+          '트랙 B (웹 개발 / 백엔드): FastAPI 또는 Django를 활용한 RESTful API 서버 및 데이터베이스 연동',
+          '트랙 C (업무 자동화 / 크롤링): Requests, BeautifulSoup, Selenium, OpenPyXL을 활용한 웹 수집 및 엑셀 자동화'
+        ],
+        files: ['202627033_종합캡스톤.py'],
+        tableHeaders: ['응용 트랙', '핵심 외부 패키지 (pip install)', '대표 구현 프로젝트', '필수 선행 단계'],
+        tableRows: [
+          ['트랙 A: 데이터/AI', 'numpy, pandas, matplotlib, scikit-learn', '성적/매출 데이터프레임 결측치 처리, 통계 시각화 및 머신러닝 예측', '3단계(컴프리헨션), 5단계(OOP), 6단계(CSV/JSON)'],
+          ['트랙 B: 웹 백엔드', 'fastapi, uvicorn, pydantic, sqlalchemy', '고성능 비동기 REST API 서버 구축 및 Swagger 자동 문서화', '4단계(함수), 5단계(상속), 8단계(데코레이터·타입힌트)'],
+          ['트랙 C: 업무 자동화', 'requests, beautifulsoup4, openpyxl', '뉴스/금융 데이터 자동 크롤링 후 엑셀 보고서 자동 생성', '1단계(문자열 가공), 2단계(반복문), 6단계(예외·파일IO)']
+        ]
+      }
+    ];
+
+    // =========================================================================
+    // 2. 12 COMPREHENSIVE PYTHON LESSONS (새폴더 파일 + 9단계 완벽 보강)
+    // =========================================================================
+    const CURRICULUM_DATA = [
+      // -----------------------------------------------------------------------
+      // 1단계: 프로그래밍 첫걸음과 기본 문법
+      // -----------------------------------------------------------------------
+      {
+        id: 'py_st1_io',
+        stageNum: 1,
+        chapterId: 'st1',
+        chapterName: '1단계. 프로그래밍 첫걸음과 기본 문법',
+        isFolderCore: true,
+        fileName: '202627033_입출력연산.py',
+        title: '[새폴더 원본+보강] 표준 입출력(input/print), 형변환(int/float), 산술 연산자',
+        summary: '새폴더의 첫 번째 기초 실습 파일입니다. input()으로 학번·이름·두 정수를 입력받아 명시적 형변환(int)을 수행하고, 실수 나눗셈(/), 정수 몫(//), 나머지(%), 거듭제곱(**) 결과를 f-string으로 출력합니다.',
+        tags: ['1단계 기본문법', 'input()과 int()', '// 몫과 % 나머지', 'f-string 포매팅'],
+        defaultStdin: '202627033 홍길동 17 5',
+        presetInputs: [
+          { label: '기본값 (17, 5)', val: '202627033 홍길동 17 5' },
+          { label: '테스트 (29, 4)', val: '202627033 김파이 29 4' }
+        ],
+        examTip: 'input() 함수는 사용자가 숫자를 입력해도 무조건 문자열(str)로 반환합니다! 사칙연산을 수행하기 전에 반드시 int() 또는 float()로 감싸서 숫자형으로 변환해야 합니다.',
+        explanations: [
+          '<code>student_id = input()</code>: 키보드 표준 입력을 문자열(<code>str</code>) 객체로 읽어와 변수에 바인딩합니다.',
+          '<code>num1 = int(input())</code>: 입력받은 숫자 문자열을 정수형(<code>int</code>) 객체로 명시적 형변환(Type Casting)합니다.',
+          '<code>num1 / num2</code> vs <code>num1 // num2</code> vs <code>num1 % num2</code>: <code>/</code>는 항상 실수(<code>float</code>)를 반환하고, <code>//</code>는 정수 몫, <code>%</code>는 나머지를 계산합니다.',
+          '<code>f"{div_float:.2f}"</code>: 파이썬 <strong>f-string</strong> 내부에서 <code>:.2f</code> 서식 지정자를 붙여 소수점 둘째 자리까지 반올림해 출력합니다.'
+        ],
+        pyCode: `# [파일명: 202627033_입출력연산.py] 1단계: 변수, 자료형 변환 및 산술 연산자 실습
+student_id = input("학번을 입력하세요: ")          # input()은 사용자 입력을 항상 문자열(str)로 반환하여 저장
+student_name = input("이름을 입력하세요: ")        # 입력받은 이름 문자열을 student_name 변수에 바인딩
+num1 = int(input("첫 번째 정수 입력: "))           # 문자열 입력을 int() 내장 함수로 정수형(int) 변환 후 저장
+num2 = int(input("두 번째 정수 입력: "))           # 두 번째 문자열 입력을 정수형(int)으로 변환하여 저장
+
+add_res = num1 + num2                              # 두 정수의 덧셈(+) 연산 결과를 add_res 변수에 저장
+div_float = num1 / num2                            # 일반 나눗셈(/)은 나누어떨어져도 항상 실수(float)를 반환
+div_quotient = num1 // num2                        # 정수 나눗셈(//)은 소수점 이하를 버린 '정수 몫'만 계산
+div_remainder = num1 % num2                        # 나머지 연산자(%)는 나눗셈 후 남는 '나머지'를 계산
+power_res = num1 ** 2                              # 거듭제곱 연산자(**)는 num1의 2제곱(num1 * num1)을 계산
+is_multiple = (div_remainder == 0)                 # 나머지가 0인지 비교하여 배수 여부를 불리언(bool: True/False)으로 저장
+
+print("=" * 46)                                    # 문자열에 정수를 곱해 '=' 기호를 46번 반복 출력 (구분선)
+print(f"학번: {student_id} | 이름: {student_name}") # f-string을 사용해 변수 값을 문자열 내부 {} 자리에 즉시 삽입
+print(f"덧셈({num1}+{num2}) = {add_res} | 제곱({num1}**2) = {power_res}") # 덧셈과 거듭제곱 결과 출력
+print(f"실수 나눗셈(/) = {div_float:.2f} (자료형: float)") # :.2f 서식으로 소수점 둘째 자리까지 출력
+print(f"정수 몫(//) = {div_quotient}, 나머지(%) = {div_remainder}, 나누어떨어짐: {is_multiple}") # 몫·나머지·불리언 출력`,
+        deepConcept: {
+          principle: '파이썬에서 모든 데이터는 객체(Object)이며, 변수는 메모리 주소를 가리키는 이름표(Object Reference)입니다. input()은 항상 str 객체를 반환하므로, int() 없이 "17" + "5"를 실행하면 문자열 결합이 일어나 "175"가 됩니다.',
+          syntax: [
+            { code: 'int(x) / float(x) / str(x) / bool(x)', desc: '기본 자료형 간의 명시적 형변환(Type Casting) 내장 함수' },
+            { code: 'a / b  vs  a // b  vs  a % b  vs  a ** b', desc: '실수 나눗셈(/), 정수 몫(//), 나머지(%), 거듭제곱(**) 산술 연산자' }
+          ],
+          wrongCode: 'a = input("숫자1: ")  # "17" (str)\nb = input("숫자2: ")  # "5" (str)\nprint(a + b)          # 결과: 22가 아니라 "175" 출력!',
+          rightCode: 'a = int(input("숫자1: "))  # 17 (int)\nb = int(input("숫자2: "))  # 5 (int)\nprint(a + b)               # 결과: 22 (정상 산술 덧셈)',
+          quiz: {
+            q: '파이썬에서 17 // 5, 17 % 5, 2 ** 4 세 수식의 실행 결과값은 각각 무엇인가요?',
+            a: '17 // 5 = 3 (몫), 17 % 5 = 2 (나머지), 2 ** 4 = 16 (거듭제곱)',
+            exp: '//는 소수점을 버린 정수 몫, %는 나머지, **는 거듭제곱을 계산합니다.'
+          }
+        }
+      },
+      {
+        id: 'py_st1_str',
+        stageNum: 1,
+        chapterId: 'st1',
+        chapterName: '1단계. 프로그래밍 첫걸음과 기본 문법',
+        isFolderCore: true,
+        fileName: '202627033_문자열슬라이싱.py',
+        title: '[새폴더 원본+보강] 문자열 인덱싱·슬라이싱([start:stop:step]) 및 가공 메서드',
+        summary: '학번과 과정명 문자열에서 원하는 구간만 추출하는 슬라이싱 문법과 split(), join(), replace(), upper() 등 1단계 필수 문자열 내장 메서드를 실습합니다.',
+        tags: ['1단계 문자열가공', '슬라이싱 [a:b]', '역순 [::-1]', 'split() & join()'],
+        defaultStdin: '202627033 Python_Programming_Basic',
+        presetInputs: [
+          { label: '기본 학번/과정명', val: '202627033 Python_Programming_Basic' },
+          { label: 'AI 과정 테스트', val: '202627033 Data_Science_AI_Track' }
+        ],
+        examTip: '슬라이싱 s[a:b]에서 시작 인덱스 a는 포함되지만 끝 인덱스 b는 포함되지 않습니다(b-1까지만 추출)! 또한 s[::-1]은 문자열을 역순으로 뒤집는 시험 단골 공식입니다.',
+        explanations: [
+          '<code>student_id[0:4]</code>: 인덱스 0번부터 3번(<code>4 미만</code>)까지 총 4글자(입학 연도 <code>"2026"</code>)를 슬라이싱합니다.',
+          '<code>student_id[-3:]</code>: 음수 인덱스를 사용해 뒤에서 3번째 글자부터 문자열 끝까지(개인 번호 <code>"033"</code>) 추출합니다.',
+          '<code>words = course.split("_")</code> & <code>" -> ".join(words)</code>: 구분자로 문자열을 쪼개어 리스트로 만든 뒤, 원하는 연결 문자열로 다시 하나로 합칩니다.'
+        ],
+        pyCode: `# [파일명: 202627033_문자열슬라이싱.py] 1단계: 문자열 인덱싱, 슬라이싱 및 내장 메서드
+student_id = input("9자리 학번 입력: ")            # 예: "202627033" 문자열을 입력받아 변수에 저장
+course_title = input("과정명 입력: ")              # 예: "Python_Programming_Basic" 문자열 입력
+
+entry_year = student_id[0:4]                       # 슬라이싱 [0:4] -> 0, 1, 2, 3번 인덱스 추출 (입학연도 4자리)
+dept_code = student_id[4:6]                        # 슬라이싱 [4:6] -> 4, 5번 인덱스 추출 (학과 코드 2자리)
+personal_num = student_id[-3:]                     # 음수 슬라이싱 [-3:] -> 뒤에서 3번째부터 끝까지 추출 (개인 번호)
+reversed_id = student_id[::-1]                     # 증감폭(step)에 -1을 지정하여 문자열 전체를 역순으로 뒤집기
+
+replaced_title = course_title.replace("Basic", "Master") # .replace(찾을문자열, 바꿀문자열)로 새 문자열 생성
+words_list = replaced_title.split("_")             # .split("_")으로 언더바 기준 분리하여 리스트(list)로 반환
+joined_roadmap = " -> ".join(words_list)           # " -> ".join(리스트)로 리스트 요소들을 화살표로 연결해 결합
+
+print(f"원본 학번: {student_id} | 역순([::-1]): {reversed_id}") # 원본 학번과 역순 문자열 비교 출력
+print(f"학번 해부 -> 입학연도: {entry_year}년 / 학과코드: {dept_code} / 번호: {personal_num}") # 슬라이싱 결과
+print(f"분리된 단어 리스트(split): {words_list}")   # 분할된 리스트 전체 출력
+print(f"재결합된 문자열(join): {joined_roadmap.upper()}") # .upper()로 대문자 변환 후 출력`,
+        deepConcept: {
+          principle: '파이썬 문자열(str)은 불변 시퀀스(Immutable Sequence)입니다. 따라서 s[0] = "9"처럼 특정 위치의 글자를 직접 변경할 수 없으며, 슬라이싱이나 .replace() 메서드를 호출하면 원본은 그대로 둔 채 새로운 문자열 객체를 생성해 반환합니다.',
+          syntax: [
+            { code: 's[start:stop:step]', desc: 'start 이상 stop 미만까지 step 간격으로 추출 (길이 = stop - start)' },
+            { code: '구분자.join(문자열_리스트)', desc: '리스트 안의 문자열들을 지정한 구분자로 이어 붙여 하나의 str로 반환' }
+          ],
+          wrongCode: 's = "202627033"\ns[0] = "3"  # TypeError: \'str\' object does not support item assignment (불변 객체 수정 불가)',
+          rightCode: 's = "202627033"\ns = "3" + s[1:]  # 슬라이싱으로 새 문자열을 만들어 재대입 ("302627033")',
+          quiz: {
+            q: 's = "PYTHON" 일 때 s[1:4]와 s[-2:]의 출력 결과는 각각 무엇인가요?',
+            a: 's[1:4]는 "YTH", s[-2:]는 "ON" 입니다.',
+            exp: '1번("Y")부터 3번("H")까지 추출되어 "YTH"가 되며, 뒤에서 두 번째("O")부터 끝까지는 "ON"입니다.'
+          }
+        }
+      },
+
+      // -----------------------------------------------------------------------
+      // 2단계: 흐름 제어 (로직 만들기 - 조건문, gugudan.py, 반복문 제어)
+      // -----------------------------------------------------------------------
+      {
+        id: 'py_st2_cond',
+        stageNum: 2,
+        chapterId: 'st2',
+        chapterName: '2단계. 흐름 제어 (로직 만들기)',
+        isFolderCore: true,
+        fileName: '202627033_조건문분기.py',
+        title: '[새폴더 원본+보강] 조건문(if-elif-else), 들여쓰기 규칙, 논리 연산자(and/or)',
+        summary: '점수와 출석률을 기반으로 학점을 판정하는 다중 조건문(if-elif-else)과, 논리 연산자(and, or) 및 한 줄 삼항 조건 표현식을 실습합니다.',
+        tags: ['2단계 흐름제어', 'if - elif - else', '들여쓰기(Indentation)', 'and / or 논리연산'],
+        defaultStdin: '94 98',
+        presetInputs: [
+          { label: '전액 장학생 (94점, 98%)', val: '94 98' },
+          { label: 'B학점 (85점, 90%)', val: '85 90' },
+          { label: '출석 미달 (92점, 75%)', val: '92 75' }
+        ],
+        examTip: '파이썬은 중괄호 {} 대신 콜론(:)과 동일한 공백 들여쓰기(보통 스페이스 4칸)로 코드 블록을 구분합니다! 또한 다른 언어의 else if는 반드시 elif로 작성해야 합니다.',
+        explanations: [
+          '<code>if 조건1: ... elif 조건2: ... else:</code>: 위에서 아래로 조건을 평가하며 <strong>처음으로 참(True)이 되는 블록 하나만 실행</strong>하고 전체 조건문을 빠져나갑니다.',
+          '<code>score >= 90 and attendance >= 95</code>: 파이썬은 기호(<code>&&</code>, <code>||</code>) 대신 영단어 <code>and</code>, <code>or</code>, <code>not</code>을 논리 연산자로 사용합니다.',
+          '<code>"이수(Pass)" if score >= 70 else "재수강"</code>: 조건에 따라 값을 즉시 선택하는 파이썬 삼항 조건 표현식입니다.'
+        ],
+        pyCode: `# [파일명: 202627033_조건문분기.py] 2단계: if-elif-else 다중 분기 및 논리 연산자
+score = int(input("시험 점수 입력(0~100): "))      # 시험 점수를 입력받아 정수형(int)으로 변환 후 저장
+attendance = int(input("출석률 입력(0~100): "))    # 출석률(%)을 입력받아 정수형(int)으로 변환 후 저장
+
+if score >= 90:                                    # 1차 조건: 점수가 90점 이상인지 검사 (끝에 콜론 : 필수)
+    grade = "A"                                    # 90점 이상이면 4칸 들여쓰기된 블록 실행 -> grade에 "A" 저장
+elif score >= 80:                                  # 2차 조건: 위 if가 거짓(90 미만)이고 80점 이상인지 검사
+    grade = "B"                                    # 80~89점 사이면 grade에 "B" 저장
+elif score >= 70:                                  # 3차 조건: 80점 미만이고 70점 이상인지 검사
+    grade = "C"                                    # 70~79점 사이면 grade에 "C" 저장
+else:                                              # 위 모든 조건(if, elif)이 거짓일 때(70점 미만) 기본 실행
+    grade = "F"                                    # 나머지 경우 grade에 "F" 저장
+
+if score >= 90 and attendance >= 95:               # 논리 연산자 and: 두 조건이 동시에 참(True)인지 검사
+    scholarship = "전액 장학금 대상 (성적+출석 우수)" # 양쪽 모두 만족할 때만 전액 장학금 부여
+elif score >= 85 or attendance == 100:             # 논리 연산자 or: 둘 중 하나라도 참인지 검사
+    scholarship = "반액 장학금 대상"               # 하나라도 참이면 반액 장학금 부여
+else:                                              # 장학금 기준에 해당하지 않는 경우
+    scholarship = "일반 대상 (장학 기준 미달)"     # 기본 안내 문구 저장
+
+pass_status = "이수 완료(Pass)" if (score >= 70 and attendance >= 80) else "재수강 요망" # 삼항 조건 표현식
+
+print(f"입력 점수: {score}점 | 출석률: {attendance}%") # 입력된 점수와 출석률 확인 출력
+print(f"최종 부여 학점: [{grade} 학점] -> 판정: {pass_status}") # 학점 및 이수 여부 출력
+print(f"장학금 심사 결과: {scholarship}")          # 장학금 판별 결과 출력`,
+        deepConcept: {
+          principle: '파이썬 조건문은 위에서 아래로 순차 평가되며 상호 배타적(Mutually Exclusive)으로 동작합니다. 상위 조건(예: score >= 90)이 거짓일 때만 하위 elif(score >= 80)로 내려오므로, 80 <= score < 90을 중복해서 적지 않아도 자동으로 범위가 좁혀집니다.',
+          syntax: [
+            { code: 'if 조건식: / elif 조건식: / else:', desc: '콜론(:) 뒤 줄바꿈 후 스페이스 4칸 들여쓰기로 종속 블록 구성' },
+            { code: '참일때값 if 조건식 else 거짓일때값', desc: '한 줄로 변수에 조건부 값을 대입하는 파이써닉 표현식' }
+          ],
+          wrongCode: 'if score == 100 && attendance == 100:  # SyntaxError (&& 사용 불가)\nelse if score >= 80:                   # SyntaxError (else if 사용 불가)',
+          rightCode: 'if score == 100 and attendance == 100:\n    print("만점")\nelif score >= 80:\n    print("우수")',
+          quiz: {
+            q: '점수가 95점일 때 if score >= 70: 학점="C" 아래에 elif score >= 90: 학점="A" 순서로 작성하면 결과는?',
+            a: '"C" 학점이 부여되는 논리 오류가 발생합니다.',
+            exp: '95점은 첫 번째 조건(score >= 70)을 이미 만족하므로 첫 블록만 실행하고 조건문 전체를 빠져나갑니다. 좁은 범위(90 이상)부터 먼저 검사해야 합니다.'
+          }
+        }
+      },
+      {
+        id: 'py_st2_gugudan',
+        stageNum: 2,
+        chapterId: 'st2',
+        chapterName: '2단계. 흐름 제어 (로직 만들기)',
+        isFolderCore: true,
+        fileName: 'gugudan.py',
+        title: '[새폴더 대표 파일] gugudan.py — 단일 for문 & 중첩 for문 구구단 완벽 해부',
+        summary: '새 폴더의 핵심 파일인 gugudan.py입니다. range(1, 10)을 이용한 입력 단 구구단 출력과, 바깥쪽(행 1~9)·안쪽(열 2~5단) 중첩 for문을 이용해 가로로 정렬된 구구단 표를 만드는 원리를 완벽히 마스터합니다.',
+        tags: ['gugudan.py 핵심', 'for i in range(1, 10)', '중첩 for문 (행·열)', ':2d 정렬 포맷'],
+        defaultStdin: '7',
+        presetInputs: [
+          { label: '7단 출력', val: '7' },
+          { label: '3단 출력', val: '3' },
+          { label: '9단 출력', val: '9' }
+        ],
+        examTip: 'range(1, 10)은 1부터 9까지의 정수를 생성합니다(끝값 10은 미포함!). 구구단에서 1~9까지 곱하려면 range(1, 9)가 아니라 반드시 range(1, 10)을 써야 한다는 점이 시험 최빈출 포인트입니다.',
+        explanations: [
+          '<code>for i in range(1, 10):</code>: <code>range(시작, 끝)</code>은 <code>시작</code> 이상 <code>끝</code> 미만의 정수 수열(<code>1~9</code>)을 생성하여 차례대로 <code>i</code>에 대입합니다.',
+          '<code>print(f"{dan} x {i} = {dan * i:2d}")</code>: <code>:2d</code> 서식 지정자로 한 자리 결과값 앞에 공백을 채워 줄을 반듯하게 맞춥니다.',
+          '<strong>중첩 for문(Nested Loop) 가로 출력:</strong> 여러 단을 가로로 나란히 배치하려면 바깥쪽 루프가 곱하는 수(<code>row: 1~9</code>)를 돌고, 안쪽 루프가 단(<code>col_dan: 2~5</code>)을 순회하며 한 행의 문자열을 완성해야 합니다.'
+        ],
+        pyCode: `# [파일명: gugudan.py] 2단계 핵심: 단일 for문 구구단 & 중첩 for문 가로 정렬 구구단
+dan = int(input("출력할 구구단 단(2~9) 입력: "))    # 사용자로부터 원하는 단을 입력받아 정수(int)로 변환
+
+print(f"=== [Part 1] 입력한 {dan}단 출력 (단일 for문) ===") # Part 1 제목 출력
+for i in range(1, 10):                             # range(1, 10)은 1부터 9까지(10 미만!) 정수를 순서대로 i에 대입
+    result = dan * i                               # 현재 단(dan)과 곱하는 수(i)의 곱셈 결과를 result에 저장
+    print(f"{dan} x {i} = {result:2d}")            # :2d 서식으로 결과를 2칸 우측 정렬하여 깔끔하게 한 줄씩 출력
+
+print("\n=== [Part 2] 2단 ~ 5단 가로 정렬 출력 (중첩 for문) ===") # 줄바꿈 후 Part 2 제목 출력
+for row in range(1, 10):                           # 바깥쪽 for문: 곱하는 수(1~9 행)를 제어하는 루프
+    line_str = ""                                  # 한 줄(행)에 가로로 이어 붙일 문자열을 빈 문자열로 초기화
+    for col_dan in range(2, 6):                    # 안쪽 for문: 2단부터 5단(6 미만)까지 열(단)을 순회
+        line_str += f"{col_dan}x{row}={col_dan*row:2d}   " # 각 단의 계산식을 문자열에 누적 결합(+=)
+    print(line_str)                                # 안쪽 루프가 끝나면 완성된 한 행을 화면에 출력 (자동 줄바꿈)`,
+        deepConcept: {
+          principle: 'range(start, stop, step) 객체는 모든 숫자를 메모리에 미리 만들어 두지 않고, 반복문이 돌아갈 때마다 그때그때 다음 숫자를 계산해 내어주는 메모리 효율적인 시퀀스입니다. 중첩 반복문에서는 바깥 루프 1회당 안쪽 루프 전체가 실행되므로 총 실행 횟수는 (바깥 횟수 × 안쪽 횟수)가 됩니다.',
+          syntax: [
+            { code: 'range(1, 10)', desc: '1, 2, 3, 4, 5, 6, 7, 8, 9 생성 (끝값 10은 포함되지 않음)' },
+            { code: 'range(10, 0, -1)', desc: '10부터 1까지 1씩 감소하는 역순 카운트다운 시퀀스 생성' }
+          ],
+          wrongCode: '# 9까지 곱하려고 range(1, 9)라고 적어서 8까지만 출력되는 단골 오답!\nfor i in range(1, 9):\n    print(f"{dan} x {i} = {dan * i}")',
+          rightCode: '# stop 인덱스는 미만이므로 9까지 반복하려면 반드시 10을 지정!\nfor i in range(1, 10):\n    print(f"{dan} x {i} = {dan * i}")',
+          quiz: {
+            q: '바깥 루프가 for d in range(2, 10): 이고 안쪽 루프가 for i in range(1, 10): 일 때 안쪽 곱셈 문장은 총 몇 번 실행되나요?',
+            a: '총 72번 실행됩니다 (8개 단 × 9번 곱셈 = 72회)',
+            exp: '2~9단(8회) 각각에 대해 1~9(9회)가 반복되므로 8 × 9 = 72회 실행됩니다.'
+          }
+        }
+      },
+      {
+        id: 'py_st2_loop_ctrl',
+        stageNum: 2,
+        chapterId: 'st2',
+        chapterName: '2단계. 흐름 제어 (로직 만들기)',
+        isFolderCore: true,
+        fileName: '202627033_반복문제어.py',
+        title: '[새폴더 원본+보강] while 반복문, 누적 합산(+=), break / continue 및 for-else',
+        summary: '조건 기반 while 루프에서 3의 배수는 continue로 건너뛰고, 누적 합계가 목표치에 도달하면 break로 즉시 탈출하는 흐름 제어를 실습합니다.',
+        tags: ['2단계 반복제어', 'while 조건식:', 'continue 건너뛰기', 'break 즉시탈출'],
+        defaultStdin: '15',
+        presetInputs: [
+          { label: '상한 15 (조기 break 발동)', val: '15' },
+          { label: '상한 8 (정상 완주)', val: '8' }
+        ],
+        examTip: 'while 반복문에서 continue를 사용할 때는 반드시 조건 변수 증감식(cur += 1)이 continue보다 위쪽에 있어야 합니다. 그렇지 않으면 증감식이 건너뛰어져 무한 루프에 빠집니다!',
+        explanations: [
+          '<code>total_sum = 0</code>: 누적 합계 변수는 반드시 반복문 진입 <strong>바깥(이전)</strong>에서 0으로 초기화해야 합니다.',
+          '<code>if cur % 3 == 0: continue</code>: 3의 배수일 때는 아래쪽 덧셈 코드를 실행하지 않고 다음 반복 회차 조건 검사로 즉시 넘어갑니다.',
+          '<code>if total_sum >= 60: break</code>: 누적 합계가 60 이상이 되는 순간 남은 반복과 상관없이 루프를 완전히 종료합니다.'
+        ],
+        pyCode: `# [파일명: 202627033_반복문제어.py] 2단계: while 반복문과 break / continue 흐름 제어
+limit_n = int(input("반복 상한 정수 N 입력: "))     # 어디까지 반복할지 상한값 N을 정수로 입력받음
+
+total_sum = 0                                      # 누적 합계를 저장할 변수는 반드시 반복문 바깥에서 0으로 초기화!
+cur = 0                                            # while 루프의 현재 숫자를 추적할 제어 변수를 0으로 초기화
+skipped_multiples = []                             # 건너뛴 3의 배수들을 기록할 빈 리스트([]) 생성
+early_stopped = False                              # break로 조기 종료되었는지 여부를 기록할 플래그 변수
+
+while cur < limit_n:                               # cur가 limit_n보다 작은 동안 반복 실행
+    cur += 1                                       # 무한 루프 방지를 위해 매 회차 시작 시 cur를 1씩 증가
+    if cur % 3 == 0:                               # 만약 현재 숫자(cur)를 3으로 나눈 나머지가 0이면 (3의 배수)
+        skipped_multiples.append(cur)              # 건너뛴 숫자를 리스트에 기록한 뒤
+        continue                                   # continue: 아래 합산 코드를 건너뛰고 while 조건식으로 직행!
+    total_sum += cur                               # 3의 배수가 아닐 때만 total_sum에 현재 숫자를 누적 합산(+=)
+    if total_sum >= 60:                            # 만약 누적된 합계가 60 이상에 도달하면
+        early_stopped = True                       # 조기 종료 플래그를 True로 변경
+        print(f"[break 발동] cur={cur}에서 합계({total_sum})가 60 이상이 되어 루프 즉시 탈출!")
+        break                                      # break: while 반복문 전체를 즉시 종료!
+
+status_msg = "목표치 도달 조기 종료(break)" if early_stopped else "상한 N까지 정상 완주"
+print(f"실행 상태: {status_msg} (최종 cur={cur} / 입력 N={limit_n})") # 종료 시점 상태 출력
+print(f"건너뛴 3의 배수(continue): {skipped_multiples}") # continue로 제외된 숫자 리스트 출력
+print(f"최종 누적 합계(total_sum): {total_sum}")   # 최종 합산 결과 출력`,
+        deepConcept: {
+          principle: 'break와 continue는 반복문의 흐름을 정밀하게 제어합니다. 또한 파이썬은 독특하게 반복문 뒤에 else: 블록(for-else, while-else)을 붙일 수 있는데, 이 else 블록은 반복문이 break를 만나지 않고 끝까지 정상 완주했을 때만 실행됩니다.',
+          syntax: [
+            { code: 'continue', desc: '현재 반복 회차의 남은 문장만 생략하고 다음 회차 조건 검사로 이동' },
+            { code: 'break', desc: '감싸고 있는 가장 가까운 반복문(for/while)을 즉시 완전 종료' }
+          ],
+          wrongCode: 'cur = 0\nwhile cur < 10:\n    if cur == 3:\n        continue  # cur += 1이 아래에 있어서 cur가 영원히 3에 머무는 무한 루프!\n    cur += 1',
+          rightCode: 'cur = 0\nwhile cur < 10:\n    cur += 1      # continue 이전에 증감식을 배치하여 무한 루프 방지!\n    if cur == 3:\n        continue',
+          quiz: {
+            q: 'for i in range(1, 6): 루프 안에서 if i == 3: break를 썼을 때와 continue를 썼을 때 출력되는 숫자는?',
+            a: 'break는 1, 2만 출력되고 종료되며, continue는 3만 건너뛰고 1, 2, 4, 5가 출력됩니다.',
+            exp: 'break는 루프 자체를 부수고 나가며, continue는 해당 회차만 건너뜁니다.'
+          }
+        }
+      },
+
+      // -----------------------------------------------------------------------
+      // 3단계: 데이터 묶음 (컬렉션 자료형과 컴프리헨션)
+      // -----------------------------------------------------------------------
+      {
+        id: 'py_st3_collections',
+        stageNum: 3,
+        chapterId: 'st3',
+        chapterName: '3단계. 데이터 묶음 (컬렉션 자료형)',
+        isFolderCore: true,
+        fileName: '202627033_컬렉션자료구조.py',
+        title: '[새폴더 원본+보강] 4대 컬렉션(List, Tuple, Dict, Set) 조작 및 집계 함수',
+        summary: '순서가 있는 가변 리스트(list), 불변 튜플(tuple), 키-값 매핑 딕셔너리(dict), 중복을 제거하는 집합(set)의 핵심 연산과 내장 집계 함수(len, sum, max, min)를 실습합니다.',
+        tags: ['3단계 컬렉션', 'List & Tuple', 'Dict & Set', 'sum / max / min'],
+        defaultStdin: '92 85 92 78 96',
+        presetInputs: [
+          { label: '점수 5개 (92 중복 포함)', val: '92 85 92 78 96' },
+          { label: '고득점 세트 (95 중복)', val: '100 95 88 95 90' }
+        ],
+        examTip: '리스트([])는 수정 가능한 가변(Mutable) 객체이지만 튜플(())은 수정 불가능한 불변(Immutable) 객체입니다! 또한 리스트를 set()으로 감싸면 중복된 데이터가 단 한 줄로 제거됩니다.',
+        explanations: [
+          '<code>scores.append(88)</code>: 가변 자료형인 리스트 맨 끝에 새 요소를 추가합니다.',
+          '<code>unique_set = set(scores)</code>: 집합(<code>set</code>)으로 변환하여 중복된 점수(<code>92</code>)를 자동으로 제거합니다.',
+          '<code>top_two_tuple = (sorted_desc[0], sorted_desc[1])</code>: 변경되면 안 되는 상위 2개 점수를 불변 자료형인 튜플(<code>tuple</code>)로 묶고, 성적 요약은 딕셔너리(<code>dict</code>)에 키-값 쌍으로 저장합니다.'
+        ],
+        pyCode: `# [파일명: 202627033_컬렉션자료구조.py] 3단계: List, Tuple, Dict, Set 4대 컬렉션 마스터
+raw_str = input("5개의 점수를 공백으로 입력: ")    # 예: "92 85 92 78 96" 문자열 입력
+scores = [int(x) for x in raw_str.split()]         # 공백으로 분리된 문자열들을 정수로 변환해 리스트(list) 생성
+
+scores.append(88)                                  # .append(88)로 가변 리스트 맨 끝에 추가 점수 88 삽입
+total_cnt = len(scores)                            # len() 내장 함수로 전체 요소 개수(6개) 산출
+max_val = max(scores)                              # max() 내장 함수로 최고 점수 산출
+min_val = min(scores)                              # min() 내장 함수로 최저 점수 산출
+avg_val = sum(scores) / total_cnt                  # sum()으로 총합을 구한 뒤 개수로 나누어 평균 계산
+
+unique_set = set(scores)                           # set(리스트)로 변환하여 중복된 점수(92)를 자동 제거
+sorted_desc = sorted(unique_set, reverse=True)     # sorted(..., reverse=True)로 중복 제거된 점수를 내림차순 정렬
+top_two_tuple = (sorted_desc[0], sorted_desc[1])   # 상위 1, 2위 점수를 수정 불가능한 튜플(tuple)로 패킹
+
+report_dict = {"학번": "202627033", "최고점": max_val, "최저점": min_val, "평균": round(avg_val, 2)} # 딕셔너리 생성
+report_dict["상위2개튜플"] = top_two_tuple          # 딕셔너리에 새로운 Key("상위2개튜플")와 Value를 동적 추가
+
+print(f"1. 리스트(List, {total_cnt}개): {scores}")  # 88이 추가된 전체 리스트 출력
+print(f"2. 집합(Set 중복제거) -> 내림차순: {sorted_desc}") # 중복 제거 후 내림차순 정렬 리스트 출력
+print(f"3. 튜플(Tuple 상위 2개): {top_two_tuple}")  # 불변 튜플 출력
+print(f"4. 딕셔너리(Dict 리포트): {report_dict}")   # 완성된 딕셔너리 출력`,
+        deepConcept: {
+          principle: '리스트의 .sort() 메서드는 원본 리스트 자체를 제자리에서 정렬(In-place sort)하고 반환값으로는 None을 돌려줍니다. 반면 내장 함수 sorted(컬렉션)는 원본을 건드리지 않고 정렬된 새로운 리스트를 만들어 반환하므로 어떤 컬렉션(tuple, set, dict)에나 사용할 수 있습니다.',
+          syntax: [
+            { code: 'list.append(x) / list.pop()', desc: '리스트 끝에 요소 추가 / 마지막 요소 꺼내기' },
+            { code: 'dict[key] = val / dict.get(key, 기본값)', desc: '딕셔너리 키-값 추가·수정 및 키가 없을 때 에러 없이 기본값 조회' }
+          ],
+          wrongCode: 'nums = [3, 1, 2]\nres = nums.sort()  # .sort()의 반환값은 None이므로 res에 None이 들어감!',
+          rightCode: 'nums = [3, 1, 2]\nres = sorted(nums) # 정렬된 새 리스트 [1, 2, 3]이 res에 정상 저장됨!',
+          quiz: {
+            q: 'a = {1, 2, 3} 이고 b = {3, 4, 5} 일 때 교집합(a & b)과 합집합(a | b)의 결과는?',
+            a: '교집합 a & b는 {3}, 합집합 a | b는 {1, 2, 3, 4, 5} 입니다.',
+            exp: '파이썬 set 자료형은 &(교집합), |(합집합), -(차집합) 연산자를 기본 지원합니다.'
+          }
+        }
+      },
+      {
+        id: 'py_st3_comprehension',
+        stageNum: 3,
+        chapterId: 'st3',
+        chapterName: '3단계. 데이터 묶음 (컬렉션 자료형)',
+        isFolderCore: false,
+        fileName: '202627033_컴프리헨션심화.py',
+        title: '[3단계 개념 보강] 리스트·딕셔너리 컴프리헨션과 zip() / enumerate() 파이써닉 기법',
+        summary: '3단계 커리큘럼의 꽃인 리스트 컴프리헨션(조건 필터링 포함)과 딕셔너리 컴프리헨션, 그리고 두 리스트를 짝지어 묶는 zip() 함수를 실습합니다.',
+        tags: ['3단계 컴프리헨션', 'List Comprehension', 'Dict Comprehension', 'zip() & enumerate()'],
+        defaultStdin: '88 72 95 64 91',
+        presetInputs: [
+          { label: '5과목 점수 입력', val: '88 72 95 64 91' },
+          { label: '전과목 우수 입력', val: '92 85 96 89 94' }
+        ],
+        examTip: '[표현식 for 변수 in 시퀀스 if 조건식] 형태의 리스트 컴프리헨션은 일반 for문 + append() 조합보다 코드가 간결할 뿐 아니라 파이썬 내부 C 엔진 수준에서 더 빠르게 실행됩니다.',
+        explanations: [
+          '<code>high_scores = [s for s in scores if s >= 80]</code>: 점수 리스트에서 80점 이상인 요소만 필터링하여 새 리스트로 생성합니다.',
+          '<code>sub_dict = {sub: sc for sub, sc in zip(subjects, scores)}</code>: <code>zip()</code>으로 과목명 리스트와 점수 리스트를 1:1로 짝지은 뒤 <strong>딕셔너리 컴프리헨션</strong>으로 사전을 완성합니다.',
+          '<code>grade_map = {sub: ("Pass" if sc >= 80 else "Fail") ...}</code>: 컴프리헨션 내부에 삼항 연산자를 결합해 과목별 합격 여부를 한 줄로 매핑합니다.'
+        ],
+        pyCode: `# [파일명: 202627033_컴프리헨션심화.py] 3단계 심화: 리스트·딕셔너리 컴프리헨션과 zip()
+subjects = ["국어", "영어", "수학", "과학", "코딩"] # 5개 과목명을 담은 리스트 선언
+scores = [int(x) for x in input("5과목 점수 입력: ").split()] # 입력 문자열을 정수 리스트로 컴프리헨션 변환
+
+high_scores = [sc for sc in scores if sc >= 80]    # [조건 필터링 컴프리헨션] 80점 이상인 우수 점수만 추출
+curved_scores = [min(100, sc + 5) for sc in scores] # [수식 변환 컴프리헨션] 모든 점수에 가산점 +5점 부여(최대 100점)
+
+sub_score_dict = {sub: sc for sub, sc in zip(subjects, scores)} # zip()과 딕셔너리 컴프리헨션으로 {과목: 점수} 생성
+pass_dict = {sub: ("우수" if sc >= 80 else "보통") for sub, sc in sub_score_dict.items()} # 과목별 등급 딕셔너리
+
+print(f"과목-점수 매핑(zip + Dict 컴프리헨션): {sub_score_dict}") # 생성된 과목별 점수 딕셔너리 출력
+print(f"80점 이상 필터링(if 조건 컴프리헨션): {high_scores} (총 {len(high_scores)}과목)") # 필터링 결과 출력
+print(f"+5점 가산점 일괄 적용 리스트: {curved_scores}") # 가산점 적용 리스트 출력
+print(f"과목별 판정 결과: {pass_dict}")            # 최종 판정 딕셔너리 출력`,
+        deepConcept: {
+          principle: '컴프리헨션(Comprehension)은 파이썬에서 이터러블(Iterable) 객체를 기반으로 새로운 리스트, 딕셔너리, 집합을 선언적으로 생성하는 문법입니다. 단, 필터링(if만 있는 경우)은 for문 오른쪽 끝에 적고, 값을 바꾸는 삼항 연산자(A if 조건 else B)는 for문 왼쪽 앞에 적는다는 위치 차이를 꼭 기억해야 합니다.',
+          syntax: [
+            { code: '[식 for x in seq if 조건]', desc: 'if 조건이 참인 요소만 골라내어 식을 계산한 새 리스트 생성 (if가 맨 뒤)' },
+            { code: '[참값 if 조건 else 거짓값 for x in seq]', desc: '모든 요소를 순회하되 조건에 따라 다른 값으로 변환 (if-else가 맨 앞)' }
+          ],
+          wrongCode: '# 필터링용 단일 if문을 for문 앞에 적으면 문법 오류 발생!\nres = [x if x >= 80 for x in scores]  # SyntaxError!',
+          rightCode: '# 필터링용 단일 if문은 반드시 for문 뒤쪽에 작성!\nres = [x for x in scores if x >= 80]  # 정상 작동',
+          quiz: {
+            q: '[x * 2 for x in range(1, 6) if x % 2 == 1] 의 실행 결과 리스트는 무엇인가요?',
+            a: '[2, 6, 10]',
+            exp: 'range(1, 6) 중 홀수(x % 2 == 1)인 1, 3, 5만 걸러진 뒤 각각 2가 곱해져 [2, 6, 10]이 됩니다.'
+          }
+        }
+      },
+
+      // -----------------------------------------------------------------------
+      // 4단계: 함수와 코드 모듈화
+      // -----------------------------------------------------------------------
+      {
+        id: 'py_st4_func',
+        stageNum: 4,
+        chapterId: 'st4',
+        chapterName: '4단계. 함수와 코드 모듈화',
+        isFolderCore: true,
+        fileName: '202627033_함수모듈화.py',
+        title: '[새폴더 원본+보강] def 함수, 기본값·가변 인수(*args), 다중 return 및 lambda',
+        summary: '반복되는 성적 분석 로직을 def 함수로 모듈화하고, 기본값 매개변수(bonus=5), 가변 인수(*args), 다중 return 언패킹, 그리고 익명 함수 lambda와 map/filter를 실습합니다.',
+        tags: ['4단계 함수모듈화', 'def & 다중 return', '가변인수 *args', 'lambda & filter()'],
+        defaultStdin: '80 90 100',
+        presetInputs: [
+          { label: '80, 90, 100 입력', val: '80 90 100' },
+          { label: '70, 75, 82 입력', val: '70 75 82' }
+        ],
+        examTip: '파이썬 함수에서 print()만 수행하고 return 문을 작성하지 않으면 함수는 자동으로 None을 반환합니다! 또한 *args는 여러 개의 위치 인자를 튜플(tuple)로 묶어서 받습니다.',
+        explanations: [
+          '<code>def analyze_scores(*args, bonus=5):</code>: <code>*args</code>로 임의 개수의 과목 점수를 튜플로 받고, <code>bonus=5</code> 기본값 매개변수로 가산점을 처리합니다.',
+          '<code>return total, avg, grade</code>: 여러 값을 콤마로 반환하면 하나의 <strong>튜플</strong>로 패킹되며, 호출부에서 <code>tot1, avg1, grd1 = ...</code>로 즉시 언패킹해 받습니다.',
+          '<code>list(map(lambda x: x + 10, nums))</code>: 일급 객체인 <code>lambda</code> 익명 함수를 <code>map()</code>에 전달해 모든 요소를 일괄 변환합니다.'
+        ],
+        pyCode: `# [파일명: 202627033_함수모듈화.py] 4단계: def 함수, *args 가변 인수, 다중 return 및 lambda
+def analyze_scores(*args, bonus=5):                # *args로 여러 점수를 튜플로 받고 bonus=5 기본값 매개변수 지정
+    total = sum(args) + bonus                      # 함수 내부 지역 변수 total에 입력 점수 총합과 보너스 합산
+    avg = round(total / len(args), 2)              # 과목 수(len(args))로 나눈 평균을 소수점 2자리 반올림
+    grade = "우수(A)" if avg >= 90 else "보통(B)"   # 평균 90점 기준으로 등급 문자열 판정
+    return total, avg, grade                       # 3개의 결과값을 튜플(total, avg, grade)로 패킹하여 반환!
+
+raw_in = input("세 과목 점수 입력(공백 구분): ")   # 사용자로부터 3개의 점수를 공백 구분 문자열로 입력받음
+a, b, c = [int(x) for x in raw_in.split()]         # 입력 문자열을 정수 3개로 변환 후 변수 a, b, c에 언패킹
+
+tot1, avg1, grd1 = analyze_scores(a, b, c)         # bonus 인자 생략 호출 -> 기본값 bonus=5 자동 적용
+tot2, avg2, grd2 = analyze_scores(a, b, c, bonus=0) # 키워드 인수로 bonus=0을 명시하여 가산점 없이 재호출
+
+ten_point_scale = list(map(lambda x: round(x / 10, 1), [a, b, c])) # lambda와 map()으로 10점 만점 환산
+
+print(f"[기본 보너스 +5점 적용] 총점: {tot1}, 평균: {avg1}, 등급: {grd1}") # 기본값 호출 결과 출력
+print(f"[보너스 0점 지정 호출] 총점: {tot2}, 평균: {avg2}, 등급: {grd2}") # 키워드 인수 호출 결과 출력
+print(f"[lambda + map 변환] 10점 만점 환산 리스트: {ten_point_scale}")    # 람다 변환 결과 출력`,
+        deepConcept: {
+          principle: '함수 내부에서 선언된 변수(total, avg 등)는 함수 스택 프레임에 속하는 지역 변수(Local Variable)로, 함수가 return되면 메모리에서 소멸합니다. 함수를 일급 객체(First-class citizen)로 다루는 파이썬에서는 함수를 변수에 대입하거나 map(), filter(), sorted()의 인자로 자유롭게 전달할 수 있습니다.',
+          syntax: [
+            { code: 'def fn(필수인자, *args, 기본값인자=값, **kwargs):', desc: '파이썬 함수 매개변수 선언 순서 표준 규칙' },
+            { code: 'lambda 매개변수: 반환표현식', desc: 'return 키워드 없이 표현식 결과를 즉시 반환하는 1줄 익명 함수' }
+          ],
+          wrongCode: 'def calc(bonus=5, a, b):  # SyntaxError: 기본값 매개변수가 일반 매개변수 앞에 올 수 없음!\n    print(a + b + bonus)',
+          rightCode: 'def calc(a, b, bonus=5):  # 일반 매개변수(a, b)를 먼저 선언하고 기본값 매개변수를 뒤에 배치!\n    return a + b + bonus',
+          quiz: {
+            q: 'return 문이 없는 함수를 호출해 res = my_func() 로 저장하면 res에 들어있는 값은 무엇인가요?',
+            a: 'None (NoneType) 입니다.',
+            exp: '명시적인 return 값이 없는 모든 파이썬 함수는 실행 종료 시 자동으로 None을 반환합니다.'
+          }
+        }
+      },
+
+      // -----------------------------------------------------------------------
+      // 5단계: 객체지향 프로그래밍 (OOP)
+      // -----------------------------------------------------------------------
+      {
+        id: 'py_st5_oop',
+        stageNum: 5,
+        chapterId: 'st5',
+        chapterName: '5단계. 객체지향 프로그래밍 (OOP)',
+        isFolderCore: false,
+        fileName: '202627033_객체지향클래스.py',
+        title: '[5단계 개념 보강] 클래스(class), 생성자(__init__), 상속(super) 및 매직 메서드(__str__)',
+        summary: '학생(Student) 클래스와 이를 상속받는 장학생(ScholarshipStudent) 클래스를 설계하여, 객체의 상태(인스턴스 변수)와 행동(메서드), 다형성(오버라이딩), 매직 메서드(__str__)를 실습합니다.',
+        tags: ['5단계 객체지향 OOP', 'class & __init__', '상속과 super()', '__str__ 매직메서드'],
+        defaultStdin: '202627033 홍길동 95 90',
+        presetInputs: [
+          { label: '홍길동 (95, 90점)', val: '202627033 홍길동 95 90' },
+          { label: '김파이 (82, 86점)', val: '202627033 김파이 82 86' }
+        ],
+        examTip: '클래스의 모든 인스턴스 메서드는 첫 번째 매개변수로 인스턴스 자신을 가리키는 self를 반드시 명시해야 합니다! 단, 메서드를 호출할 때(stu.get_avg())는 파이썬이 자동으로 self를 넘겨주므로 인자를 적지 않습니다.',
+        explanations: [
+          '<code>def __init__(self, stu_id, name, scores):</code>: 인스턴스가 생성될 때 자동으로 호출되어 객체 고유의 속성(인스턴스 변수)을 초기화하는 <strong>생성자(Constructor)</strong>입니다.',
+          '<code>def __str__(self):</code>: <code>print(stu)</code>를 호출했을 때 객체의 메모리 주소 대신 사람이 읽기 좋은 요약 문자열을 반환하는 <strong>특수(Magic/Dunder) 메서드</strong>입니다.',
+          '<code>class HonorStudent(Student):</code>: 부모 클래스(<code>Student</code>)를 상속받아 <code>super().__init__(...)</code>으로 부모 속성을 재사용하고 장학금 기능을 확장합니다.'
+        ],
+        pyCode: `# [파일명: 202627033_객체지향클래스.py] 5단계: 클래스, __init__ 생성자, 상속 및 매직 메서드
+class Student:                                     # Student 부모 클래스(설계도) 정의
+    school_name = "한국파이썬대학교"                 # 모든 인스턴스가 공유하는 클래스 변수(Class Variable)
+
+    def __init__(self, stu_id, name, scores):      # 객체 생성 시 자동 호출되는 생성자 메서드 (self 필수)
+        self.stu_id = stu_id                       # 인스턴스 변수 self.stu_id에 학번 저장
+        self.name = name                           # 인스턴스 변수 self.name에 이름 저장
+        self.scores = scores                       # 인스턴스 변수 self.scores에 점수 리스트 저장
+
+    def get_average(self):                         # 평균을 계산해 반환하는 인스턴스 메서드 정의
+        return round(sum(self.scores) / len(self.scores), 2)
+
+    def __str__(self):                             # print(인스턴스) 호출 시 자동 실행되는 매직 메서드
+        return f"[{self.school_name}] {self.stu_id} {self.name} (평균: {self.get_average()}점)"
+
+class HonorStudent(Student):                       # Student 클래스를 상속받는 자식 클래스 정의
+    def get_badge(self):                           # 자식 클래스만의 확장 메서드 추가
+        return "★ 성적우수 장학생" if self.get_average() >= 90 else "일반 재학생"
+
+tokens = input("학번 이름 점수1 점수2 입력: ").split() # 입력 문자열을 공백 기준으로 분리
+stu_obj = HonorStudent(tokens[0], tokens[1], [int(tokens[2]), int(tokens[3])]) # 인스턴스 생성!
+
+print(stu_obj)                                     # stu_obj.__str__() 매직 메서드가 자동 호출되어 출력됨
+print(f"인스턴스 메서드 호출 -> 평균: {stu_obj.get_average()}점 | 구분: {stu_obj.get_badge()}")`,
+        deepConcept: {
+          principle: '객체지향 프로그래밍(OOP)은 서로 연관된 데이터(속성)와 함수(메서드)를 하나의 캡슐(인스턴스 객체)로 묶어 관리합니다. 클래스 변수(school_name)는 모든 인스턴스가 하나를 공유하지만, 인스턴스 변수(self.name)는 각 객체마다 독립된 메모리 공간을 가집니다.',
+          syntax: [
+            { code: 'def __init__(self, ...):', desc: '인스턴스 생성 직후 속성을 초기화하는 생성자' },
+            { code: 'def __str__(self): / def __len__(self):', desc: 'print() 및 len() 내장 함수와 연동되는 파이썬 매직 메서드' }
+          ],
+          wrongCode: 'class Student:\n    def get_avg():  # 첫 번째 매개변수 self를 누락하면 호출 시 TypeError 발생!\n        return 90',
+          rightCode: 'class Student:\n    def get_avg(self):  # 인스턴스 메서드는 반드시 첫 인자로 self를 선언!\n        return 90',
+          quiz: {
+            q: 'print(stu_obj)를 실행했을 때 메모리 주소(<__main__.Student object at 0x...>) 대신 원하는 문자열이 출력되게 하려면 클래스 안에 어떤 메서드를 정의해야 하나요?',
+            a: 'def __str__(self): 메서드를 정의하고 문자열을 return 해야 합니다.',
+            exp: '__str__ 매직 메서드는 객체를 문자열로 변환(str(객체), print(객체))할 때 파이썬이 자동으로 호출합니다.'
+          }
+        }
+      },
+
+      // -----------------------------------------------------------------------
+      // 6단계: 견고한 프로그램 만들기 (예외 처리와 파일 입출력 / JSON)
+      // -----------------------------------------------------------------------
+      {
+        id: 'py_st6_exception_io',
+        stageNum: 6,
+        chapterId: 'st6',
+        chapterName: '6단계. 견고한 프로그램 (예외와 입출력)',
+        isFolderCore: false,
+        fileName: '202627033_예외처리파일IO.py',
+        title: '[6단계 개념 보강] 예외 처리(try-except-else-finally), with 컨텍스트 매니저, JSON 파싱',
+        summary: '잘못된 점수 입력(문자열 등)이 들어와도 프로그램이 죽지 않도록 try-except로 방어하고, 성적 데이터를 JSON 포맷으로 직렬화하여 안전하게 처리하는 6단계 핵심 기법입니다.',
+        tags: ['6단계 예외와 입출력', 'try - except - finally', 'with open() 컨텍스트', 'JSON 직렬화'],
+        defaultStdin: '95 오류값 88',
+        presetInputs: [
+          { label: '오류값 포함 입력 (95 오류값 88)', val: '95 오류값 88' },
+          { label: '정상 숫자 입력 (95 100 88)', val: '95 100 88' }
+        ],
+        examTip: '파일을 열 때 with open("data.txt", "w", encoding="utf-8") as f: 구문을 사용하면, 블록 안에서 에러가 발생하더라도 블록을 빠져나갈 때 파이썬이 자동으로 f.close()를 호출해 자원을 안전하게 반환합니다.',
+        explanations: [
+          '<code>try: ... except ValueError: ...</code>: 숫자로 변환할 수 없는 문자열(예: <code>"오류값"</code>)이 들어와 <code>ValueError</code>가 발생해도 프로그램을 멈추지 않고 예외를 잡아 기본값(<code>0점</code>)으로 안전하게 복구합니다.',
+          '<code>finally:</code>: 예외 발생 여부와 관계없이 맨 마지막에 무조건 실행되는 마무리 블록입니다.',
+          '<code>json.dumps(data_dict, ensure_ascii=False)</code>: 파이썬 딕셔너리 객체를 네트워크 전송이나 파일 저장이 가능한 표준 <strong>JSON 문자열</strong>로 변환합니다.'
+        ],
+        pyCode: `# [파일명: 202627033_예외처리파일IO.py] 6단계: try-except 예외 방어 및 JSON 데이터 직렬화
+import json                                        # 표준 JSON 데이터 파싱 및 저장을 위한 내장 모듈 임포트
+
+raw_tokens = input("점수 데이터 입력(문자 포함 가능): ").split() # 공백 기준으로 입력 토큰 분리
+valid_scores = []                                  # 정상 변환된 점수만 담을 리스트
+error_logs = []                                    # 예외가 발생한 잘못된 입력값을 기록할 리스트
+
+for token in raw_tokens:                           # 입력된 각 토큰을 하나씩 순회하며 검증
+    try:                                           # 예외 발생 가능성이 있는 코드를 try 블록 안에 배치
+        score = int(token)                         # 문자열을 정수(int)로 변환 시도 ("오류값"이면 ValueError 발생!)
+    except ValueError:                             # ValueError 예외가 발생했을 때 프로그램 종료 대신 실행되는 블록
+        error_logs.append(token)                   # 오류 토큰을 로그 리스트에 기록하고
+        score = 0                                  # 기본값 0점으로 안전하게 대체 복구
+    else:                                          # 예외가 전혀 발생하지 않고 정상 변환되었을 때만 실행되는 블록
+        valid_scores.append(score)                 # 정상 점수 리스트에 추가
+
+# with open("report.json", "w", encoding="utf-8") as f: 형태로 실무에서 파일 저장 수행
+json_payload = json.dumps({"학번": "202627033", "유효점수": valid_scores, "오류무시": error_logs}, ensure_ascii=False)
+
+print(f"[예외 방어 완료] 정상 수집된 점수: {valid_scores} | 포착된 ValueError 입력: {error_logs}")
+print(f"[JSON 직렬화 출력] {json_payload}")        # 파일 및 API 저장용 JSON 포맷 문자열 출력`,
+        deepConcept: {
+          principle: '예외 처리(Exception Handling)의 4단계 구조는 ① try(실행 시도) → ② except(에러 발생 시 복구) → ③ else(에러가 없었을 때만 실행) → ④ finally(성공/실패 상관없이 마지막에 무조건 실행)로 구성됩니다.',
+          syntax: [
+            { code: 'try: ... except 예외타입 as e:', desc: '특정 예외를 포착하고 에러 메시지 객체(e)를 확인' },
+            { code: 'with open("파일명", "r", encoding="utf-8") as f:', desc: '블록 종료 시 자동으로 파일을 닫아주는 컨텍스트 매니저' }
+          ],
+          wrongCode: 'f = open("test.txt", "w")\nf.write("Hello")\n# 만약 중간에 에러가 나면 f.close()가 실행되지 않아 파일 손상 위험!',
+          rightCode: 'with open("test.txt", "w", encoding="utf-8") as f:\n    f.write("Hello")  # 블록을 나가면 자동으로 닫힘 보장!',
+          quiz: {
+            q: 'int("백점")을 실행할 때 발생하는 예외 이름과 10 / 0을 실행할 때 발생하는 예외 이름은 각각 무엇인가요?',
+            a: 'int("백점")은 ValueError, 10 / 0은 ZeroDivisionError가 발생합니다.',
+            exp: '자료형은 맞지만 값의 형태가 잘못되면 ValueError, 0으로 나누면 ZeroDivisionError가 발생합니다.'
+          }
+        }
+      },
+
+      // -----------------------------------------------------------------------
+      // 7단계 & 8단계: 모듈·패키지·제너레이터·데코레이터·타입 힌트
+      // -----------------------------------------------------------------------
+      {
+        id: 'py_st78_advanced',
+        stageNum: 8,
+        chapterId: 'st78',
+        chapterName: '7~8단계. 모듈·제너레이터·데코레이터·타입힌트',
+        isFolderCore: false,
+        fileName: '202627033_고급파이썬테크닉.py',
+        title: '[7~8단계 개념 보강] 제너레이터(yield), 데코레이터(@), 타입 힌트(Type Hinting) 및 모듈 보호',
+        summary: '파이썬 중·고급자로 도약하기 위한 7~8단계 핵심 문법인 제너레이터(yield), 함수 확장 데코레이터(@), 정적 타입 힌트(typing), 그리고 if __name__ == "__main__": 구문을 실습합니다.',
+        tags: ['7~8단계 고급기법', '제너레이터 yield', '데코레이터 @', '타입 힌트 (Type Hint)'],
+        defaultStdin: '5',
+        presetInputs: [
+          { label: '피보나치/제곱 5개 생성', val: '5' },
+          { label: '8개 생성 테스트', val: '8' }
+        ],
+        examTip: '일반 함수는 return으로 모든 결과 리스트를 한 번에 만들어 반환하지만, 제너레이터(Generator)는 yield 키워드를 사용해 요청받을 때마다 값을 하나씩 생성하므로 대용량 데이터 처리 시 메모리를 획기적으로 절약합니다.',
+        explanations: [
+          '<code>def square_generator(n: int): yield i ** 2</code>: <code>yield</code>를 포함한 함수는 제너레이터가 되어 값을 하나씩 지연 생성(Lazy Evaluation)합니다.',
+          '<code>@log_decorator</code>: 원본 함수를 수정하지 않고도 함수 실행 전후에 로그를 출력하는 <strong>데코레이터(Decorator)</strong> 패턴입니다.',
+          '<code>if __name__ == "__main__":</code>: 이 파이썬 파일이 직접 실행될 때만 메인 코드를 돌리고, 다른 파일에서 <code>import</code> 될 때는 자동 실행되지 않도록 보호합니다.'
+        ],
+        pyCode: `# [파일명: 202627033_고급파이썬테크닉.py] 7~8단계: 제너레이터(yield), 데코레이터(@), 타입 힌트
+def log_decorator(func):                           # 함수를 인자로 받아 기능을 확장하는 데코레이터 정의
+    def wrapper(*args, **kwargs):                  # 원본 함수를 감싸는 내부 래퍼(wrapper) 함수
+        print(f"[Decorator 로그] '{func.__name__}' 함수 실행 시작!")
+        result = func(*args, **kwargs)             # 원본 함수 실행 및 결과 저장
+        return result                              # 실행 결과 반환
+    return wrapper                                 # 포장된 wrapper 함수 객체 반환
+
+def square_generator(limit: int):                  # [타입 힌트] limit 매개변수가 정수(int)임을 명시한 제너레이터
+    for i in range(1, limit + 1):                  # 1부터 limit까지 순회하면서
+        yield i ** 2                               # return 대신 yield로 제곱수를 하나씩 지연 생성(메모리 절약)
+
+@log_decorator                                     # @데코레이터를 붙여 summarize_squares 함수에 로깅 기능 주입
+def summarize_squares(n: int) -> list:             # 반환값 타입이 list임을 타입 힌트(-> list)로 명시
+    return list(square_generator(n))               # 제너레이터가 생성한 값들을 리스트로 변환해 반환
+
+if __name__ == "__main__":                         # 7단계 핵심: 이 파일이 직접 실행될 때만 아래 블록 구동
+    cnt = int(input("제너레이터로 생성할 개수 N 입력: "))
+    generated_list = summarize_squares(cnt)        # 데코레이터가 적용된 함수 호출
+    print(f"제너레이터(yield) 생성 제곱수 리스트: {generated_list} (합계: {sum(generated_list)})")`,
+        deepConcept: {
+          principle: '파이썬 스크립트가 직접 실행될 때 내부 특수 변수 __name__에는 "__main__"이라는 문자열이 할당됩니다. 반면 다른 파일에서 import 구문으로 불러올 때는 __name__에 파일명(모듈명)이 들어가므로, if __name__ == "__main__": 블록을 통해 모듈 테스트 코드를 안전하게 분리할 수 있습니다.',
+          syntax: [
+            { code: 'yield 값', desc: '제너레이터 함수에서 값을 하나 바깥으로 내보내고 현재 실행 상태를 일시 유지' },
+            { code: 'def fn(x: int) -> str:', desc: '매개변수 타입(: int)과 반환 타입(-> str)을 명시하는 타입 힌트 문법' }
+          ],
+          wrongCode: '# 수억 개의 숫자를 리스트로 한 번에 만들면 메모리 부족(MemoryError) 발생 위험!\nbig_data = [x ** 2 for x in range(100000000)]',
+          rightCode: '# 제너레이터 표현식 () 또는 yield 함수를 쓰면 메모리를 거의 쓰지 않고 순회 가능!\nbig_gen = (x ** 2 for x in range(100000000))',
+          quiz: {
+            q: '함수 안에 return 대신 어떤 키워드가 들어가면 그 함수는 호출 시 제너레이터(Generator) 객체를 반환하나요?',
+            a: 'yield 키워드입니다.',
+            exp: '함수 본문에 yield가 하나라도 존재하면 파이썬은 해당 함수를 제너레이터 함수로 취급합니다.'
+          }
+        }
+      },
+
+      // -----------------------------------------------------------------------
+      // 9단계: 다음 단계로의 분기 (응용 트랙 & 새폴더 최종 종합 캡스톤)
+      // -----------------------------------------------------------------------
+      {
+        id: 'py_st9_capstone',
+        stageNum: 9,
+        chapterId: 'st9',
+        chapterName: '9단계. 다음 단계로의 분기 & 종합 캡스톤',
+        isFolderCore: true,
+        fileName: '202627033_종합캡스톤.py',
+        title: '[새폴더 최종 종합] 1~9단계 전 문법 통합 성적 분석 & 진로 트랙 추천 시스템',
+        summary: '새폴더의 최종 종합 실습 파일을 9단계 커리큘럼 수준으로 완성한 프로젝트입니다. 입력 파싱, 함수 모듈화, enumerate 반복 집계, 조건문 학점 판별, 그리고 9단계 응용 트랙(데이터/AI·웹·자동화) 추천까지 한 번에 수행합니다.',
+        tags: ['9단계 종합캡스톤', '202627033 최종과제', 'enumerate() 집계', '응용트랙 분기'],
+        defaultStdin: '202627033 95 84 72 91 88',
+        presetInputs: [
+          { label: '기본 데이터 (95 84 72 91 88)', val: '202627033 95 84 72 91 88' },
+          { label: 'AI 특화 고득점자', val: '202627033 98 96 92 94 100' },
+          { label: '기초 보강 필요 데이터', val: '202627033 72 68 75 80 65' }
+        ],
+        examTip: '종합 문제에서는 데이터를 리스트로 입력받은 뒤 for idx, val in enumerate(리스트, start=1): 로 순회하면서 조건문(if)으로 특정 조건을 만족하는 요소의 개수(pass_count += 1)를 누적 집계하는 패턴이 핵심입니다.',
+        explanations: [
+          '<code>get_grade(score)</code> & <code>recommend_track(avg)</code>: 학점 판정 로직과 9단계 진로 트랙 추천 로직을 독립된 <code>def</code> 함수로 모듈화했습니다.',
+          '<code>for idx, sc in enumerate(score_list, start=1):</code>: 과목 번호(1번부터)와 점수를 동시에 언패킹하며 80점 이상 우수 과목 수를 집계합니다.',
+          '전체 평균, 최고점, 최저점, 우수 과목 수와 함께 9단계 응용 트랙 추천 결과를 리포트 형태로 출력합니다.'
+        ],
+        pyCode: `# [파일명: 202627033_종합캡스톤.py] 9단계 최종 종합: 성적 통계 분석 및 응용 트랙 추천기
+def get_grade(score: int) -> str:                  # 개별 점수를 받아 학점 등급을 반환하는 함수 (타입 힌트 적용)
+    if score >= 90:                                # 90점 이상이면
+        return "A"                                 # "A" 반환
+    elif score >= 80:                              # 80점 이상 90점 미만이면
+        return "B"                                 # "B" 반환
+    elif score >= 70:                              # 70점 이상 80점 미만이면
+        return "C"                                 # "C" 반환
+    return "F"                                     # 그 외(70점 미만)에는 "F" 반환
+
+def recommend_track(avg_val: float) -> str:        # 평균 점수에 따라 9단계 심화 응용 트랙을 추천하는 함수
+    if avg_val >= 90:
+        return "트랙 A: 데이터 분석 / AI (NumPy, Pandas, 머신러닝)"
+    elif avg_val >= 80:
+        return "트랙 B: 웹 개발 / 백엔드 (FastAPI, Django REST 서버)"
+    return "트랙 C: 업무 자동화 / 웹 크롤링 (BeautifulSoup, 엑셀 자동화)"
+
+tokens = input("학번과 과목 점수들 입력: ").split() # 첫 단어는 학번, 나머지는 점수들인 문자열을 공백 분리
+stu_id = tokens[0]                                 # 0번 인덱스 요소를 학번(stu_id)으로 저장
+score_list = [int(x) for x in tokens[1:]]          # 슬라이싱 [1:]으로 1번부터 끝까지 점수를 정수로 변환
+
+pass_count = 0                                     # 80점 이상 우수 과목 개수를 셀 카운터 변수를 0으로 초기화
+print(f"=== [{stu_id}] 9단계 마스터 성적 상세 분석표 ===") # 상단 리포트 헤더 출력
+for idx, sc in enumerate(score_list, start=1):     # enumerate(start=1)로 과목 번호(1부터)와 점수(sc)를 동시 순회
+    g = get_grade(sc)                              # get_grade(sc) 함수를 호출해 과목별 학점 계산
+    if sc >= 80:                                   # 만약 해당 과목 점수가 80점 이상이면
+        pass_count += 1                            # 우수 과목 카운터를 1 증가(+= 1)
+    print(f"과목 {idx}: {sc:3d}점 -> 등급 [{g}]")   # 과목 번호, 점수(3자리 정렬), 등급을 포매팅 출력
+
+avg_score = sum(score_list) / len(score_list)      # 전체 과목 합계를 과목 수로 나누어 평균 계산
+best_track = recommend_track(avg_score)            # 평균 점수를 기반으로 9단계 응용 트랙 추천 결과 획득
+print("=" * 48)                                    # 하단 구분선 출력
+print(f"전체 평균: {avg_score:.2f}점 (최고: {max(score_list)}점 / 80점 이상: {pass_count}과목)")
+print(f"추천 다음 단계(9단계 분기): {best_track}") # 최종 추천 트랙 출력`,
+        deepConcept: {
+          principle: '이 종합 캡스톤 코드는 앞서 정의한 1단계(입출력·슬라이싱) → 2단계(조건·반복문) → 3단계(리스트 컴프리헨션·내장 집계) → 4단계(함수 모듈화) → 8단계(타입 힌트) → 9단계(실무 응용 트랙 분기)를 하나의 완결된 파이프라인으로 연결한 표준 아키텍처입니다.',
+          syntax: [
+            { code: 'enumerate(iterable, start=1)', desc: '시퀀스를 순회할 때 (순번, 값) 튜플 쌍을 생성하여 인덱스 수동 관리를 제거' },
+            { code: 'tokens[0] / tokens[1:]', desc: '첫 번째 식별자(학번)와 나머지 가변 길이 데이터(점수 리스트)를 분리하는 관용구' }
+          ],
+          wrongCode: '# 인덱스를 얻기 위해 range(len(...))을 중첩 사용하는 구식 패턴\nfor i in range(len(score_list)):\n    print(i + 1, score_list[i])',
+          rightCode: '# enumerate(start=1)을 사용하여 가독성과 파이써닉함을 동시에 확보!\nfor idx, sc in enumerate(score_list, start=1):\n    print(idx, sc)',
+          quiz: {
+            q: 'tokens = ["202627033", "95", "84", "72"] 일 때 학번을 제외한 뒤쪽 점수 문자열들만 리스트로 잘라내는 슬라이싱 식은?',
+            a: 'tokens[1:]',
+            exp: '1번 인덱스부터 끝까지 슬라이싱하면 ["95", "84", "72"]가 깔끔하게 추출됩니다.'
+          }
+        }
+      }
+    ];
+
+    // =========================================================================
+    // 3. APPLICATION STATE & STORAGE MANAGEMENT
+    // =========================================================================
+    let currentLessonIndex = 3; // Default to gugudan.py or first item; let's start at index 0 for sequential flow
+    let currentSidebarFilter = 'all';
+    let viewMode = 'study'; // 'study' | 'roadmap' | 'pdf'
+    let showLineComments = true;
+    let showXrayView = false;
+
+    const STORAGE_KEY = 'python_9stage_master_workbook_v2';
+    let userState = {
+      completed: {},
+      starred: {},
+      notes: {},
+      customPy: {},
+      customStdin: {}
+    };
+
+    function loadUserState() {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          userState = { ...userState, ...parsed };
+        }
+      } catch (e) {
+        console.warn('Storage load skipped:', e);
+      }
+    }
+
+    function saveUserState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(userState));
+      } catch (e) {
+        console.warn('Storage save skipped:', e);
+      }
+    }
+
+    // Strip or keep inline Korean comments (# ...) when toggling comment view
+    function formatPythonCodeForView(rawCode, includeComments) {
+      if (includeComments) return rawCode;
+      return rawCode
+        .split('\n')
+        .map(line => {
+          const trimmed = line.trim();
+          if (trimmed.startsWith('# [파일명:')) return line;
+          if (trimmed.startsWith('#')) return null;
+          let inSingle = false;
+          let inDouble = false;
+          for (let i = 0; i < line.length; i++) {
+            const ch = line[i];
+            if (ch === "'" && line[i - 1] !== '\\' && !inDouble) inSingle = !inSingle;
+            else if (ch === '"' && line[i - 1] !== '\\' && !inSingle) inDouble = !inDouble;
+            else if (ch === '#' && !inSingle && !inDouble) {
+              return line.slice(0, i).replace(/\s+$/, '');
+            }
+          }
+          return line;
+        })
+        .filter(l => l !== null)
+        .join('\n');
+    }
+
+    // Parse raw Python code into Line-by-Line X-Ray objects { lineNum, codePart, commentPart }
+    function parseCodeForXray(rawCode) {
+      const lines = rawCode.split('\n');
+      const rows = [];
+      let lineCounter = 1;
+
+      lines.forEach(line => {
+        const trimmed = line.trim();
+        if (!trimmed) return;
+        if (trimmed.startsWith('# [파일명:')) return;
+
+        let codePart = line;
+        let commentPart = '';
+
+        if (trimmed.startsWith('#')) {
+          codePart = '# (설명 주석)';
+          commentPart = trimmed.slice(1).trim();
+        } else {
+          let inSingle = false;
+          let inDouble = false;
+          for (let i = 0; i < line.length; i++) {
+            const ch = line[i];
+            if (ch === "'" && line[i - 1] !== '\\' && !inDouble) inSingle = !inSingle;
+            else if (ch === '"' && line[i - 1] !== '\\' && !inSingle) inDouble = !inDouble;
+            else if (ch === '#' && !inSingle && !inDouble) {
+              codePart = line.slice(0, i).replace(/\s+$/, '');
+              commentPart = line.slice(i + 1).trim();
+              break;
+            }
+          }
+        }
+
+        rows.push({
+          lineNum: lineCounter++,
+          code: codePart,
+          comment: commentPart || '파이썬 실행 구문'
+        });
+      });
+
+      return rows;
+    }
+
+    function getEffectivePy(item) {
+      return userState.customPy[item.id] !== undefined ? userState.customPy[item.id] : item.pyCode;
+    }
+
+    function getEffectiveStdin(item) {
+      return userState.customStdin[item.id] !== undefined ? userState.customStdin[item.id] : (item.defaultStdin || '');
+    }
+
+    // =========================================================================
+    // 4. SIDEBAR & LESSON SELECTION RENDERING
+    // =========================================================================
+    const STAGE_GROUPS = [
+      { id: 'st1', name: '1단계. 프로그래밍 첫걸음과 기본 문법' },
+      { id: 'st2', name: '2단계. 흐름 제어 (조건·반복·gugudan.py)' },
+      { id: 'st3', name: '3단계. 데이터 묶음 (컬렉션·컴프리헨션)' },
+      { id: 'st4', name: '4단계. 함수와 코드 모듈화 (def·lambda)' },
+      { id: 'st5', name: '5단계. 객체지향 프로그래밍 (OOP)' },
+      { id: 'st6', name: '6단계. 예외 처리와 파일 입출력 (JSON)' },
+      { id: 'st78', name: '7~8단계. 모듈·제너레이터·데코레이터' },
+      { id: 'st9', name: '9단계. 응용 트랙 & 새폴더 종합 캡스톤' }
+    ];
+
+    function renderSidebarList() {
+      const container = document.getElementById('sidebarListContainer');
+      const query = (document.getElementById('searchInput').value || '').trim().toLowerCase();
+
+      const completedCount = CURRICULUM_DATA.filter(d => userState.completed[d.id]).length;
+      const pct = Math.round((completedCount / CURRICULUM_DATA.length) * 100);
+      document.getElementById('progressCountText').innerText = `${completedCount} / ${CURRICULUM_DATA.length} 완료 (${pct}%)`;
+      document.getElementById('progressBarFill').style.width = `${pct}%`;
+
+      let html = '';
+      STAGE_GROUPS.forEach(group => {
+        const items = CURRICULUM_DATA.map((item, idx) => ({ item, idx })).filter(({ item }) => {
+          if (item.chapterId !== group.id) return false;
+          if (currentSidebarFilter === 'folder' && !item.isFolderCore) return false;
+          if (currentSidebarFilter === 'starred' && !userState.starred[item.id]) return false;
+          if (currentSidebarFilter === 'uncompleted' && userState.completed[item.id]) return false;
+          if (query) {
+            const hay = `${item.fileName} ${item.title} ${item.summary} ${item.tags.join(' ')}`.toLowerCase();
+            return hay.includes(query);
+          }
+          return true;
+        });
+
+        if (items.length === 0) return;
+
+        html += `
+          <div class="space-y-1.5">
+            <div class="px-2 py-1 text-[11px] font-extrabold text-slate-400 uppercase tracking-wider flex items-center justify-between">
+              <span>${group.name}</span>
+              <span class="text-[10px] font-mono text-slate-400">${items.length}</span>
+            </div>
+            ${items.map(({ item, idx }) => {
+              const isActive = idx === currentLessonIndex;
+              const isDone = !!userState.completed[item.id];
+              const isStar = !!userState.starred[item.id];
+              const isGugudan = item.fileName.toLowerCase().includes('gugudan');
+              return `
+                <button onclick="selectLesson(${idx})" class="w-full text-left px-3 py-2.5 rounded-xl border transition flex items-start justify-between gap-2 ${
+                  isActive
+                    ? 'bg-indigo-50/90 border-indigo-300 text-indigo-950 shadow-sm'
+                    : 'bg-white border-slate-200/80 hover:bg-slate-50 text-slate-700'
+                }">
+                  <div class="min-w-0 flex-1">
+                    <div class="flex items-center gap-1.5 flex-wrap">
+                      <span class="font-mono text-xs font-bold ${isActive ? 'text-indigo-700' : 'text-slate-900'} truncate">${escapeHtml(item.fileName)}</span>
+                      ${isGugudan ? `<span class="px-1.5 py-0.2 text-[10px] font-mono bg-amber-100 text-amber-800 rounded font-bold">대표파일</span>` : ''}
+                      ${item.isFolderCore && !isGugudan ? `<span class="px-1.5 py-0.2 text-[10px] font-mono bg-indigo-100 text-indigo-700 rounded font-semibold">새폴더</span>` : ''}
+                    </div>
+                    <p class="text-[11px] text-slate-500 truncate mt-0.5">${escapeHtml(item.title)}</p>
+                  </div>
+                  <div class="flex items-center gap-1 shrink-0 mt-0.5">
+                    ${isStar ? `<span class="text-amber-500 text-xs">★</span>` : ''}
+                    ${isDone ? `<span class="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-[10px] font-bold">✓</span>` : ''}
+                  </div>
+                </button>
+              `;
+            }).join('')}
+          </div>
+        `;
+      });
+
+      container.innerHTML = html || `<div class="p-6 text-center text-xs text-slate-400">검색 조건에 맞는 파이썬 파일이 없습니다.</div>`;
+    }
+
+    function setSidebarFilter(filter) {
+      currentSidebarFilter = filter;
+      ['all', 'folder', 'starred', 'uncompleted'].forEach(f => {
+        const btn = document.getElementById(`filterBtn_${f}`);
+        if (!btn) return;
+        if (f === filter) {
+          btn.className = 'py-1.5 text-[11px] font-semibold rounded-md bg-indigo-600 text-white transition';
+        } else {
+          btn.className = 'py-1.5 text-[11px] font-semibold rounded-md bg-slate-100 text-slate-600 hover:bg-slate-200 transition';
+        }
+      });
+      renderSidebarList();
+    }
+
+    function selectLesson(index) {
+      if (index < 0 || index >= CURRICULUM_DATA.length) return;
+      currentLessonIndex = index;
+      const item = CURRICULUM_DATA[index];
+
+      document.getElementById('activeStageBadge').innerText = item.chapterName;
+      document.getElementById('activeFileName').innerText = item.fileName;
+      const originBadge = document.getElementById('activeOriginBadge');
+      if (item.isFolderCore) {
+        originBadge.innerText = '새폴더 원본 + 개념보강';
+        originBadge.className = 'px-2 py-0.5 text-xs font-mono font-semibold rounded bg-amber-50 text-amber-800 border border-amber-200';
+      } else {
+        originBadge.innerText = `${item.stageNum}단계 커리큘럼 심화`;
+        originBadge.className = 'px-2 py-0.5 text-xs font-mono font-semibold rounded bg-emerald-50 text-emerald-800 border border-emerald-200';
+      }
+
+      document.getElementById('activeTitleDesc').innerText = `${item.title} — ${item.summary}`;
+      document.getElementById('tabPyLabel').innerText = item.fileName;
+
+      // Populate Python editor & X-Ray Table
+      const rawCode = getEffectivePy(item);
+      document.getElementById('codeEditorPy').value = formatPythonCodeForView(rawCode, showLineComments);
+      renderXrayTable(rawCode);
+
+      // Populate stdin input & preset buttons
+      document.getElementById('stdinInputBox').value = getEffectiveStdin(item);
+      const presetContainer = document.getElementById('presetInputsContainer');
+      if (item.presetInputs && item.presetInputs.length > 0) {
+        presetContainer.innerHTML = item.presetInputs.map(p =>
+          `<button onclick="applyPresetInput('${escapeHtml(p.val)}')" class="px-2 py-0.5 text-[10px] font-semibold rounded bg-slate-800 hover:bg-indigo-600 text-slate-300 hover:text-white border border-slate-700 transition">${escapeHtml(p.label)}</button>`
+        ).join('');
+      } else {
+        presetContainer.innerHTML = '';
+      }
+
+      updateStatusButtons();
+
+      // Tags & Explanations
+      document.getElementById('activeTagsContainer').innerHTML = item.tags.map(t =>
+        `<span class="px-2 py-0.5 text-xs font-mono font-semibold rounded-md bg-slate-100 text-slate-700 border border-slate-200">${escapeHtml(t)}</span>`
+      ).join('');
+
+      document.getElementById('activeExplanationList').innerHTML = item.explanations.map((exp, i) => `
+        <div class="flex items-start gap-2.5">
+          <span class="w-5 h-5 rounded-full bg-indigo-100 text-indigo-700 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">${i + 1}</span>
+          <div class="flex-1">${exp}</div>
+        </div>
+      `).join('');
+
+      document.getElementById('activeExamTip').innerText = item.examTip;
+
+      renderDeepPyLessonPanel(item);
+      renderStageConnectionCard(item);
+      document.getElementById('personalNoteInput').value = userState.notes[item.id] || '';
+
+      renderSidebarList();
+      runPythonSandbox();
+      lucide.createIcons();
+    }
+
+    function renderXrayTable(rawCode) {
+      const tbody = document.getElementById('xrayTableBody');
+      if (!tbody) return;
+      const rows = parseCodeForXray(rawCode);
+      tbody.innerHTML = rows.map(r => `
+        <tr class="hover:bg-slate-800/60 transition">
+          <td class="py-2 px-2.5 text-center font-mono text-[11px] text-slate-500 select-none">${r.lineNum}</td>
+          <td class="py-2 px-3 font-mono text-xs text-emerald-300 whitespace-pre">${escapeHtml(r.code)}</td>
+          <td class="py-2 px-3 text-xs text-amber-200/90 leading-snug">${escapeHtml(r.comment)}</td>
+        </tr>
+      `).join('');
+    }
+
+    function toggleXrayView() {
+      showXrayView = !showXrayView;
+      const textWrapper = document.getElementById('editorTextareaWrapper');
+      const xrayWrapper = document.getElementById('editorXrayWrapper');
+      const btn = document.getElementById('btnToggleXray');
+      const label = document.getElementById('xrayToggleText');
+
+      if (showXrayView) {
+        const item = CURRICULUM_DATA[currentLessonIndex];
+        renderXrayTable(getEffectivePy(item));
+        textWrapper.classList.add('hidden');
+        xrayWrapper.classList.remove('hidden');
+        label.innerText = '코드 에디터로 돌아가기';
+        btn.className = 'flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 hover:bg-emerald-500/30 transition';
+      } else {
+        textWrapper.classList.remove('hidden');
+        xrayWrapper.classList.add('hidden');
+        label.innerText = '줄별 X-Ray 해부표 보기';
+        btn.className = 'flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 transition';
+      }
+      lucide.createIcons();
+    }
+
+    function renderStageConnectionCard(item) {
+      const card = document.getElementById('stageConnectionCard');
+      if (!card) return;
+      const stageObj = NINE_STAGE_ROADMAP.find(s => s.stageKey === item.chapterId) || NINE_STAGE_ROADMAP[0];
+      card.innerHTML = `
+        <div class="flex items-center justify-between gap-2">
+          <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30">
+            커리큘럼 매핑: ${escapeHtml(stageObj.badge)}
+          </span>
+          <button onclick="switchViewMode('roadmap')" class="text-xs text-indigo-300 hover:text-white font-semibold flex items-center gap-1">
+            <span>9단계 전체 목차 보기</span>
+            <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+        <h4 class="font-bold text-sm text-white pt-0.5">${escapeHtml(stageObj.title)}</h4>
+        <p class="text-xs text-slate-300 leading-relaxed">${escapeHtml(stageObj.goal)}</p>
+      `;
+    }
+
+    function applyPresetInput(val) {
+      const item = CURRICULUM_DATA[currentLessonIndex];
+      document.getElementById('stdinInputBox').value = val;
+      userState.customStdin[item.id] = val;
+      saveUserState();
+      runPythonSandbox();
+    }
+
+    function toggleCommentView() {
+      showLineComments = !showLineComments;
+      const item = CURRICULUM_DATA[currentLessonIndex];
+      const rawCode = getEffectivePy(item);
+      document.getElementById('codeEditorPy').value = formatPythonCodeForView(rawCode, showLineComments);
+      document.getElementById('commentToggleText').innerText = showLineComments ? '한 줄 주석: ON' : '한 줄 주석: OFF (순수 코드)';
+      const btn = document.getElementById('btnToggleComments');
+      if (showLineComments) {
+        btn.className = 'flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-400/30 hover:bg-amber-500/30 transition';
+      } else {
+        btn.className = 'flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 transition';
+      }
+      lucide.createIcons();
+    }
+
+    function renderDeepPyLessonPanel(item) {
+      const container = document.getElementById('deepPyConceptContainer');
+      if (!container) return;
+      const deep = item.deepConcept;
+      if (!deep) {
+        container.innerHTML = '';
+        return;
+      }
+
+      const syntaxRowsHtml = (deep.syntax || []).map(s => `
+        <tr class="border-b border-slate-100 last:border-0">
+          <td class="py-2 pr-3 font-mono text-xs font-bold text-indigo-700 whitespace-nowrap align-top">${escapeHtml(s.code)}</td>
+          <td class="py-2 text-xs text-slate-600 leading-relaxed">${escapeHtml(s.desc)}</td>
+        </tr>
+      `).join('');
+
+      container.innerHTML = `
+        <!-- 1. Python Memory & Object Model Principle -->
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+          <div class="flex items-center gap-2 text-xs font-extrabold text-indigo-900 uppercase tracking-wider">
+            <i data-lucide="cpu" class="w-4 h-4 text-indigo-600"></i>
+            <span>파이썬 인터프리터 동작 원리 & 메모리 모델 (How It Works)</span>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">${escapeHtml(deep.principle)}</p>
+        </div>
+
+        <!-- 2. Syntax Anatomy Table -->
+        <div class="p-4 rounded-xl bg-white border border-slate-200 space-y-2">
+          <div class="flex items-center gap-2 text-xs font-extrabold text-slate-800 uppercase tracking-wider">
+            <i data-lucide="code" class="w-4 h-4 text-emerald-600"></i>
+            <span>핵심 문법 구조 및 반환값 분석 (Syntax Anatomy)</span>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="border-b border-slate-200 text-[11px] text-slate-400 uppercase">
+                  <th class="py-1.5 pr-3">파이썬 구문 / 내장 함수</th>
+                  <th class="py-1.5">역할 및 실행 동작 설명</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${syntaxRowsHtml}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 3. Common Mistakes: Wrong vs Right Comparison -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div class="p-3.5 rounded-xl bg-rose-50/70 border border-rose-200 space-y-1.5">
+            <div class="flex items-center gap-1.5 text-xs font-bold text-rose-800">
+              <i data-lucide="x-circle" class="w-4 h-4 text-rose-600"></i>
+              <span>❌ 자주 틀리는 오답 코드 (주의!)</span>
+            </div>
+            <pre class="font-mono text-[11px] leading-snug text-rose-950 bg-white/90 p-2.5 rounded-lg border border-rose-200 overflow-x-auto whitespace-pre-wrap">${escapeHtml(deep.wrongCode)}</pre>
+          </div>
+          <div class="p-3.5 rounded-xl bg-emerald-50/70 border border-emerald-200 space-y-1.5">
+            <div class="flex items-center gap-1.5 text-xs font-bold text-emerald-800">
+              <i data-lucide="check-circle" class="w-4 h-4 text-emerald-600"></i>
+              <span>⭕ 올바른 정답 코드 (Pythonic 표준)</span>
+            </div>
+            <pre class="font-mono text-[11px] leading-snug text-emerald-950 bg-white/90 p-2.5 rounded-lg border border-emerald-200 overflow-x-auto whitespace-pre-wrap">${escapeHtml(deep.rightCode)}</pre>
+          </div>
+        </div>
+
+        <!-- 4. Self-Check Mini Quiz -->
+        ${deep.quiz ? `
+          <div class="p-4 rounded-xl bg-indigo-50/60 border border-indigo-200/80 space-y-2.5">
+            <div class="flex items-center justify-between gap-2 flex-wrap">
+              <div class="flex items-center gap-1.5 text-xs font-extrabold text-indigo-950">
+                <i data-lucide="help-circle" class="w-4 h-4 text-indigo-600"></i>
+                <span>실력 점검 미니 퀴즈 (Self-Check)</span>
+              </div>
+              <button onclick="toggleQuizAnswer()" class="px-2.5 py-1 rounded-md text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white transition">
+                정답 및 해설 확인
+              </button>
+            </div>
+            <p class="text-xs sm:text-sm font-semibold text-slate-800">Q. ${escapeHtml(deep.quiz.q)}</p>
+            <div id="lessonQuizAnswerBox" class="hidden p-3 rounded-lg bg-white border border-indigo-200 text-xs space-y-1">
+              <div class="font-bold text-indigo-700">✔ 정답: <span class="font-mono">${escapeHtml(deep.quiz.a)}</span></div>
+              <div class="text-slate-600"><strong>해설:</strong> ${escapeHtml(deep.quiz.exp)}</div>
+            </div>
+          </div>
+        ` : ''}
+      `;
+    }
+
+    function toggleQuizAnswer() {
+      const box = document.getElementById('lessonQuizAnswerBox');
+      if (box) box.classList.toggle('hidden');
+    }
+
+    // =========================================================================
+    // 5. INTERACTIVE PYTHON SANDBOX ENGINE (All 12 Lessons + Generic Parser)
+    // =========================================================================
+    function executePythonSimulation(item, codeText, stdinRaw) {
+      const tokens = String(stdinRaw || '').trim().split(/\s+/).filter(Boolean);
+      let tokenIdx = 0;
+      const nextToken = (fallback = '1') => (tokenIdx < tokens.length ? tokens[tokenIdx++] : fallback);
+      const remainingLine = (fallback = '') => {
+        if (tokenIdx >= tokens.length) return fallback;
+        const rest = tokens.slice(tokenIdx).join(' ');
+        tokenIdx = tokens.length;
+        return rest;
+      };
+
+      const stdoutLines = [];
+      const vars = [];
+
+      try {
+        if (item.id === 'py_st1_io') {
+          const student_id = nextToken('202627033');
+          const student_name = nextToken('홍길동');
+          const num1 = parseInt(nextToken('17'), 10) || 17;
+          const num2 = parseInt(nextToken('5'), 10) || 5;
+          const add_res = num1 + num2;
+          const div_float = num1 / num2;
+          const div_quotient = Math.floor(num1 / num2);
+          const div_remainder = num1 % num2;
+          const power_res = Math.pow(num1, 2);
+          const is_multiple = (div_remainder === 0) ? 'True' : 'False';
+
+          stdoutLines.push(`학번을 입력하세요: ${student_id}`);
+          stdoutLines.push(`이름을 입력하세요: ${student_name}`);
+          stdoutLines.push(`첫 번째 정수 입력: ${num1}`);
+          stdoutLines.push(`두 번째 정수 입력: ${num2}`);
+          stdoutLines.push('='.repeat(46));
+          stdoutLines.push(`학번: ${student_id} | 이름: ${student_name}`);
+          stdoutLines.push(`덧셈(${num1}+${num2}) = ${add_res} | 제곱(${num1}**2) = ${power_res}`);
+          stdoutLines.push(`실수 나눗셈(/) = ${div_float.toFixed(2)} (자료형: float)`);
+          stdoutLines.push(`정수 몫(//) = ${div_quotient}, 나머지(%) = ${div_remainder}, 나누어떨어짐: ${is_multiple}`);
+
+          vars.push(
+            { name: 'student_id', type: 'str (불변)', val: `"${student_id}"` },
+            { name: 'num1, num2', type: 'int (불변)', val: `${num1}, ${num2}` },
+            { name: 'div_float', type: 'float (불변)', val: `${div_float.toFixed(4)}` },
+            { name: 'div_quotient, div_remainder', type: 'int (불변)', val: `${div_quotient}, ${div_remainder}` },
+            { name: 'is_multiple', type: 'bool (불변)', val: `${is_multiple}` }
+          );
+        } else if (item.id === 'py_st1_str') {
+          const student_id = nextToken('202627033');
+          const course_title = nextToken('Python_Programming_Basic');
+          const entry_year = student_id.slice(0, 4);
+          const dept_code = student_id.slice(4, 6);
+          const personal_num = student_id.slice(-3);
+          const reversed_id = student_id.split('').reverse().join('');
+          const replaced_title = course_title.replace('Basic', 'Master');
+          const words_list = replaced_title.split('_');
+          const joined_roadmap = words_list.join(' -> ');
+
+          stdoutLines.push(`9자리 학번 입력: ${student_id}`);
+          stdoutLines.push(`과정명 입력: ${course_title}`);
+          stdoutLines.push(`원본 학번: ${student_id} | 역순([::-1]): ${reversed_id}`);
+          stdoutLines.push(`학번 해부 -> 입학연도: ${entry_year}년 / 학과코드: ${dept_code} / 번호: ${personal_num}`);
+          stdoutLines.push(`분리된 단어 리스트(split): [${words_list.map(w => `'${w}'`).join(', ')}]`);
+          stdoutLines.push(`재결합된 문자열(join): ${joined_roadmap.toUpperCase()}`);
+
+          vars.push(
+            { name: 'student_id', type: 'str (불변)', val: `"${student_id}"` },
+            { name: 'entry_year', type: 'str (불변)', val: `"${entry_year}"` },
+            { name: 'reversed_id', type: 'str (불변)', val: `"${reversed_id}"` },
+            { name: 'words_list', type: 'list (가변)', val: `[${words_list.map(w => `'${w}'`).join(', ')}]` }
+          );
+        } else if (item.id === 'py_st2_cond') {
+          const score = parseInt(nextToken('94'), 10);
+          const attendance = parseInt(nextToken('98'), 10);
+          let grade = 'F';
+          if (score >= 90) grade = 'A';
+          else if (score >= 80) grade = 'B';
+          else if (score >= 70) grade = 'C';
+
+          let scholarship = '일반 대상 (장학 기준 미달)';
+          if (score >= 90 && attendance >= 95) scholarship = '전액 장학금 대상 (성적+출석 우수)';
+          else if (score >= 85 || attendance === 100) scholarship = '반액 장학금 대상';
+
+          const pass_status = (score >= 70 && attendance >= 80) ? '이수 완료(Pass)' : '재수강 요망';
+
+          stdoutLines.push(`시험 점수 입력(0~100): ${score}`);
+          stdoutLines.push(`출석률 입력(0~100): ${attendance}`);
+          stdoutLines.push(`입력 점수: ${score}점 | 출석률: ${attendance}%`);
+          stdoutLines.push(`최종 부여 학점: [${grade} 학점] -> 판정: {${pass_status}}`.replace('{', '').replace('}', ''));
+          stdoutLines.push(`장학금 심사 결과: ${scholarship}`);
+
+          vars.push(
+            { name: 'score, attendance', type: 'int (불변)', val: `${score}, ${attendance}` },
+            { name: 'grade', type: 'str (불변)', val: `"${grade}"` },
+            { name: 'scholarship', type: 'str (불변)', val: `"${scholarship}"` },
+            { name: 'pass_status', type: 'str (불변)', val: `"${pass_status}"` }
+          );
+        } else if (item.id === 'py_st2_gugudan') {
+          const dan = parseInt(nextToken('7'), 10) || 7;
+          stdoutLines.push(`출력할 구구단 단(2~9) 입력: ${dan}`);
+          stdoutLines.push(`=== [Part 1] 입력한 ${dan}단 출력 (단일 for문) ===`);
+          for (let i = 1; i < 10; i++) {
+            const res = dan * i;
+            stdoutLines.push(`${dan} x ${i} = ${String(res).padStart(2, ' ')}`);
+          }
+          stdoutLines.push(`\n=== [Part 2] 2단 ~ 5단 가로 정렬 출력 (중첩 for문) ===`);
+          for (let row = 1; row < 10; row++) {
+            let lineStr = '';
+            for (let colDan = 2; colDan < 6; colDan++) {
+              lineStr += `${colDan}x${row}=${String(colDan * row).padStart(2, ' ')}   `;
+            }
+            stdoutLines.push(lineStr);
+          }
+
+          vars.push(
+            { name: 'dan', type: 'int (불변)', val: `${dan}` },
+            { name: 'i (최종값)', type: 'int (불변)', val: '9 (range(1, 10) 종료)' },
+            { name: 'result (최종값)', type: 'int (불변)', val: `${dan * 9}` },
+            { name: 'row, col_dan', type: 'int (불변)', val: '9, 5 (중첩 루프 완주)' }
+          );
+        } else if (item.id === 'py_st2_loop_ctrl') {
+          const limit_n = parseInt(nextToken('15'), 10) || 15;
+          let total_sum = 0;
+          let cur = 0;
+          const skipped = [];
+          let early_stopped = false;
+          stdoutLines.push(`반복 상한 정수 N 입력: ${limit_n}`);
+          while (cur < limit_n) {
+            cur += 1;
+            if (cur % 3 === 0) {
+              skipped.push(cur);
+              continue;
+            }
+            total_sum += cur;
+            if (total_sum >= 60) {
+              early_stopped = true;
+              stdoutLines.push(`[break 발동] cur=${cur}에서 합계(${total_sum})가 60 이상이 되어 루프 즉시 탈출!`);
+              break;
+            }
+          }
+          const status_msg = early_stopped ? '목표치 도달 조기 종료(break)' : '상한 N까지 정상 완주';
+          stdoutLines.push(`실행 상태: ${status_msg} (최종 cur=${cur} / 입력 N=${limit_n})`);
+          stdoutLines.push(`건너뛴 3의 배수(continue): [${skipped.join(', ')}]`);
+          stdoutLines.push(`최종 누적 합계(total_sum): ${total_sum}`);
+
+          vars.push(
+            { name: 'limit_n, cur', type: 'int (불변)', val: `${limit_n}, ${cur}` },
+            { name: 'skipped_multiples', type: 'list (가변)', val: `[${skipped.join(', ')}]` },
+            { name: 'early_stopped', type: 'bool (불변)', val: early_stopped ? 'True' : 'False' },
+            { name: 'total_sum', type: 'int (불변)', val: `${total_sum}` }
+          );
+        } else if (item.id === 'py_st3_collections') {
+          const rawLine = remainingLine('92 85 92 78 96');
+          const scores = rawLine.split(/\s+/).filter(Boolean).map(x => parseInt(x, 10) || 80);
+          stdoutLines.push(`5개의 점수를 공백으로 입력: ${rawLine}`);
+          scores.push(88);
+          const total_cnt = scores.length;
+          const max_val = Math.max(...scores);
+          const min_val = Math.min(...scores);
+          const sum_val = scores.reduce((a, b) => a + b, 0);
+          const avg_val = sum_val / total_cnt;
+
+          const unique_arr = Array.from(new Set(scores));
+          const sorted_desc = [...unique_arr].sort((a, b) => b - a);
+          const t0 = sorted_desc[0] ?? 0;
+          const t1 = sorted_desc[1] ?? t0;
+
+          stdoutLines.push(`1. 리스트(List, ${total_cnt}개): [${scores.join(', ')}]`);
+          stdoutLines.push(`2. 집합(Set 중복제거) -> 내림차순: [${sorted_desc.join(', ')}]`);
+          stdoutLines.push(`3. 튜플(Tuple 상위 2개): (${t0}, ${t1})`);
+          stdoutLines.push(`4. 딕셔너리(Dict 리포트): {'학번': '202627033', '최고점': ${max_val}, '최저점': ${min_val}, '평균': ${Number(avg_val.toFixed(2))}, '상위2개튜플': (${t0}, ${t1})}`);
+
+          vars.push(
+            { name: 'scores', type: 'list (가변)', val: `[${scores.join(', ')}]` },
+            { name: 'unique_set', type: 'set (가변)', val: `{${unique_arr.join(', ')}}` },
+            { name: 'top_two_tuple', type: 'tuple (불변)', val: `(${t0}, ${t1})` },
+            { name: 'report_dict', type: 'dict (가변)', val: `{'학번': '202627033', '최고점': ${max_val}, ...}` }
+          );
+        } else if (item.id === 'py_st3_comprehension') {
+          const subjects = ['국어', '영어', '수학', '과학', '코딩'];
+          const rawLine = remainingLine('88 72 95 64 91');
+          const scores = rawLine.split(/\s+/).filter(Boolean).map(x => parseInt(x, 10) || 80);
+          while (scores.length < 5) scores.push(85);
+
+          const high_scores = scores.filter(s => s >= 80);
+          const curved_scores = scores.map(s => Math.min(100, s + 5));
+          const subPairs = subjects.map((sub, i) => `'${sub}': ${scores[i]}`).join(', ');
+          const passPairs = subjects.map((sub, i) => `'${sub}': '${scores[i] >= 80 ? '우수' : '보통'}'`).join(', ');
+
+          stdoutLines.push(`5과목 점수 입력: ${rawLine}`);
+          stdoutLines.push(`과목-점수 매핑(zip + Dict 컴프리헨션): {${subPairs}}`);
+          stdoutLines.push(`80점 이상 필터링(if 조건 컴프리헨션): [${high_scores.join(', ')}] (총 ${high_scores.length}과목)`);
+          stdoutLines.push(`+5점 가산점 일괄 적용 리스트: [${curved_scores.join(', ')}]`);
+          stdoutLines.push(`과목별 판정 결과: {${passPairs}}`);
+
+          vars.push(
+            { name: 'high_scores', type: 'list (가변)', val: `[${high_scores.join(', ')}]` },
+            { name: 'curved_scores', type: 'list (가변)', val: `[${curved_scores.join(', ')}]` },
+            { name: 'sub_score_dict', type: 'dict (가변)', val: `{${subPairs}}` }
+          );
+        } else if (item.id === 'py_st4_func') {
+          const a = parseInt(nextToken('80'), 10) || 80;
+          const b = parseInt(nextToken('90'), 10) || 90;
+          const c = parseInt(nextToken('100'), 10) || 100;
+
+          const calc = (s1, s2, s3, bonus = 5) => {
+            const total = s1 + s2 + s3 + bonus;
+            const avg = Number((total / 3).toFixed(2));
+            const grade = avg >= 90 ? '우수(A)' : '보통(B)';
+            return [total, avg, grade];
+          };
+
+          const [tot1, avg1, grd1] = calc(a, b, c, 5);
+          const [tot2, avg2, grd2] = calc(a, b, c, 0);
+          const tenScale = [a, b, c].map(x => Number((x / 10).toFixed(1)));
+
+          stdoutLines.push(`세 과목 점수 입력(공백 구분): ${a} ${b} ${c}`);
+          stdoutLines.push(`[기본 보너스 +5점 적용] 총점: ${tot1}, 평균: ${avg1}, 등급: ${grd1}`);
+          stdoutLines.push(`[보너스 0점 지정 호출] 총점: ${tot2}, 평균: ${avg2}, 등급: ${grd2}`);
+          stdoutLines.push(`[lambda + map 변환] 10점 만점 환산 리스트: [${tenScale.join(', ')}]`);
+
+          vars.push(
+            { name: 'args (함수 내부)', type: 'tuple (불변)', val: `(${a}, ${b}, ${c})` },
+            { name: 'tot1, avg1, grd1', type: 'unpacked vars', val: `${tot1}, ${avg1}, "${grd1}"` },
+            { name: 'ten_point_scale', type: 'list (가변)', val: `[${tenScale.join(', ')}]` }
+          );
+        } else if (item.id === 'py_st5_oop') {
+          const stu_id = nextToken('202627033');
+          const name = nextToken('홍길동');
+          const s1 = parseInt(nextToken('95'), 10) || 95;
+          const s2 = parseInt(nextToken('90'), 10) || 90;
+          const avg = Number(((s1 + s2) / 2).toFixed(2));
+          const badge = avg >= 90 ? '★ 성적우수 장학생' : '일반 재학생';
+
+          stdoutLines.push(`학번 이름 점수1 점수2 입력: ${stu_id} ${name} ${s1} ${s2}`);
+          stdoutLines.push(`[한국파이썬대학교] ${stu_id} ${name} (평균: ${avg}점)`);
+          stdoutLines.push(`인스턴스 메서드 호출 -> 평균: ${avg}점 | 구분: ${badge}`);
+
+          vars.push(
+            { name: 'stu_obj', type: 'HonorStudent (인스턴스)', val: `<HonorStudent stu_id='${stu_id}', name='${name}'>` },
+            { name: 'stu_obj.scores', type: 'list (인스턴스 속성)', val: `[${s1}, ${s2}]` },
+            { name: 'Student.school_name', type: 'str (클래스 변수)', val: `"한국파이썬대학교"` }
+          );
+        } else if (item.id === 'py_st6_exception_io') {
+          const rawLine = remainingLine('95 오류값 88');
+          const rawTokens = rawLine.split(/\s+/).filter(Boolean);
+          const valid_scores = [];
+          const error_logs = [];
+
+          rawTokens.forEach(t => {
+            const parsed = Number(t);
+            if (!Number.isNaN(parsed) && Number.isInteger(parsed)) {
+              valid_scores.push(parsed);
+            } else {
+              error_logs.push(t);
+            }
+          });
+
+          const jsonStr = JSON.stringify({ 학번: '202627033', 유효점수: valid_scores, 오류무시: error_logs });
+          stdoutLines.push(`점수 데이터 입력(문자 포함 가능): ${rawLine}`);
+          stdoutLines.push(`[예외 방어 완료] 정상 수집된 점수: [${valid_scores.join(', ')}] | 포착된 ValueError 입력: [${error_logs.map(e => `'${e}'`).join(', ')}]`);
+          stdoutLines.push(`[JSON 직렬화 출력] ${jsonStr}`);
+
+          vars.push(
+            { name: 'valid_scores', type: 'list (가변)', val: `[${valid_scores.join(', ')}]` },
+            { name: 'error_logs', type: 'list (가변)', val: `[${error_logs.map(e => `'${e}'`).join(', ')}]` },
+            { name: 'json_payload', type: 'str (JSON 포맷)', val: jsonStr }
+          );
+        } else if (item.id === 'py_st78_advanced') {
+          const cnt = parseInt(nextToken('5'), 10) || 5;
+          const genList = [];
+          for (let i = 1; i <= cnt; i++) genList.push(i * i);
+          const sumVal = genList.reduce((a, b) => a + b, 0);
+
+          stdoutLines.push(`제너레이터로 생성할 개수 N 입력: ${cnt}`);
+          stdoutLines.push(`[Decorator 로그] 'summarize_squares' 함수 실행 시작!`);
+          stdoutLines.push(`제너레이터(yield) 생성 제곱수 리스트: [${genList.join(', ')}] (합계: ${sumVal})`);
+
+          vars.push(
+            { name: '__name__', type: 'str (특수 변수)', val: `"__main__"` },
+            { name: 'square_generator', type: 'generator (제너레이터)', val: `<generator object square_generator>` },
+            { name: 'generated_list', type: 'list[int]', val: `[${genList.join(', ')}]` }
+          );
+        } else if (item.id === 'py_st9_capstone') {
+          const allTokens = remainingLine('202627033 95 84 72 91 88').split(/\s+/).filter(Boolean);
+          const stu_id = allTokens[0] || '202627033';
+          const score_list = allTokens.slice(1).map(x => parseInt(x, 10) || 80);
+          if (score_list.length === 0) score_list.push(95, 84, 72);
+
+          const get_grade = (sc) => (sc >= 90 ? 'A' : sc >= 80 ? 'B' : sc >= 70 ? 'C' : 'F');
+          let pass_count = 0;
+
+          stdoutLines.push(`학번과 과목 점수들 입력: ${stu_id} ${score_list.join(' ')}`);
+          stdoutLines.push(`=== [${stu_id}] 9단계 마스터 성적 상세 분석표 ===`);
+          score_list.forEach((sc, idx) => {
+            const g = get_grade(sc);
+            if (sc >= 80) pass_count += 1;
+            stdoutLines.push(`과목 ${idx + 1}: ${String(sc).padStart(3, ' ')}점 -> 등급 [${g}]`);
+          });
+          const avg_score = score_list.reduce((a, b) => a + b, 0) / score_list.length;
+          const best_track = avg_score >= 90
+            ? '트랙 A: 데이터 분석 / AI (NumPy, Pandas, 머신러닝)'
+            : avg_score >= 80
+              ? '트랙 B: 웹 개발 / 백엔드 (FastAPI, Django REST 서버)'
+              : '트랙 C: 업무 자동화 / 웹 크롤링 (BeautifulSoup, 엑셀 자동화)';
+
+          stdoutLines.push('='.repeat(48));
+          stdoutLines.push(`전체 평균: ${avg_score.toFixed(2)}점 (최고: ${Math.max(...score_list)}점 / 80점 이상: ${pass_count}과목)`);
+          stdoutLines.push(`추천 다음 단계(9단계 분기): ${best_track}`);
+
+          vars.push(
+            { name: 'stu_id', type: 'str (불변)', val: `"${stu_id}"` },
+            { name: 'score_list', type: 'list[int] (가변)', val: `[${score_list.join(', ')}]` },
+            { name: 'avg_score', type: 'float (불변)', val: `${avg_score.toFixed(2)}` },
+            { name: 'best_track', type: 'str (불변)', val: `"${best_track}"` }
+          );
+        } else {
+          return runGenericPythonInterpreter(codeText, tokens);
+        }
+      } catch (err) {
+        stdoutLines.push(`[실행 오류 안내] ${err.message}`);
+      }
+
+      return {
+        stdout: stdoutLines.join('\n'),
+        vars
+      };
+    }
+
+    // Generic lightweight Python interpreter for uploaded custom .py scripts
+    function runGenericPythonInterpreter(codeText, tokens) {
+      let tokenIdx = 0;
+      const env = {};
+      const stdout = [];
+      const lines = codeText.split('\n');
+
+      for (let i = 0; i < lines.length; i++) {
+        let line = lines[i];
+        let inS = false, inD = false;
+        for (let c = 0; c < line.length; c++) {
+          if (line[c] === "'" && !inD) inS = !inS;
+          else if (line[c] === '"' && !inS) inD = !inD;
+          else if (line[c] === '#' && !inS && !inD) {
+            line = line.slice(0, c);
+            break;
+          }
+        }
+        const trimmed = line.trim();
+        if (!trimmed) continue;
+
+        const forMatch = trimmed.match(/^for\s+([a-zA-Z_]\w*)\s+in\s+range\(([^)]+)\)\s*:/);
+        if (forMatch) {
+          const loopVar = forMatch[1];
+          const rangeArgs = forMatch[2].split(',').map(s => {
+            const st = s.trim();
+            return env[st] !== undefined ? Number(env[st]) : parseInt(st, 10);
+          });
+          const start = rangeArgs.length === 1 ? 0 : rangeArgs[0];
+          const stop = rangeArgs.length === 1 ? rangeArgs[0] : rangeArgs[1];
+          const step = rangeArgs[2] || 1;
+
+          const bodyLines = [];
+          while (i + 1 < lines.length && (lines[i + 1].startsWith(' ') || lines[i + 1].startsWith('\t') || !lines[i + 1].trim())) {
+            i++;
+            if (lines[i].trim()) bodyLines.push(lines[i].trim());
+          }
+
+          for (let val = start; step > 0 ? val < stop : val > stop; val += step) {
+            env[loopVar] = val;
+            bodyLines.forEach(bLine => evalSimplePyStatement(bLine, env, stdout, tokens, () => tokens[tokenIdx++] || '5'));
+          }
+          continue;
+        }
+
+        evalSimplePyStatement(trimmed, env, stdout, tokens, () => tokens[tokenIdx++] || '5');
+      }
+
+      const vars = Object.keys(env).map(k => ({
+        name: k,
+        type: typeof env[k] === 'number' ? (Number.isInteger(env[k]) ? 'int' : 'float') : 'str',
+        val: typeof env[k] === 'string' ? `"${env[k]}"` : String(env[k])
+      }));
+
+      if (stdout.length === 0) {
+        stdout.push('# 스크립트 구문 분석 완료 (출력문 결과 표시)');
+      }
+
+      return { stdout: stdout.join('\n'), vars };
+    }
+
+    function evalSimplePyStatement(stmt, env, stdout, tokens, getNextInput) {
+      if (stmt.startsWith('print(') && stmt.endsWith(')')) {
+        let inner = stmt.slice(6, -1).trim();
+        if ((inner.startsWith('f"') || inner.startsWith("f'")) && (inner.endsWith('"') || inner.endsWith("'"))) {
+          let content = inner.slice(2, -1);
+          content = content.replace(/\{([^}]+)\}/g, (_, expr) => {
+            const cleanExpr = expr.split(':')[0].trim();
+            return evalPyExpr(cleanExpr, env);
+          });
+          stdout.push(content);
+        } else {
+          stdout.push(String(evalPyExpr(inner, env)));
+        }
+        return;
+      }
+
+      const assignMatch = stmt.match(/^([a-zA-Z_]\w*)\s*=\s*(.+)$/);
+      if (assignMatch) {
+        const varName = assignMatch[1];
+        const rhs = assignMatch[2].trim();
+        if (rhs.includes('input(')) {
+          const val = getNextInput();
+          env[varName] = rhs.startsWith('int(') ? (parseInt(val, 10) || 0) : rhs.startsWith('float(') ? (parseFloat(val) || 0.0) : val;
+          stdout.push(`> 입력값(${varName}): ${env[varName]}`);
+        } else {
+          env[varName] = evalPyExpr(rhs, env);
+        }
+      }
+    }
+
+    function evalPyExpr(expr, env) {
+      const t = expr.trim();
+      if ((t.startsWith('"') && t.endsWith('"')) || (t.startsWith("'") && t.endsWith("'"))) {
+        return t.slice(1, -1);
+      }
+      if (env[t] !== undefined) return env[t];
+      if (!isNaN(Number(t))) return Number(t);
+      try {
+        let jsExpr = t.replace(/\/\//g, '/').replace(/\*\*/g, '**');
+        Object.keys(env).forEach(k => {
+          const reg = new RegExp(`\\b${k}\\b`, 'g');
+          jsExpr = jsExpr.replace(reg, JSON.stringify(env[k]));
+        });
+        const res = Function(`"use strict"; return (${jsExpr});`)();
+        return t.includes('//') ? Math.floor(res) : res;
+      } catch (e) {
+        return t;
+      }
+    }
+
+    function runPythonSandbox() {
+      const item = CURRICULUM_DATA[currentLessonIndex];
+      const code = document.getElementById('codeEditorPy').value;
+      const stdinVal = document.getElementById('stdinInputBox').value;
+      userState.customStdin[item.id] = stdinVal;
+      saveUserState();
+
+      const result = executePythonSimulation(item, code, stdinVal);
+      const termEl = document.getElementById('terminalOutputScreen');
+      termEl.innerHTML = `<div class="text-emerald-400 font-bold mb-1.5">$ python3 ${escapeHtml(item.fileName)}</div>` +
+        `<div class="text-slate-100">${escapeHtml(result.stdout)}</div>` +
+        `<div class="text-slate-500 text-[11px] mt-3 border-t border-slate-800/80 pt-1.5">[Process finished with exit code 0]</div>`;
+
+      const memBody = document.getElementById('memoryInspectorBody');
+      if (result.vars && result.vars.length > 0) {
+        memBody.innerHTML = result.vars.map(v => `
+          <tr>
+            <td class="py-1 pr-2 font-bold text-indigo-300">${escapeHtml(v.name)}</td>
+            <td class="py-1 pr-2"><span class="px-1.5 py-0.2 rounded bg-slate-800 text-amber-300 text-[10px]">${escapeHtml(v.type)}</span></td>
+            <td class="py-1 text-emerald-300 break-all">${escapeHtml(v.val)}</td>
+          </tr>
+        `).join('');
+      } else {
+        memBody.innerHTML = `<tr><td colspan="3" class="py-2 text-slate-500 text-center">추적된 변수가 없습니다.</td></tr>`;
+      }
+    }
+
+    // =========================================================================
+    // 6. EDITOR ACTIONS & STATUS TOGGLES
+    // =========================================================================
+    let editDebounce = null;
+    function handleCodeEdit() {
+      const item = CURRICULUM_DATA[currentLessonIndex];
+      const updated = document.getElementById('codeEditorPy').value;
+      userState.customPy[item.id] = updated;
+      saveUserState();
+      renderXrayTable(updated);
+
+      clearTimeout(editDebounce);
+      editDebounce = setTimeout(() => {
+        runPythonSandbox();
+      }, 400);
+    }
+
+    function resetCurrentCode() {
+      const item = CURRICULUM_DATA[currentLessonIndex];
+      delete userState.customPy[item.id];
+      delete userState.customStdin[item.id];
+      saveUserState();
+      showLineComments = true;
+      document.getElementById('commentToggleText').innerText = '한 줄 주석: ON';
+      document.getElementById('codeEditorPy').value = item.pyCode;
+      document.getElementById('stdinInputBox').value = item.defaultStdin || '';
+      renderXrayTable(item.pyCode);
+      runPythonSandbox();
+      showToast('원본 파이썬 코드와 주석으로 초기화되었습니다.');
+    }
+
+    function copyCurrentCode() {
+      const text = document.getElementById('codeEditorPy').value;
+      try {
+        const tempArea = document.createElement('textarea');
+        tempArea.value = text;
+        document.body.appendChild(tempArea);
+        tempArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempArea);
+        showToast('파이썬 코드가 클립보드에 복사되었습니다!');
+      } catch (e) {
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(text).then(() => showToast('파이썬 코드가 클립보드에 복사되었습니다!'));
+        }
+      }
+    }
+
+    function updateStatusButtons() {
+      const item = CURRICULUM_DATA[currentLessonIndex];
+      const isStar = !!userState.starred[item.id];
+      const isDone = !!userState.completed[item.id];
+
+      const btnStar = document.getElementById('btnToggleStar');
+      const btnDone = document.getElementById('btnToggleDone');
+
+      if (isStar) {
+        btnStar.className = 'flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border border-amber-300 bg-amber-50 text-amber-800 transition';
+        btnStar.innerHTML = `<i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-500"></i><span>★ 중요 표시됨</span>`;
+      } else {
+        btnStar.className = 'flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border border-slate-200 bg-white text-slate-600 hover:bg-amber-50 transition';
+        btnStar.innerHTML = `<i data-lucide="star" class="w-4 h-4"></i><span>중요 표시</span>`;
+      }
+
+      if (isDone) {
+        btnDone.className = 'flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border border-emerald-300 bg-emerald-50 text-emerald-800 transition';
+        btnDone.innerHTML = `<i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i><span>학습 완료됨</span>`;
+      } else {
+        btnDone.className = 'flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border border-slate-200 bg-white text-slate-600 hover:bg-emerald-50 transition';
+        btnDone.innerHTML = `<i data-lucide="check-circle-2" class="w-4 h-4"></i><span>학습 완료</span>`;
+      }
+      lucide.createIcons();
+    }
+
+    function toggleStarCurrent() {
+      const item = CURRICULUM_DATA[currentLessonIndex];
+      userState.starred[item.id] = !userState.starred[item.id];
+      saveUserState();
+      updateStatusButtons();
+      renderSidebarList();
+    }
+
+    function toggleDoneCurrent() {
+      const item = CURRICULUM_DATA[currentLessonIndex];
+      userState.completed[item.id] = !userState.completed[item.id];
+      saveUserState();
+      updateStatusButtons();
+      renderSidebarList();
+    }
+
+    function navigateLesson(delta) {
+      const next = currentLessonIndex + delta;
+      if (next >= 0 && next < CURRICULUM_DATA.length) {
+        selectLesson(next);
+      }
+    }
+
+    function savePersonalNote() {
+      const item = CURRICULUM_DATA[currentLessonIndex];
+      userState.notes[item.id] = document.getElementById('personalNoteInput').value;
+      saveUserState();
+      const ind = document.getElementById('noteSavedIndicator');
+      ind.classList.remove('opacity-0');
+      setTimeout(() => ind.classList.add('opacity-0'), 1400);
+    }
+
+    // =========================================================================
+    // 7. 9-STAGE ROADMAP & A4 PDF WORKBOOK RENDERING
+    // =========================================================================
+    function renderNineStageRoadmap() {
+      const navContainer = document.getElementById('roadmapNavPills');
+      const gridContainer = document.getElementById('roadmapCardsGrid');
+      if (!navContainer || !gridContainer) return;
+
+      navContainer.innerHTML = NINE_STAGE_ROADMAP.map(st => `
+        <a href="#roadmap_${st.stageKey}" class="shrink-0 px-3.5 py-2 rounded-xl bg-white hover:bg-indigo-50 border border-slate-200 text-xs font-bold text-slate-700 hover:text-indigo-700 shadow-sm transition">
+          ${escapeHtml(st.badge.split('·')[0].trim())} · ${escapeHtml(st.badge.split('·')[1].trim())}
+        </a>
+      `).join('');
+
+      gridContainer.innerHTML = NINE_STAGE_ROADMAP.map(st => `
+        <article id="roadmap_${st.stageKey}" class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+          <div class="bg-slate-900 px-6 py-4 text-white flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">${escapeHtml(st.badge)}</span>
+              <h3 class="text-base sm:text-lg font-extrabold mt-0.5">${escapeHtml(st.title)}</h3>
+            </div>
+            <div class="flex items-center gap-1.5 flex-wrap">
+              <span class="text-[11px] text-slate-400 mr-1">연계 실습 파일:</span>
+              ${st.files.map(f => {
+                const targetIdx = CURRICULUM_DATA.findIndex(c => c.fileName === f);
+                return targetIdx !== -1
+                  ? `<button onclick="jumpToLessonFromRoadmap(${targetIdx})" class="px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-indigo-500/20 hover:bg-indigo-500/40 text-amber-300 border border-indigo-400/30 transition" title="클릭하여 실습 에디터로 이동">${escapeHtml(f)} 실습하기 ↗</button>`
+                  : `<span class="px-2 py-0.5 rounded text-xs font-mono bg-slate-800 text-slate-300">${escapeHtml(f)}</span>`;
+              }).join('')}
+            </div>
+          </div>
+
+          <div class="p-6 space-y-4">
+            <p class="text-xs sm:text-sm text-slate-700 font-medium bg-indigo-50/50 p-3.5 rounded-xl border border-indigo-100">
+              <strong class="text-indigo-900">🎯 단계 학습 목표:</strong> ${escapeHtml(st.goal)}
+            </p>
+
+            <!-- Detailed Curriculum Bullet Points -->
+            <div class="space-y-2 text-xs sm:text-sm text-slate-700 leading-relaxed">
+              <div class="font-bold text-slate-900 text-xs uppercase tracking-wider">세부 개념 목차</div>
+              ${st.subTopics.map((pt, i) => `
+                <div class="flex items-start gap-2.5">
+                  <span class="w-5 h-5 rounded-full bg-indigo-600 text-white font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">${i + 1}</span>
+                  <div class="flex-1 font-medium">${escapeHtml(pt)}</div>
+                </div>
+              `).join('')}
+            </div>
+
+            <!-- Comparison Table -->
+            <div class="overflow-x-auto pt-2">
+              <table class="w-full text-xs border-collapse border border-slate-200 rounded-lg overflow-hidden">
+                <thead>
+                  <tr class="bg-slate-100 text-slate-800">
+                    ${st.tableHeaders.map(th => `<th class="border border-slate-200 px-3 py-2 text-left font-bold">${escapeHtml(th)}</th>`).join('')}
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-200">
+                  ${st.tableRows.map(row => `
+                    <tr class="hover:bg-slate-50/80">
+                      ${row.map((cell, ci) => `<td class="border border-slate-200 px-3 py-2 ${ci === 1 ? 'font-mono font-semibold text-indigo-950 whitespace-pre-wrap' : ci === 0 ? 'font-bold text-slate-900' : 'text-slate-700'}">${escapeHtml(cell)}</td>`).join('')}
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function jumpToLessonFromRoadmap(idx) {
+      switchViewMode('study');
+      selectLesson(idx);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function switchViewMode(mode) {
+      viewMode = mode;
+      const studyContainer = document.getElementById('studyModeContainer');
+      const roadmapContainer = document.getElementById('roadmapModeContainer');
+      const pdfContainer = document.getElementById('pdfModeContainer');
+      const btnStudy = document.getElementById('btnModeStudy');
+      const btnRoadmap = document.getElementById('btnModeRoadmap');
+      const btnPdf = document.getElementById('btnModePdf');
+
+      const activeBtnClass = 'flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all whitespace-nowrap bg-indigo-600 text-white shadow';
+      const inactiveBtnClass = 'flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all whitespace-nowrap text-slate-300 hover:text-white';
+
+      studyContainer.classList.add('hidden');
+      roadmapContainer.classList.add('hidden');
+      roadmapContainer.classList.remove('flex');
+      pdfContainer.classList.add('hidden');
+      pdfContainer.classList.remove('flex');
+
+      btnStudy.className = inactiveBtnClass;
+      btnRoadmap.className = inactiveBtnClass;
+      btnPdf.className = inactiveBtnClass;
+
+      if (mode === 'study') {
+        studyContainer.classList.remove('hidden');
+        btnStudy.className = activeBtnClass;
+      } else if (mode === 'roadmap') {
+        roadmapContainer.classList.remove('hidden');
+        roadmapContainer.classList.add('flex');
+        btnRoadmap.className = activeBtnClass;
+        renderNineStageRoadmap();
+      } else {
+        pdfContainer.classList.remove('hidden');
+        pdfContainer.classList.add('flex');
+        btnPdf.className = activeBtnClass;
+        renderA4Workbook();
+      }
+      lucide.createIcons();
+    }
+
+    function triggerPrintPdf() {
+      if (viewMode !== 'pdf') {
+        switchViewMode('pdf');
+      } else {
+        renderA4Workbook();
+      }
+      setTimeout(() => {
+        window.print();
+      }, 250);
+    }
+
+    function renderA4Workbook() {
+      const scope = document.getElementById('pdfFilterScope').value;
+      const cardsPerPage = parseInt(document.getElementById('pdfCardsPerPage').value, 10) || 2;
+      const includeCover = document.getElementById('chkIncludeCover').checked;
+      const includeDeepPy = document.getElementById('chkIncludeDeepPy').checked;
+      const includeOutput = document.getElementById('chkIncludeOutput').checked;
+      const includeNotes = document.getElementById('chkIncludeNotes').checked;
+
+      const filteredItems = CURRICULUM_DATA.filter(item => {
+        if (scope === 'all') return true;
+        if (scope === 'folder') return !!item.isFolderCore;
+        if (scope === 'starred') return !!userState.starred[item.id];
+        return item.chapterId === scope;
+      });
+
+      const pagesHtml = [];
+      let pageNumber = 1;
+
+      // 1. Cover & 9-Stage Curriculum Master Sheet
+      if (includeCover) {
+        pagesHtml.push(`
+          <div class="a4-page">
+            <div class="a4-page-body">
+              <div class="border-b-2 border-slate-900 pb-3 flex items-end justify-between">
+                <div>
+                  <div class="text-[10px] font-bold text-indigo-600 uppercase tracking-widest mb-0.5">PYTHON 9-STAGE CURRICULUM & CODE WORKBOOK</div>
+                  <h1 class="text-xl font-extrabold text-slate-900">파이썬 9단계 개념 커리큘럼 & 새폴더 실습 코드 마스터북</h1>
+                  <p class="text-[11px] text-slate-600 mt-0.5">1단계 기초 문법부터 2단계 구구단(gugudan.py), 3~4단계 컬렉션·함수, 5~8단계 OOP·고급기법, 9단계 종합 캡스톤까지</p>
+                </div>
+                <div class="text-right text-[10px] text-slate-500 font-mono">
+                  <div>수록 스크립트: 총 ${filteredItems.length}개</div>
+                  <div>규격: A4 (210mm × 297mm)</div>
+                </div>
+              </div>
+
+              <!-- 9-Stage Curriculum Summary Table -->
+              <div>
+                <h2 class="text-xs font-extrabold text-slate-900 mb-1.5 flex items-center gap-1.5">
+                  <span class="w-1.5 h-3.5 bg-indigo-600 rounded-sm inline-block"></span>
+                  <span>파이썬 9단계 개념 커리큘럼 정의표 (Step-by-Step Concept Architecture)</span>
+                </h2>
+                <table class="w-full text-[9.8px] border-collapse border border-slate-300">
+                  <thead>
+                    <tr class="bg-slate-100 text-slate-800">
+                      <th class="border border-slate-300 px-2 py-1 text-left w-1/5">단계 구분</th>
+                      <th class="border border-slate-300 px-2 py-1 text-left w-2/5">핵심 교육 개념 및 문법 키워드</th>
+                      <th class="border border-slate-300 px-2 py-1 text-left">매핑된 실습 파일 및 학습 목표</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-200">
+                    <tr>
+                      <td class="border border-slate-300 px-2 py-1 font-bold text-indigo-900">1단계. 기본 문법</td>
+                      <td class="border border-slate-300 px-2 py-1 font-mono">print, input, int/float, //, %, **, 슬라이싱, f-string</td>
+                      <td class="border border-slate-300 px-2 py-1"><code>202627033_입출력연산.py</code>, <code>문자열슬라이싱.py</code></td>
+                    </tr>
+                    <tr>
+                      <td class="border border-slate-300 px-2 py-1 font-bold text-indigo-900">2단계. 흐름 제어</td>
+                      <td class="border border-slate-300 px-2 py-1 font-mono">if-elif-else, for in range(1,10), while, break, continue</td>
+                      <td class="border border-slate-300 px-2 py-1"><code>gugudan.py</code>, <code>조건문분기.py</code>, <code>반복문제어.py</code></td>
+                    </tr>
+                    <tr>
+                      <td class="border border-slate-300 px-2 py-1 font-bold text-indigo-900">3단계. 데이터 묶음</td>
+                      <td class="border border-slate-300 px-2 py-1 font-mono">List[], Tuple(), Dict{k:v}, Set{}, 리스트/사전 컴프리헨션</td>
+                      <td class="border border-slate-300 px-2 py-1"><code>202627033_컬렉션자료구조.py</code>, <code>컴프리헨션심화.py</code></td>
+                    </tr>
+                    <tr>
+                      <td class="border border-slate-300 px-2 py-1 font-bold text-indigo-900">4단계. 함수 모듈화</td>
+                      <td class="border border-slate-300 px-2 py-1 font-mono">def, 다중 return, 기본값 인자, *args, **kwargs, lambda</td>
+                      <td class="border border-slate-300 px-2 py-1"><code>202627033_함수모듈화.py</code> (재사용 가능한 로직 설계)</td>
+                    </tr>
+                    <tr>
+                      <td class="border border-slate-300 px-2 py-1 font-bold text-indigo-900">5단계. 객체지향 OOP</td>
+                      <td class="border border-slate-300 px-2 py-1 font-mono">class, __init__(self), 상속(super), 다형성, __str__</td>
+                      <td class="border border-slate-300 px-2 py-1"><code>202627033_객체지향클래스.py</code> (상태와 행동의 캡슐화)</td>
+                    </tr>
+                    <tr>
+                      <td class="border border-slate-300 px-2 py-1 font-bold text-indigo-900">6단계. 예외와 입출력</td>
+                      <td class="border border-slate-300 px-2 py-1 font-mono">try-except-else-finally, with open() as f, json/csv</td>
+                      <td class="border border-slate-300 px-2 py-1"><code>202627033_예외처리파일IO.py</code> (방어적 프로그래밍)</td>
+                    </tr>
+                    <tr>
+                      <td class="border border-slate-300 px-2 py-1 font-bold text-indigo-900">7~8단계. 고급 파이썬</td>
+                      <td class="border border-slate-300 px-2 py-1 font-mono">import, __main__, venv/pip, 제너레이터(yield), @데코레이터</td>
+                      <td class="border border-slate-300 px-2 py-1"><code>202627033_고급파이썬테크닉.py</code> (메모리 최적화·타입힌트)</td>
+                    </tr>
+                    <tr>
+                      <td class="border border-slate-300 px-2 py-1 font-bold text-indigo-900">9단계. 응용 트랙 분기</td>
+                      <td class="border border-slate-300 px-2 py-1 font-mono">트랙A(데이터/AI) · 트랙B(웹 FastAPI) · 트랙C(자동화)</td>
+                      <td class="border border-slate-300 px-2 py-1"><code>202627033_종합캡스톤.py</code> (전 단원 통합 성적·진로 시스템)</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Table of Contents Checklist -->
+              <div>
+                <h2 class="text-xs font-extrabold text-slate-900 mb-1.5 flex items-center gap-1.5">
+                  <span class="w-1.5 h-3.5 bg-emerald-600 rounded-sm inline-block"></span>
+                  <span>수록 파이썬 파일 목차 및 학습 완료 체크리스트</span>
+                </h2>
+                <div class="grid grid-cols-2 gap-1.5 text-[9.8px]">
+                  ${filteredItems.map((it, i) => `
+                    <div class="flex items-center justify-between px-2.5 py-1.5 border border-slate-200 rounded bg-slate-50/70">
+                      <div class="truncate">
+                        <span class="font-bold text-slate-400 mr-1">${String(i + 1).padStart(2, '0')}.</span>
+                        <span class="font-mono font-bold text-indigo-700">${escapeHtml(it.fileName)}</span>
+                        <span class="text-slate-600 ml-1">— ${escapeHtml(it.title)}</span>
+                      </div>
+                      <span class="shrink-0 ml-1.5 font-mono text-slate-400">${userState.completed[it.id] ? '☑' : '☐'}</span>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-2 border-t border-slate-200 flex items-center justify-between text-[9.5px] text-slate-400">
+              <span>Python 9단계 개념 커리큘럼 & 새폴더 실습 코드 마스터 워크북</span>
+              <span>Page ${pageNumber++}</span>
+            </div>
+          </div>
+        `);
+      }
+
+      // 2. Chunk filteredItems into A4 pages
+      for (let i = 0; i < filteredItems.length; i += cardsPerPage) {
+        const pageItems = filteredItems.slice(i, i + cardsPerPage);
+        const isTwoPerPage = cardsPerPage === 2;
+
+        const cardsMarkup = pageItems.map((item, idxOnPage) => {
+          const globalNum = i + idxOnPage + 1;
+          const pyCode = getEffectivePy(item);
+          const simResult = executePythonSimulation(item, pyCode, getEffectiveStdin(item));
+          const userNote = userState.notes[item.id] || '';
+          const deep = item.deepConcept;
+
+          if (isTwoPerPage) {
+            return `
+              <div class="study-card-print">
+                <div class="bg-slate-900 text-white px-3 py-1.5 flex items-center justify-between gap-2 shrink-0">
+                  <div class="flex items-center gap-1.5 min-w-0">
+                    <span class="px-1.5 py-0.2 text-[9.5px] font-bold bg-amber-500 text-slate-950 rounded">#${String(globalNum).padStart(2, '0')}</span>
+                    <span class="font-mono font-bold text-xs text-amber-300">${escapeHtml(item.fileName)}</span>
+                    <span class="text-[11px] font-semibold text-white truncate">— ${escapeHtml(item.title)}</span>
+                  </div>
+                  <div class="flex items-center gap-1 shrink-0">
+                    ${item.tags.slice(0, 2).map(t => `<span class="px-1.5 py-0.2 text-[9px] font-mono bg-slate-800 text-slate-200 rounded">${escapeHtml(t)}</span>`).join('')}
+                  </div>
+                </div>
+
+                <div class="p-2.5 grid grid-cols-12 gap-2.5 flex-1 items-stretch">
+                  <div class="col-span-7 flex flex-col gap-1.5 justify-between">
+                    <div>
+                      <div class="text-[9.5px] font-mono font-bold text-slate-500 mb-0.5 flex items-center justify-between">
+                        <span>[Python 3 코드 & 한 줄 주석] ${escapeHtml(item.fileName)}</span>
+                        <span class="text-slate-400 font-sans">${escapeHtml(item.chapterName)}</span>
+                      </div>
+                      <pre class="code-block-print">${escapeHtml(pyCode)}</pre>
+                    </div>
+                    ${includeOutput ? `
+                      <div>
+                        <div class="text-[9px] font-mono font-bold text-emerald-700 mb-0.5">[실행 결과 (stdout) — 입력: ${escapeHtml(getEffectiveStdin(item))}]</div>
+                        <pre class="code-block-print" style="background-color:#0f172a; color:#e2e8f0; border-color:#334155; font-size:6.8pt; line-height:1.25;">${escapeHtml(simResult.stdout)}</pre>
+                      </div>
+                    ` : ''}
+                  </div>
+
+                  <div class="col-span-5 flex flex-col justify-between gap-1.5 text-[9.5px]">
+                    <div class="space-y-1.5">
+                      <div class="bg-indigo-50/60 border border-indigo-200 rounded p-2 space-y-1">
+                        <div class="font-bold text-indigo-950 text-[10px]">💡 핵심 동작 & 줄별 코드 해설</div>
+                        <p class="text-slate-700 leading-snug">${escapeHtml(item.summary)}</p>
+                        <ul class="list-disc list-inside text-slate-700 space-y-0.5 leading-snug">
+                          ${item.explanations.map(e => `<li>${e}</li>`).join('')}
+                        </ul>
+                        <div class="text-amber-900 font-semibold pt-0.5 leading-snug">★ 핵심 포인트: ${escapeHtml(item.examTip)}</div>
+                      </div>
+
+                      ${includeDeepPy && deep ? `
+                        <div class="bg-slate-50 border border-slate-200 rounded p-2 space-y-1">
+                          <div class="text-slate-800 leading-snug">
+                            <strong class="text-indigo-900">📘 동작 원리:</strong> ${escapeHtml(deep.principle)}
+                          </div>
+                          <div class="space-y-1 pt-0.5">
+                            <div class="bg-rose-50/80 border border-rose-200 rounded px-1.5 py-1 font-mono text-[8.2px] text-rose-950 whitespace-pre-wrap leading-tight"><b>❌ 오답:</b>\n${escapeHtml(deep.wrongCode)}</div>
+                            <div class="bg-emerald-50/80 border border-emerald-200 rounded px-1.5 py-1 font-mono text-[8.2px] text-emerald-950 whitespace-pre-wrap leading-tight"><b>⭕ 정답:</b>\n${escapeHtml(deep.rightCode)}</div>
+                          </div>
+                        </div>
+                      ` : ''}
+                    </div>
+
+                    ${includeNotes ? `
+                      <div class="border border-dashed border-slate-300 rounded p-1.5 bg-slate-50/40 flex items-center justify-between gap-2">
+                        <div class="truncate">
+                          <span class="font-bold text-slate-700 mr-1">✏️ 메모:</span>
+                          <span class="text-slate-600">${userNote ? escapeHtml(userNote) : '핵심 키워드 직접 필기'}</span>
+                        </div>
+                        <span class="text-[9px] text-slate-400 shrink-0">□완료 □복습</span>
+                      </div>
+                    ` : ''}
+                  </div>
+                </div>
+              </div>
+            `;
+          }
+
+          // 1 Card Per Page Layout
+          return `
+            <div class="study-card-print">
+              <div class="bg-slate-900 text-white px-3.5 py-2 flex items-center justify-between">
+                <div class="flex items-center gap-2 min-w-0">
+                  <span class="px-1.5 py-0.5 text-[10px] font-bold bg-amber-500 text-slate-950 rounded">#${String(globalNum).padStart(2, '0')}</span>
+                  <span class="font-mono font-bold text-sm text-amber-300">${escapeHtml(item.fileName)}</span>
+                  <span class="text-xs font-semibold text-white truncate">— ${escapeHtml(item.title)}</span>
+                </div>
+                <span class="text-[10px] text-slate-300 shrink-0">${escapeHtml(item.chapterName)}</span>
+              </div>
+
+              <div class="p-3 space-y-2.5 flex-1 flex flex-col justify-between">
+                <div class="space-y-2.5">
+                  <div class="flex items-start justify-between gap-2 text-xs text-slate-700">
+                    <p class="leading-snug"><strong class="text-slate-900">학습 요약:</strong> ${escapeHtml(item.summary)}</p>
+                  </div>
+
+                  <div>
+                    <div class="text-[10px] font-mono font-bold text-slate-500 mb-0.5">[Python 3 전체 코드 & 한 줄 한국어 주석] ${escapeHtml(item.fileName)}</div>
+                    <pre class="code-block-print" style="font-size:8.2pt; line-height:1.38;">${escapeHtml(pyCode)}</pre>
+                  </div>
+
+                  ${includeOutput ? `
+                    <div>
+                      <div class="text-[10px] font-mono font-bold text-emerald-700 mb-0.5">[터미널 실행 결과 (stdout) — 입력값: ${escapeHtml(getEffectiveStdin(item))}]</div>
+                      <pre class="code-block-print" style="background-color:#0f172a; color:#e2e8f0; border-color:#334155; font-size:8pt; line-height:1.32;">${escapeHtml(simResult.stdout)}</pre>
+                    </div>
+                  ` : ''}
+
+                  ${includeDeepPy && deep ? `
+                    <div class="bg-slate-50 border border-slate-200 rounded-md p-2.5 space-y-2 text-[11px]">
+                      <div class="text-slate-800 leading-relaxed">
+                        <strong class="text-indigo-900">📘 파이썬 동작 원리:</strong> ${escapeHtml(deep.principle)}
+                      </div>
+                      <div class="grid grid-cols-2 gap-2">
+                        <div class="bg-rose-50/70 border border-rose-200 rounded px-2.5 py-1.5 font-mono text-[9.5px] text-rose-950 whitespace-pre-wrap"><b>❌ 오답 주의:</b>\n${escapeHtml(deep.wrongCode)}</div>
+                        <div class="bg-emerald-50/70 border border-emerald-200 rounded px-2.5 py-1.5 font-mono text-[9.5px] text-emerald-950 whitespace-pre-wrap"><b>⭕ 표준 정답:</b>\n${escapeHtml(deep.rightCode)}</div>
+                      </div>
+                    </div>
+                  ` : ''}
+                </div>
+
+                ${includeNotes ? `
+                  <div class="grid grid-cols-12 gap-2 pt-1 text-[11px]">
+                    <div class="col-span-7 bg-indigo-50/60 border border-indigo-200 rounded-md p-2.5 space-y-1">
+                      <div class="font-bold text-indigo-950">💡 핵심 코드 해설 & 시험 포인트</div>
+                      <ul class="list-disc list-inside text-slate-700 space-y-0.5">
+                        ${item.explanations.map(e => `<li>${e}</li>`).join('')}
+                      </ul>
+                      <div class="text-amber-900 font-semibold pt-0.5">★ 포인트: ${escapeHtml(item.examTip)}</div>
+                    </div>
+                    <div class="col-span-5 border border-dashed border-slate-300 rounded-md p-2.5 bg-slate-50/40 flex flex-col justify-between min-h-[85px]">
+                      <div>
+                        <div class="font-bold text-slate-700 mb-1">✏️ 나의 파이썬 학습 노트 / 필기란</div>
+                        <div class="text-slate-700 whitespace-pre-wrap leading-snug">${userNote ? escapeHtml(userNote) : '<span class="text-slate-400">중요 문법이나 시험 포인트를 여기에 필기하세요.</span>'}</div>
+                      </div>
+                      <div class="text-[10px] text-right text-slate-400 mt-2">이해도: □ 상  □ 중  □ 복습필요</div>
+                    </div>
+                  </div>
+                ` : ''}
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        pagesHtml.push(`
+          <div class="a4-page">
+            <div class="a4-page-body">${cardsMarkup}</div>
+            <div class="pt-1.5 border-t border-slate-200 flex items-center justify-between text-[9.5px] text-slate-400 shrink-0 mt-1">
+              <span>Python 9단계 개념 커리큘럼 & 새폴더 코드 마스터 워크북 — ${escapeHtml(pageItems.map(p => p.fileName).join(', '))}</span>
+              <span>Page ${pageNumber++}</span>
+            </div>
+          </div>
+        `);
+      }
+
+      const totalPages = pagesHtml.length;
+      document.getElementById('pdfPageCountBadge').innerText = `총 ${totalPages} 페이지 (A4 규격)`;
+      document.getElementById('a4WorkbookPages').innerHTML = pagesHtml.join('');
+    }
+
+    async function downloadDirectPdfFile() {
+      const btn = document.getElementById('btnDirectPdfDownload');
+      const originalHtml = btn.innerHTML;
+      btn.disabled = true;
+
+      try {
+        if (viewMode !== 'pdf') {
+          switchViewMode('pdf');
+        } else {
+          renderA4Workbook();
+        }
+
+        await new Promise(r => setTimeout(r, 150));
+
+        const pageElements = Array.from(document.querySelectorAll('#a4WorkbookPages .a4-page'));
+        if (pageElements.length === 0) {
+          showToast('출력할 페이지가 없습니다.');
+          return;
+        }
+
+        const jsPDFCtor = (window.jspdf && window.jspdf.jsPDF) || window.jsPDF;
+        const h2c = window.html2canvas;
+
+        if (jsPDFCtor && h2c) {
+          const pdf = new jsPDFCtor({ orientation: 'portrait', unit: 'mm', format: 'a4', compress: true });
+
+          for (let i = 0; i < pageElements.length; i++) {
+            btn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i><span>PDF 생성 중 (${i + 1}/${pageElements.length})...</span>`;
+            lucide.createIcons();
+
+            const pageEl = pageElements[i];
+            const canvas = await h2c(pageEl, {
+              scale: 2,
+              useCORS: true,
+              logging: false,
+              backgroundColor: '#ffffff',
+              scrollX: 0,
+              scrollY: -window.scrollY,
+              windowWidth: document.documentElement.offsetWidth
+            });
+
+            const imgData = canvas.toDataURL('image/jpeg', 0.96);
+            if (i > 0) pdf.addPage('a4', 'portrait');
+            pdf.addImage(imgData, 'JPEG', 0, 0, 210, 297);
+          }
+
+          pdf.save('Python_9단계커리큘럼_새폴더실습_마스터워크북_A4.pdf');
+          showToast(`총 ${pageElements.length}페이지 A4 PDF 다운로드가 완료되었습니다!`);
+        } else {
+          window.print();
+        }
+      } catch (err) {
+        console.error('PDF direct download error:', err);
+        showToast('브라우저 인쇄 대화상자를 통해 PDF로 저장합니다.');
+        setTimeout(() => window.print(), 300);
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = originalHtml;
+        lucide.createIcons();
+      }
+    }
+
+    // =========================================================================
+    // 8. SMART RECURSIVE ZIP & .PY UPLOADER (Auto Korean Line Comments!)
+    // =========================================================================
+    function openZipModal() {
+      const m = document.getElementById('zipModal');
+      m.classList.remove('hidden');
+      m.classList.add('flex');
+    }
+
+    function closeZipModal() {
+      const m = document.getElementById('zipModal');
+      m.classList.add('hidden');
+      m.classList.remove('flex');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const dz = document.getElementById('zipDropzone');
+      if (dz) {
+        dz.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          dz.classList.add('ring-2', 'ring-indigo-500');
+        });
+        dz.addEventListener('dragleave', () => {
+          dz.classList.remove('ring-2', 'ring-indigo-500');
+        });
+        dz.addEventListener('drop', (e) => {
+          e.preventDefault();
+          dz.classList.remove('ring-2', 'ring-indigo-500');
+          if (e.dataTransfer && e.dataTransfer.files.length > 0) {
+            handleUploadedFiles(e.dataTransfer.files);
+          }
+        });
+      }
+    });
+
+    function decodeBytesSmart(uint8Array) {
+      try {
+        return new TextDecoder('utf-8', { fatal: true }).decode(uint8Array);
+      } catch (e) {
+        try {
+          return new TextDecoder('euc-kr').decode(uint8Array);
+        } catch (e2) {
+          return new TextDecoder('utf-8').decode(uint8Array);
+        }
+      }
+    }
+
+    function autoAnnotatePythonLineByLine(fileName, rawContent) {
+      const lines = rawContent.replace(/\r\n/g, '\n').split('\n');
+      const annotated = lines.map(line => {
+        const trimmed = line.trim();
+        if (!trimmed || trimmed.startsWith('#') || line.includes('#')) return line;
+
+        let comment = '파이썬 실행 구문';
+        if (trimmed.match(/int\s*\(\s*input\s*\(/)) comment = 'input() 문자열 입력을 받아 int()로 정수 형변환 후 변수에 저장';
+        else if (trimmed.match(/float\s*\(\s*input\s*\(/)) comment = 'input() 문자열 입력을 받아 float()로 실수 형변환 후 저장';
+        else if (trimmed.includes('input(')) comment = '사용자로부터 키보드 표준 입력을 문자열(str)로 받아 변수에 저장';
+        else if (trimmed.startsWith('for ') && trimmed.includes('range(')) comment = 'range() 범위의 정수를 순차적으로 대입하며 반복 실행';
+        else if (trimmed.startsWith('for ')) comment = '시퀀스/컬렉션의 요소를 하나씩 순회하는 for 반복문';
+        else if (trimmed.startsWith('while ')) comment = '조건식이 참(True)인 동안 블록을 계속 실행하는 while 반복문';
+        else if (trimmed.startsWith('if ')) comment = '조건식이 참(True)인지 검사하는 시작 조건문 (콜론과 들여쓰기 필수)';
+        else if (trimmed.startsWith('elif ')) comment = '위 조건이 거짓일 때 추가 조건을 검사하는 다중 분기문(elif)';
+        else if (trimmed.startsWith('else:')) comment = '위의 모든 if/elif 조건이 거짓일 때 기본 실행되는 블록';
+        else if (trimmed.startsWith('def ')) comment = 'def 키워드로 재사용 가능한 사용자 정의 함수 선언';
+        else if (trimmed.startsWith('class ')) comment = 'class 키워드로 객체지향 설계도(클래스) 선언';
+        else if (trimmed.startsWith('return')) comment = '함수 실행을 종료하고 호출한 곳으로 결과값을 반환';
+        else if (trimmed === 'break') comment = '현재 반복문을 즉시 완전히 탈출(종료)';
+        else if (trimmed === 'continue') comment = '아래쪽 코드를 건너뛰고 다음 반복 회차로 즉시 이동';
+        else if (trimmed.startsWith('print(f')) comment = 'f-string 포매팅을 사용해 변수 값을 문자열에 삽입하여 화면에 출력';
+        else if (trimmed.startsWith('print(')) comment = '괄호 안의 값이나 수식 결과를 표준 출력(화면)에 표시';
+        else if (trimmed.includes('+=')) comment = '기존 변수 값에 우측 값을 더하여 누적 저장(복합 대입 연산)';
+        else if (trimmed.includes('=')) comment = '우측 수식/객체를 계산하여 좌측 변수 이름에 바인딩(대입)';
+
+        const padded = line.padEnd(46, ' ');
+        return `${padded} # ${comment}`;
+      });
+
+      if (!annotated[0] || !annotated[0].includes('[파일명:')) {
+        annotated.unshift(`# [파일명: ${fileName}] 새폴더 원본 파이썬 파일 자동 분석 및 한 줄 한국어 주석 해설`);
+      }
+      return annotated.join('\n');
+    }
+
+    async function extractZipBufferRecursive(arrayBuffer, collectedFiles = {}) {
+      const view = new DataView(arrayBuffer);
+      const bytes = new Uint8Array(arrayBuffer);
+
+      let eocdOffset = -1;
+      for (let i = bytes.length - 22; i >= Math.max(0, bytes.length - 65557); i--) {
+        if (view.getUint32(i, true) === 0x06054b50) {
+          eocdOffset = i;
+          break;
+        }
+      }
+
+      if (eocdOffset === -1) return collectedFiles;
+
+      const totalEntries = view.getUint16(eocdOffset + 10, true);
+      const cdOffset = view.getUint32(eocdOffset + 16, true);
+
+      let ptr = cdOffset;
+      for (let i = 0; i < totalEntries; i++) {
+        if (view.getUint32(ptr, true) !== 0x02014b50) break;
+
+        const compressionMethod = view.getUint16(ptr + 10, true);
+        const compressedSize = view.getUint32(ptr + 20, true);
+        const fileNameLen = view.getUint16(ptr + 28, true);
+        const extraLen = view.getUint16(ptr + 30, true);
+        const commentLen = view.getUint16(ptr + 32, true);
+        const localHeaderOffset = view.getUint32(ptr + 42, true);
+
+        const nameBytes = bytes.slice(ptr + 46, ptr + 46 + fileNameLen);
+        const fullPath = decodeBytesSmart(nameBytes);
+        const baseName = fullPath.split('/').pop();
+
+        ptr += 46 + fileNameLen + extraLen + commentLen;
+        if (!baseName || fullPath.endsWith('/')) continue;
+
+        const lfNameLen = view.getUint16(localHeaderOffset + 26, true);
+        const lfExtraLen = view.getUint16(localHeaderOffset + 28, true);
+        const dataStart = localHeaderOffset + 30 + lfNameLen + lfExtraLen;
+        const compressedData = bytes.slice(dataStart, dataStart + compressedSize);
+
+        let fileBytes = null;
+        if (compressionMethod === 0) {
+          fileBytes = compressedData;
+        } else if (compressionMethod === 8 && typeof DecompressionStream !== 'undefined') {
+          try {
+            const ds = new DecompressionStream('deflate-raw');
+            const writer = ds.writable.getWriter();
+            writer.write(compressedData);
+            writer.close();
+            const resp = new Response(ds.readable);
+            const ab = await resp.arrayBuffer();
+            fileBytes = new Uint8Array(ab);
+          } catch (e) {
+            console.warn('Decompression skipped for:', baseName, e);
+          }
+        }
+
+        if (fileBytes) {
+          const lower = baseName.toLowerCase();
+          if (lower.endsWith('.zip')) {
+            await extractZipBufferRecursive(fileBytes.buffer.slice(fileBytes.byteOffset, fileBytes.byteOffset + fileBytes.byteLength), collectedFiles);
+          } else if (lower.endsWith('.py')) {
+            collectedFiles[baseName] = decodeBytesSmart(fileBytes);
+          }
+        }
+      }
+      return collectedFiles;
+    }
+
+    async function handleUploadedFiles(fileList) {
+      if (!fileList || fileList.length === 0) return;
+      const pyFilesMap = {};
+
+      for (const file of fileList) {
+        const lower = file.name.toLowerCase();
+        if (lower.endsWith('.zip')) {
+          const buf = await file.arrayBuffer();
+          await extractZipBufferRecursive(buf, pyFilesMap);
+        } else if (lower.endsWith('.py')) {
+          const buf = await file.arrayBuffer();
+          pyFilesMap[file.name] = decodeBytesSmart(new Uint8Array(buf));
+        }
+      }
+
+      const uploadedNames = Object.keys(pyFilesMap);
+      let updatedCount = 0;
+      let addedCount = 0;
+
+      uploadedNames.forEach(fName => {
+        const rawCode = pyFilesMap[fName];
+        const annotatedCode = autoAnnotatePythonLineByLine(fName, rawCode);
+
+        const existing = CURRICULUM_DATA.find(item => item.fileName.toLowerCase() === fName.toLowerCase());
+        if (existing) {
+          userState.customPy[existing.id] = annotatedCode;
+          updatedCount++;
+        } else {
+          const newId = 'uploaded_' + fName.replace(/[^a-zA-Z0-9]/g, '_') + '_' + Date.now();
+          const hasClass = rawCode.includes('class ');
+          const hasDef = rawCode.includes('def ');
+          const hasLoop = rawCode.includes('for ') || rawCode.includes('while ');
+          const hasCond = rawCode.includes('if ');
+
+          const targetChapterId = hasClass ? 'st5' : hasDef ? 'st4' : hasLoop || hasCond ? 'st2' : 'st1';
+          const targetGroup = STAGE_GROUPS.find(g => g.id === targetChapterId) || STAGE_GROUPS[0];
+
+          const newItem = {
+            id: newId,
+            stageNum: hasClass ? 5 : hasDef ? 4 : hasLoop || hasCond ? 2 : 1,
+            chapterId: targetChapterId,
+            chapterName: targetGroup.name,
+            isFolderCore: true,
+            fileName: fName,
+            title: `[새폴더 업로드 원본] ${fName} 코드 분석 및 개념 해설`,
+            summary: '업로드된 새 폴더 압축 파일에서 추출된 파이썬 원본 스크립트입니다. 각 줄마다 자동 생성된 한국어 해설 주석과 터미널 실행 결과를 확인하세요.',
+            tags: [
+              ...(rawCode.includes('input') ? ['input()'] : []),
+              ...(hasCond ? ['if-elif-else'] : []),
+              ...(hasLoop ? ['for / while 반복문'] : []),
+              ...(hasDef ? ['def 함수'] : []),
+              '새폴더 동기화'
+            ],
+            defaultStdin: '7 90 85',
+            presetInputs: [{ label: '기본 테스트 입력', val: '7 90 85' }],
+            examTip: '각 줄 우측의 # 한국어 주석과 [줄별 X-Ray 해부표 보기] 기능을 통해 변수의 자료형 변환과 제어문 블록 흐름을 점검하세요.',
+            explanations: [
+              `업로드된 <code>${escapeHtml(fName)}</code> 원본 파일의 모든 실행 구문에 대해 한 줄씩 한국어 주석을 자동 매핑했습니다.`,
+              '우측 터미널 입력창에 테스트 값을 넣고 [실행 (Run)]을 누르면 결과를 즉시 시뮬레이션합니다.'
+            ],
+            pyCode: annotatedCode
+          };
+          CURRICULUM_DATA.push(newItem);
+          addedCount++;
+        }
+      });
+
+      saveUserState();
+      renderSidebarList();
+      selectLesson(currentLessonIndex);
+      if (viewMode === 'pdf') renderA4Workbook();
+
+      const statusBox = document.getElementById('zipUploadStatusBox');
+      statusBox.classList.remove('hidden');
+      statusBox.innerHTML = `
+        <div><strong>✅ 총 ${uploadedNames.length}개 파이썬(.py) 파일 추출 및 9단계 커리큘럼 매핑 완료!</strong></div>
+        <div>• 기존 예제 동기화: ${updatedCount}개 / 신규 추가된 파일: ${addedCount}개</div>
+        <div class="text-[11px] font-mono text-emerald-800 mt-1">추출 목록: ${uploadedNames.map(escapeHtml).join(', ')}</div>
+      `;
+
+      document.getElementById('zipStatusText').innerText = `새폴더 .py ${uploadedNames.length}개 동기화됨`;
+      showToast(`총 ${uploadedNames.length}개의 파이썬 파일이 워크북에 반영되었습니다!`);
+    }
+
+    function escapeHtml(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    let toastTimeout = null;
+    function showToast(msg) {
+      const banner = document.getElementById('toastBanner');
+      document.getElementById('toastMessage').innerText = msg;
+      banner.classList.remove('hidden');
+      banner.classList.add('flex');
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        banner.classList.add('hidden');
+        banner.classList.remove('flex');
+      }, 2800);
+    }
+
+    // Initialize everything on load
+    window.addEventListener('DOMContentLoaded', () => {
+      loadUserState();
+      selectLesson(0);
+      renderA4Workbook();
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
